@@ -1,3 +1,4 @@
-# New project template
+# Nickel-lang.org website
 
-Use this template when creating a new project.
+This repository contains the content of the Nickel language website. This is
+WIP.
