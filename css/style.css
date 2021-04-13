@@ -1,0 +1,54 @@
+.main-title {
+    font-size: 3em;
+    line-height: 1.5;
+}
+
+.main-subtitle {
+    font-size: 2em;
+}
+
+.main-text {
+    font-size: 1.5em;
+    line-height: 1.1;
+}
+
+.main-container {
+    padding-top: 5em;
+}
+
+.section-block {
+    padding-top: 7.5em;
+    padding-bottom: 7.5em;
+}
+
+.logo {
+    height: 1.5em;
+    margin-right: 0.2em;
+}
+
+.list-elt {
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+}
+
+.abstract-illustration {
+    width: 7em;
+}
+
+.code {
+    word-wrap: normal;
+    background-color: #f8f9fa;
+    padding: 1rem;
+}
+
+.code pre {
+    display: block;
+}
+
+.code pre > code {
+    padding: 0;
+    margin: 0;
+    word-break: normal;
+    white-space: pre;
+    border: 0;
+}
