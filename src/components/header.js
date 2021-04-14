@@ -15,7 +15,7 @@ const Header = ({ siteTitle, menuLinks }) => (
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav mx-auto">
                         {menuLinks.map(link => (
-                            <Link className="nav-link" activeClassName="active" to={link.link}>{link.name}</Link>
+                            <Link key={link.name} className="nav-link" activeClassName="active" to={link.link}>{link.name}</Link>
                         ))}
                     </div>
                 </div>
