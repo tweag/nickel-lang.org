@@ -6,7 +6,7 @@ const Header = ({ siteTitle, menuLinks }) => (
     <header>
         <nav className="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
             <div className="container-fluid">
-                <Link to="/">Nickel</Link>
+                <Link className="navbar-brand" to="/">Nickel</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,7 +15,7 @@ const Header = ({ siteTitle, menuLinks }) => (
                 <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div className="navbar-nav mx-auto">
                         {menuLinks.map(link => (
-                            <Link to={link.link}>{link.name}</Link>
+                            <Link className="nav-link" activeClassName="active" to={link.link}>{link.name}</Link>
                         ))}
                     </div>
                 </div>
