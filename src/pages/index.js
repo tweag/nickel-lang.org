@@ -1,6 +1,7 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import {StaticImage} from "gatsby-plugin-image";
+import '../asciinema-player/asciinema-player.css';
 
 // markup
 const IndexPage = () => {
@@ -22,7 +23,7 @@ const IndexPage = () => {
               </div>
             </div>
             <div className="col">
-              <asciinema-player src="demos/cover.cast"/>
+              <asciinema-player src="/demos/cover.cast"/>
             </div>
           </section>
 
@@ -53,6 +54,8 @@ const IndexPage = () => {
             </div>
           </section>
         </main>
+
+        <script src="../asciinema-player/asciinema-player.js"/>
       </Layout>
   )
 }

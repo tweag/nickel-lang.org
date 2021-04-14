@@ -4,11 +4,11 @@ module.exports = {
         menuLinks: [
             {
                 name: 'Getting started',
-                link: '#'
+                link: '/getting-started'
             },
             {
                 name: 'Documentation',
-                link: '#'
+                link: '/documentation'
             },
             {
                 name: 'Playground',
