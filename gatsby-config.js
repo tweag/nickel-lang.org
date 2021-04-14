@@ -12,7 +12,7 @@ module.exports = {
             },
             {
                 name: 'Playground',
-                link: '#'
+                link: '/playground'
             },
         ]
     },
@@ -21,5 +21,13 @@ module.exports = {
         'gatsby-plugin-sharp',
         'gatsby-transformer-sharp',
         'gatsby-plugin-image',
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `markdown-pages`,
+                path: `${__dirname}/src/markdown-pages`,
+            },
+        },
+        'gatsby-transformer-remark',
     ],
 };
