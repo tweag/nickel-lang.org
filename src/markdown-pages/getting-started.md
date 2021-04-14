@@ -4,6 +4,15 @@ page: "getting-started"
 
 # Getting started
 
+
+PRISM TEST
+
+```javascript
+const someVar = 2;
+const someFunc = (id) => id+1;
+someFunc(someVar)
+```
+
 Nickel is quite new and not yet distributed using the standard channels
 (binaries, nix package, Rust crate, and so on). We are sorry if the installation
 process is not yet optimal, but this should change soon, so stay tuned.
@@ -15,25 +24,31 @@ running:
 
 1. Clone the [Nickel repository](https://github.io/tweag/nickel)
  locally and set it as the current directory:
- 
-        $git clone git@github.com:tweag/nickel.git
-        Cloning in 'nickel'...
-        [..]
-        $cd nickel
-        nickel$
+
+```shell{outputLines: 2,3}{promptUser: devops}{promptHost: nickel-lang}
+$git clone git@github.com:tweag/nickel.git
+Cloning in 'nickel'...
+[..]
+$cd nickel
+nickel$
+```
 
 1. Invoke nix build:
 
-       nickel$nix build
-       [1 built, 0.0 MiB DL]
-       nickel$
+```shell{outputLines: 2}{promptUser: devops}{promptHost: nickel-lang}
+nickel$nix build
+[1 built, 0.0 MiB DL]
+nickel$
+```
 
 1. If everything went right, a binary is now available in the
 result directory:
 
-    nickel$./result/bin/nickel -V
-    nickel 0.1.0
-    nickel$
+```shell{outputLines: 2}{promptUser: devops}{promptHost: nickel-lang}
+nickel$./result/bin/nickel -V
+nickel 0.1.0
+nickel$
+```
 
 ## Build from source without Nix
 
@@ -49,30 +64,32 @@ instructions of the
  basic configuration is almost as writing JSON or YAML. Let us start with a
  basic fictional app configuration:
 
-    {
-      name = "example",
-        description = m#"
-        This is an awesome software I'm developing.
-        Please use it!
-        "#m,
-        version = "0.1.1",
-        main = "index.js",
-        keywords = ["example", "config"],
-        scripts = {
-        test = m#"test.sh --option --install example --version "0.1.1""#m,
-        do_stuff = "do_stuff.sh subcommand",
-      },
-        contributors = [{
-        name = "John Doe",
-        email = "johndoe@example.com"
-      }, {
-        name = "Ivy Lane",
-        url = "https=//example.com/ivylane"
-      }],
-        dependencies = {
-        dep1 = "^1.0.0",
-        dep3 = "6.7"
-      }
+```nickel
+{
+  name = "example",
+    description = m#"
+    This is an awesome software I'm developing.
+    Please use it!
+    "#m,
+    version = "0.1.1",
+    main = "index.js",
+    keywords = ["example", "config"],
+    scripts = {
+    test = m#"test.sh --option --install example --version "0.1.1""#m,
+    do_stuff = "do_stuff.sh subcommand",
+  },
+    contributors = [{
+    name = "John Doe",
+    email = "johndoe@example.com"
+  }, {
+    name = "Ivy Lane",
+    url = "https=//example.com/ivylane"
+  }],
+    dependencies = {
+    dep1 = "^1.0.0",
+    dep3 = "6.7"
+}
+```
 
 This program describe a record delimited by `{` and `}`, consisting in a list of
 key-value pairs, akin to JSON's objects. Nickel basic datatypes include strings
@@ -92,26 +109,28 @@ illustrated here:
 Now, save the content in "example.ncl" and run nickel export (or
 ./result/bin/nickel export if you haven't made a symbolic link):
 
-    nickel$ nickel -f example.ncl export --format yaml
-    ---
-    contributors:
-      - email: johndoe@example.com
-        name: John Doe
-      - name: Ivy Lane
-        url: https=//example.com/ivylane
-    dependencies:
-      dep1: ^1.0.0
-      dep3: "6.7"
-    description: "This is an awesome software I'm developing.\nPlease use it!"
-    keywords:
-      - example
-      - config
-    main: index.js
-    name: example
-    scripts:
-      do_stuff: do_stuff.sh subcommand
-      test: "test.sh --option --install example --version \"0.1.1\""
-    version: 0.1.1
+```shell{outputLines: 2-20}
+nickel$ nickel -f example.ncl export --format yaml
+---
+contributors:
+  - email: johndoe@example.com
+    name: John Doe
+  - name: Ivy Lane
+    url: https=//example.com/ivylane
+dependencies:
+  dep1: ^1.0.0
+  dep3: "6.7"
+description: "This is an awesome software I'm developing.\nPlease use it!"
+keywords:
+  - example
+  - config
+main: index.js
+name: example
+scripts:
+  do_stuff: do_stuff.sh subcommand
+  test: "test.sh --option --install example --version \"0.1.1\""
+version: 0.1.1
+```
 
 Currently supported formats are yaml, toml, json, and raw. json is the
 default, while raw expect a string result that it output directly, useful to
@@ -123,10 +142,12 @@ Nickel is a programming language. This allows you not only to describe, but to
 generate data. There's some repetition in our previous example (reproducing only
 the interesting part):
 
-    name = "example",
-    version = "0.1.1",
-    scripts = {
-      test = m#"test.sh --option --install example --version "0.1.1""#m,
+```nickel
+name = "example",
+version = "0.1.1",
+scripts = {
+  test = m#"test.sh --option --install example --version "0.1.1""#m,
+```
 
 Apart from aesthetics, a more serious issue is inconsistency. If you bump the
 version number in version, you may forget to do so in the test scripts as well,
@@ -134,19 +155,23 @@ leading to an incorrect configuration. To remedy this problem, let us have a
 single source of truth by reusing the value of name and version in test, using
 the interpolation syntax `#{expr}`:
 
-      name = "example",
-      version = "0.1.1",
-      scripts = {
-        test = m#"test.sh --option --install #{name} --version "#{version}""#m
+```nickel
+name = "example",
+version = "0.1.1",
+scripts = {
+  test = m#"test.sh --option --install #{name} --version "#{version}""#m
+```
 
 Now, if we change version to "0.1.2" and export the result, the test script
 invocation is updated as well:
 
-    [...]
-    scripts:
-      do_stuff: do_stuff.sh subcommand
-      test: "test.sh --option --install example --version \"0.1.2\""
-      version: 0.1.2</code></pre>
+```yaml
+# [...]
+scripts:
+  do_stuff: do_stuff.sh subcommand
+  test: "test.sh --option --install example --version \"0.1.2\""
+  version: 0.1.2
+```
 
 ## Going further
 
