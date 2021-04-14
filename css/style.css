@@ -21,6 +21,11 @@
     padding-bottom: 7.5em;
 }
 
+.landingpage-column {
+    padding-left: 2em;
+    padding-right: 2em;
+}
+
 .logo {
     height: 1.5em;
     margin-right: 0.2em;
