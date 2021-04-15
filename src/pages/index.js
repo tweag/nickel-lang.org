@@ -1,7 +1,6 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import {StaticImage} from "gatsby-plugin-image";
-import '../asciinema-player/asciinema-player.css';
 
 import atomSVG from '../images/atom-electrons.svg';
 import moleculeSVG from '../images/molecules.svg';
@@ -26,7 +25,9 @@ const IndexPage = () => {
               </div>
             </div>
             <div className="col">
-              <asciinema-player src="/demos/cover.cast"/>
+              <iframe className="asciinema-iframe" allowFullScreen="true" webkitallowfullscreen="true" mozallowfullscreen="true"
+                      src="https://asciinema.org/a/3CG6L6oAfimqtDkoxiUu6VOws/iframe"/>
+              {/*<script id="asciicast-3CG6L6oAfimqtDkoxiUu6VOws" src="https://asciinema.org/a/3CG6L6oAfimqtDkoxiUu6VOws.js" async/>*/}
             </div>
           </section>
 

@@ -72,3 +72,8 @@
 .full-page {
     min-height: 100vh;
 }
+
+.asciinema-iframe {
+    width:100%;
+    height: 100%;
+}
