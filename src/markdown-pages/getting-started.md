@@ -4,15 +4,6 @@ page: "getting-started"
 
 # Getting started
 
-
-PRISM TEST
-
-```javascript
-const someVar = 2;
-const someFunc = (id) => id+1;
-someFunc(someVar)
-```
-
 Nickel is quite new and not yet distributed using the standard channels
 (binaries, nix package, Rust crate, and so on). We are sorry if the installation
 process is not yet optimal, but this should change soon, so stay tuned.
@@ -23,32 +14,32 @@ Using [Nix]("https://nixos.org/") is the easiest way to get a Nickel executable
 running:
 
 1. Clone the [Nickel repository](https://github.io/tweag/nickel)
- locally and set it as the current directory:
+   locally and set it as the current directory:
 
-```shell{outputLines: 2,3}{promptUser: devops}{promptHost: nickel-lang}
-$git clone git@github.com:tweag/nickel.git
-Cloning in 'nickel'...
-[..]
-$cd nickel
-nickel$
-```
+   ```shell-session
+   $ git clone git@github.com:tweag/nickel.git
+   Cloning in 'nickel'...
+   [..]
+   $ cd nickel
+   devops@nickel-lang:~/nickel$ 
+   ```
 
 1. Invoke nix build:
 
-```shell{outputLines: 2}{promptUser: devops}{promptHost: nickel-lang}
-nickel$nix build
-[1 built, 0.0 MiB DL]
-nickel$
-```
+   ```shell-session
+   devops@nickel-lang:~/nickel$ nix build
+   [1 built, 0.0 MiB DL]
+   devops@nickel-lang:~/nickel$ 
+   ```
 
 1. If everything went right, a binary is now available in the
-result directory:
+   result directory:
 
-```shell{outputLines: 2}{promptUser: devops}{promptHost: nickel-lang}
-nickel$./result/bin/nickel -V
-nickel 0.1.0
-nickel$
-```
+   ```shell-session
+   devops@nickel-lang:~/nickel$ ./result/bin/nickel -V
+   nickel 0.1.0
+   devops@nickel-lang:~/nickel$  
+   ```
 
 ## Build from source without Nix
 
@@ -106,11 +97,12 @@ illustrated here:
   escape them (", \, and so on).
 
 ##Export
+
 Now, save the content in "example.ncl" and run nickel export (or
 ./result/bin/nickel export if you haven't made a symbolic link):
 
-```shell{outputLines: 2-20}
-nickel$ nickel -f example.ncl export --format yaml
+```shell-session
+devops@nickel-lang:~/nickel$ nickel -f example.ncl export --format yaml
 ---
 contributors:
   - email: johndoe@example.com
