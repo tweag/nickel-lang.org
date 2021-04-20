@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { Terminal } from 'xterm';
+import {FitAddon} from "xterm-addon-fit";
+import {wasm_input, wasm_init} from "nickel-repl";
 
-const nonPrintable = ['Control', 'Alt', '']
+const NICKEL_SUCCESS = 0;
+const NICKEL_BLANK = 1;
+const NICKEL_PARTIAL = 2;
+const NICKEL_ERROR = 3;
 
 export default class XTerm extends React.Component {
     xterm;
@@ -15,9 +20,10 @@ export default class XTerm extends React.Component {
     componentDidMount() {
         this.xterm = new Terminal(this.props.options);
         this.xterm.open(this.container);
-        if (this.props.addons) {
-            this.props.addons.forEach(addon => this.xterm.loadAddon(addon));
-        }
+
+        this.fitAddon = new FitAddon();
+        this.xterm.loadAddon(this.fitAddon);
+
         if (this.props.onContextMenu) {
             this.xterm.element.addEventListener('contextmenu', this.onContextMenu.bind(this));
         }
@@ -31,12 +37,23 @@ export default class XTerm extends React.Component {
         this.xterm.onKey(this.onKey);
 
         this.xterm.prompt = () => {
-            this.xterm.write('\r\nnickel> ');
+            this.xterm.write('\r\n\u001b[32mnickel>\u001b[0m ');
+            this.input = '';
         };
 
         this.xterm.writeln('PLAYGROUND | Online Nickel REPL, powered by xterm.js');
-        this.xterm.prompt();
         this.xterm.focus();
+        this.fitAddon.fit();
+
+        const result = wasm_init();
+        if(result.tag === NICKEL_ERROR) {
+            this.xterm.writeln(`Initialization error: ${result.msg}`);
+        }
+        else {
+            // WARNING: result is moved by the Rust code when calling to the repl() method. Do not use or copy result after this line
+            this.repl = result.repl();
+            this.xterm.prompt();
+        }
     }
 
     componentWillUnmount() {
@@ -80,15 +97,29 @@ export default class XTerm extends React.Component {
     };
 
     onKey = (event) => {
-        console.log( `Key: ${event.key} / code: ${event.code}`);
-        console.log(event);
-        if (event.key === '\r') {
-            this.xterm.prompt();
+        if (this.repl === null) {
+            return;
         }
-        else if(event.key === '\b' && this.xterm._core.buffer.x > 2) {
+
+        if (event.key === '\r') {
+            const result = wasm_input(this.repl, this.input);
+
+            if(result.tag === NICKEL_PARTIAL) {
+                this.xterm.writeln('');
+                this.input += '\n';
+            }
+            else {
+                this.xterm.writeln('');
+                this.xterm.write(result.msg.replace(/\r?\n/g, "\r\n"));
+                this.xterm.prompt();
+            }
+        }
+        else if((event.key === '\b' || event.key === '\u007f') && this.input.length > 0) {
+            this.input = this.input.slice(0, -1);
             this.xterm.write('\b \b');
         }
         else if (event.key.length === 1) {
+            this.input += event.key;
             this.xterm.write(event.key);
         }
     };
@@ -99,6 +130,7 @@ export default class XTerm extends React.Component {
 
     resize(cols, rows) {
         this.xterm && this.xterm.resize(Math.round(cols), Math.round(rows));
+        this.fitAddon && this.fitAddon.fit();
     }
 
     setOption(key, value) {
@@ -114,8 +146,7 @@ export default class XTerm extends React.Component {
     }
 
     render() {
-        const terminalClassName = 'ReactXTerm' + (this.state.isFocused ? ' ReactXTerm--focused' : '') + (this.props.className ? ' ' + this.props.className : '');
-        return <div ref={ref => (this.container = ref)} className={terminalClassName} />;
+        return <div ref={ref => (this.container = ref)} className={this.props.className}/>;
     }
 }
 
