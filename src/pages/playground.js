@@ -2,6 +2,7 @@ import * as React from "react"
 import Layout from "../components/layout"
 import {Helmet} from "react-helmet";
 import XTerm from "../components/terminal";
+import Editor from "../components/editor";
 import { FitAddon } from "xterm-addon-fit/src/FitAddon";
 
 // markup
@@ -20,7 +21,7 @@ const IndexPage = () => {
                     </section>
                     <section className={"row playground-container flex-grow-1"}>
                         <div className={"col-6"}>
-                            <textarea id={"playground-input"}/>
+                            <Editor/>
                         </div>
                         <div className={"col-6"}>
                             <XTerm className={"playground-terminal"}/>
