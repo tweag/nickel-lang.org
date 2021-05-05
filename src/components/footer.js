@@ -8,7 +8,7 @@ import {
     faDiscourse,
 } from "@fortawesome/free-brands-svg-icons";
 
-const Header = ({ siteTitle, menuLinks }) => (
+const Footer = () => (
     <footer className="bg-primary text-center text-white">
         <div className="container p-4">
             <section className="mb-4">
@@ -110,10 +110,5 @@ const Header = ({ siteTitle, menuLinks }) => (
         </div>
     </footer>
 )
-Header.propTypes = {
-    siteTitle: PropTypes.string,
-}
-Header.defaultProps = {
-    siteTitle: ``,
-}
-export default Header
+
+export default Footer
