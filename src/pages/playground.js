@@ -1,12 +1,13 @@
 import * as React from "react"
 import Layout from "../components/layout"
 import {Helmet} from "react-helmet";
+import PlaygroundComponent from "../components/playground";
 import XTerm from "../components/terminal";
 import Editor from "../components/editor";
 import { FitAddon } from "xterm-addon-fit/src/FitAddon";
 
 // markup
-const IndexPage = () => {
+const PlaygroundPage = () => {
     return (
         <Layout>
             <Helmet>
@@ -19,17 +20,10 @@ const IndexPage = () => {
                             Experiment with the Nickel REPL online!
                         </div>
                     </section>
-                    <section className={"row playground-container flex-grow-1"}>
-                        <div className={"col-6"}>
-                            <Editor/>
-                        </div>
-                        <div className={"col-6"}>
-                            <XTerm className={"playground-terminal"}/>
-                        </div>
-                    </section>
+                    <PlaygroundComponent/>
                 </div>
         </Layout>
     )
 }
 
-export default IndexPage
+export default PlaygroundPage

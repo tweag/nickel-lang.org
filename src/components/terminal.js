@@ -16,10 +16,11 @@ export default class XTerm extends React.Component {
         this.state = {
             isFocused: false
         };
+        this.state = {lines: "Hello, welcome to NICKEL \n"};
     }
     componentDidMount() {
         this.xterm = new Terminal(this.props.options);
-        this.xterm.open(this.container);
+        //this.xterm.open(this.container);
 
         this.fitAddon = new FitAddon();
         this.xterm.loadAddon(this.fitAddon);
@@ -37,7 +38,8 @@ export default class XTerm extends React.Component {
         this.xterm.onKey(this.onKey);
 
         this.xterm.prompt = () => {
-            this.xterm.write('\r\n\u001b[32mnickel>\u001b[0m ');
+            this.writeAnsi('\r\n\u001b[32mnickel>\u001b[0m ')
+            //this.xterm.write('\r\n\u001b[32mnickel>\u001b[0m ');
             this.input = '';
         };
 
@@ -81,11 +83,17 @@ export default class XTerm extends React.Component {
     }
 
     write(data) {
-        this.xterm && this.xterm.write(data);
+        //this.xterm && this.xterm.write(data);
+        this.setState({input: this.state.input + data.replaceAll(/\r?\n/g, "<br>")});
     }
 
     writeln(data) {
-        this.xterm && this.xterm.writeln(data);
+        //this.xterm && this.xterm.writeln(data);
+        this.setState({input: this.state.input + "<br>" + data.replaceAll(/\r?\n/g, "<br>")});
+    }
+
+    writeAnsi(data) {
+        this.write(data)
     }
 
     focus() {
@@ -102,17 +110,7 @@ export default class XTerm extends React.Component {
         }
 
         if (event.key === '\r') {
-            const result = wasm_input(this.repl, this.input);
-
-            if(result.tag === NICKEL_PARTIAL) {
-                this.xterm.writeln('');
-                this.input += '\n';
-            }
-            else {
-                this.xterm.writeln('');
-                this.xterm.write(result.msg.replace(/\r?\n/g, "\r\n"));
-                this.xterm.prompt();
-            }
+            this.run(true);
         }
         else if((event.key === '\b' || event.key === '\u007f') && this.input.length > 0) {
             this.input = this.input.slice(0, -1);
@@ -122,6 +120,41 @@ export default class XTerm extends React.Component {
             this.input += event.key;
             this.xterm.write(event.key);
         }
+    };
+
+    send = (input) => {
+        this.write(input);
+        this.input = input;
+        console.log('Send to text area input ' + input);
+        this.run(false);
+        console.log('Global input: ' + this.state.input);
+    };
+
+    run = (allowPartial) => {
+        if(this.repl === null) {
+            console.error("Terminal: REPL is not loaded (this.repl === null)");
+            return;
+        }
+
+        const result = wasm_input(this.repl, this.input);
+
+        if(result.tag === NICKEL_PARTIAL && allowPartial) {
+            this.xterm.writeln('');
+            this.input += '\n';
+        }
+        else if(result.tag === NICKEL_PARTIAL && !allowPartial) {
+            this.xterm.writeln('');
+            this.xterm.write('Error: unexpected end of input');
+            this.xterm.prompt();
+        }
+        else {
+            this.xterm.writeln('');
+            this.xterm.write(result.msg.replace(/\r?\n/g, "\r\n"));
+            this.xterm.prompt();
+        }
+
+        this.forceUpdate();
+        return result.tag;
     };
 
     onPaste = data => {
@@ -146,7 +179,11 @@ export default class XTerm extends React.Component {
     }
 
     render() {
-        return <div ref={ref => (this.container = ref)} className={this.props.className}/>;
+        return <>
+            <p>{this.state.input}</p>
+        </>
+        //return <textarea value={this.state.input} readOnly/>
+        //return <div ref={ref => (this.container = ref)} className={this.props.className}/>;
     }
 }
 
