@@ -1,17 +1,17 @@
-define(function (require, exports, module) {
+ace.define(function (require, exports, _module) {
     "use strict";
 
-    var oop = require("../lib/oop");
-    var TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
+    const oop = require("../lib/oop");
+    const TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
 
-    var NickelHighlightRules = function () {
+    const NickelHighlightRules = function () {
 
-        var constantLanguage = "true|false|null";
-        var keywordControl = "switch|import|if|else|then";
-        var keywordDeclaration = "let|in";
-        var keywordMetavalue = "doc|default"
+        const constantLanguage = "true|false|null";
+        const keywordControl = "switch|import|if|else|then";
+        const keywordDeclaration = "let|in";
+        const keywordMetavalue = "doc|default"
 
-        var keywordMapper = this.createKeywordMapper({
+        const keywordMapper = this.createKeywordMapper({
             "constant.language.nickel": constantLanguage,
             "keyword.control.nickel": keywordControl,
             "keyword.declaration.nickel": keywordDeclaration,
@@ -20,14 +20,14 @@ define(function (require, exports, module) {
 
         // Although Ace supports modal lexing (the next, push and pop rules allow to
         // maintain a state and a stack), we can't encode nickel
-        // variable-length delimiter directly with one nice generic rule.
+        // constiable-length delimiter directly with one nice generic rule.
         //
         // We thus generate a rule for lengths 1, 2 and 3 (m#", m##", and m###")
         // plus write a generic rule for size n. The generic rule is wrong for
         // length 5 and above, but this is highly unlikely to be used in
         // practice.
 
-        // Generate the starting rule of a string with variable-length
+        // Generate the starting rule of a string with constiable-length
         // delimiters
         let genQqdoc = length => ({
             token: "string",
@@ -35,7 +35,7 @@ define(function (require, exports, module) {
             next: `qqdoc${length}`,
         });
 
-        // Generate the escape and end rules of a string with variable-length delimiters
+        // Generate the escape and end rules of a string with constiable-length delimiters
         let genQqdocState = length => ({
             [`qqdoc${length}`]: [
                 {
@@ -66,24 +66,24 @@ define(function (require, exports, module) {
                 regex: "m(#{4,})\"",
                 next: "qqdocn"
             },
-            genQqdoc(1),
-            genQqdoc(2),
-            genQqdoc(3), {
-                token: "constant.numeric", // hex
-                regex: "0[xX][0-9a-fA-F]+\\b"
-            }, {
-                token: "constant.numeric", // float
-                regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
-            }, {
-                token: keywordMapper,
-                regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
-            }, {
-                regex: "}",
-                token: function (_val, _start, stack) {
-                    return stack[1] && stack[1].charAt(0) == "q" ? "constant.language.escape" : "text";
-                },
-                next: "pop"
-            }],
+                genQqdoc(1),
+                genQqdoc(2),
+                genQqdoc(3), {
+                    token: "constant.numeric", // hex
+                    regex: "0[xX][0-9a-fA-F]+\\b"
+                }, {
+                    token: "constant.numeric", // float
+                    regex: "[+-]?\\d+(?:(?:\\.\\d*)?(?:[eE][+-]?\\d+)?)?\\b"
+                }, {
+                    token: keywordMapper,
+                    regex: "[a-zA-Z_$][a-zA-Z0-9_$]*\\b"
+                }, {
+                    regex: "}",
+                    token: function (_val, _start, stack) {
+                        return stack[1] && stack[1].charAt(0) === "q" ? "constant.language.escape" : "text";
+                    },
+                    next: "pop"
+                }],
             "qqdocn": [
                 {
                     token: "constant.language.escape",
