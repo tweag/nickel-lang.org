@@ -1,15 +1,16 @@
-ace.define(function (require, exports, _module) {
-    "use strict";
+// import * as ace from 'ace-builds/src-min-noconflict/ace.js'
 
-    const oop = require("../lib/oop");
-    const TextHighlightRules = require("./text_highlight_rules").TextHighlightRules;
+const ace = window.ace;
+
+ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (_require, exports, _module) {
+    const oop = ace.require("ace/lib/oop");
+    const TextHighlightRules = ace.require("ace/mode/text_highlight_rules").TextHighlightRules;
 
     const NickelHighlightRules = function () {
-
         const constantLanguage = "true|false|null";
         const keywordControl = "switch|import|if|else|then";
         const keywordDeclaration = "let|in";
-        const keywordMetavalue = "doc|default"
+        const keywordMetavalue = "doc|default";
 
         const keywordMapper = this.createKeywordMapper({
             "constant.language.nickel": constantLanguage,
@@ -59,9 +60,21 @@ ace.define(function (require, exports, _module) {
                 regex: "(==|!=|<=?|>=?)",
                 token: ["keyword.operator.comparison.nickel"]
             }, {
+                regex: "(\\+\\+|@)",
+                token: ["keyword.operator.combinator.nickel"]
+            }, {
+                regex: "(#|->|:)",
+                token: ["keyword.operator.type.nickel"]
+            }, {
                 regex: "=",
                 token: "keyword.operator.assignment.nickel"
-            }, {
+            },
+                {
+                    token: "string",
+                    regex: "\"",
+                    next: "qqstring",
+                },
+                {
                 token: "string",
                 regex: "m(#{4,})\"",
                 next: "qqdocn"
@@ -119,4 +132,28 @@ ace.define(function (require, exports, _module) {
     oop.inherits(NickelHighlightRules, TextHighlightRules);
 
     exports.NickelHighlightRules = NickelHighlightRules;
+});
+
+ace.define("ace/mode/nickel",["require","exports","module","ace/lib/oop","ace/mode/text","ace/mode/nickel_highlight_rules","ace/mode/folding/cstyle"], function (_require, exports, _module) {
+    const oop = ace.require("ace/lib/oop");
+    const TextMode = ace.require("ace/mode/text").Mode;
+    const NimHighlightRules = ace.require("ace/mode/nickel_highlight_rules").NickelHighlightRules;
+   // const CStyleFoldMode = ace.require("ace/mode/folding/cstyle").FoldMode;
+
+    const Mode = function () {
+        TextMode.call(this);
+        this.HighlightRules = NimHighlightRules;
+     //   this.foldingRules = new CStyleFoldMode();
+        this.$behaviour = this.$defaultBehaviour;
+    };
+
+    oop.inherits(Mode, TextMode);
+
+    (function () {
+        this.lineCommentStart = "//";
+        this.$id = "ace/mode/nickel";
+    }).call(Mode.prototype);
+
+    exports.Mode = Mode;
+
 });
