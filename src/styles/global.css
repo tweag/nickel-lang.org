@@ -25,7 +25,7 @@
 .playground-main-container {
     margin-top: 5em;
     margin-bottom: 5em;
-    min-height: 80vh;
+    height: 80vh;
 }
 
 .playground-terminal {
@@ -36,7 +36,12 @@
 .playground-container {
     margin-top: 2.5em;
     width: 100%;
-    height: 100%;
+    overflow: hidden;
+}
+
+.playground-terminal-container {
+    max-height: 100%;
+    overflow-y: scroll;
 }
 
 #playground-input {
@@ -95,7 +100,84 @@
     min-height: 100vh;
 }
 
+.overflow-scroll {
+    overflow: scroll;
+}
+
 .asciinema-iframe {
     width:100%;
     height: 100%;
+}
+
+.ansi-monokai {
+    background: #2F3129;
+    color: #8F908A;
+}
+
+.ansi-monokai code {
+    color: #8F908A;
+}
+
+.ansi-black-bg {
+    color: #002b36;
+}
+
+.ansi-black-fg {
+    color: #073642;
+}
+
+.ansi-green-bg {
+    color: #586e75;
+}
+
+.ansi-yellow-bg {
+    color: #657b83;
+}
+
+.ansi-blue-bg {
+    color: #839496;
+}
+
+.ansi-cyan-bg {
+    color: #93a1a1;
+}
+
+.ansi-white-fg {
+    color: #eee8d5;
+}
+
+.ansi-white-bg {
+    color: #fdf6e3;
+}
+
+.ansi-yellow-fg {
+    color: #b58900;
+}
+
+.ansi-red-bg {
+    color: #cb4b16;
+}
+
+.ansi-red-fg {
+    color: #dc322f;
+}
+
+.ansi-magenta-fg {
+    color: #d33682;
+}
+
+.ansi-magenta-fb {
+    color: #6c71c4;
+}
+
+.ansi-blue-fg {
+    color: #268bd2;
+}
+
+.ansi-cyan-fg {
+    color: #2aa198;
+}
+
+.ansi-green-fg {
+    color: #859900;
 }
