@@ -1,8 +1,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
 
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-solarized_dark";
 
 const initialContent = `// Try it out! Type Ctrl+Enter (or Cmd+Enter) to send your code to the repl
 let data = {value = "Hello," ++ " world!"} in data.value`;
@@ -13,8 +12,8 @@ export default class Editor extends React.Component {
         this.state = {
             value: initialContent,
             placeholder: "Placeholder Text",
-            theme: "monokai",
-            mode: "javascript",
+            theme: "solarized_dark",
+            mode: "nickel",
             height: "100%",
             width: "100%",
             enableBasicAutocompletion: false,
@@ -33,6 +32,10 @@ export default class Editor extends React.Component {
         this.setFontSize = this.setFontSize.bind(this);
         this.setBoolean = this.setBoolean.bind(this);
         this.send = this.send.bind(this);
+    }
+
+    componentDidMount() {
+        require("../ace-nickel-mode/ace-nickel-mode");
     }
 
     onChange(newValue) {
