@@ -2,11 +2,7 @@ import * as React from "react"
 import Layout from "../components/layout"
 import {Helmet} from "react-helmet";
 import PlaygroundComponent from "../components/playground";
-import XTerm from "../components/terminal";
-import Editor from "../components/editor";
-import { FitAddon } from "xterm-addon-fit/src/FitAddon";
 
-// markup
 const PlaygroundPage = () => {
     return (
         <Layout>
