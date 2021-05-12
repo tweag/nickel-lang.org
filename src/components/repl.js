@@ -1,13 +1,33 @@
 import * as React from 'react';
 import {wasm_input, wasm_init} from "nickel-repl";
 import Ansi from "ansi-to-react";
+import {EDITOR_SEND_EVENT} from "./editor";
 
-const NICKEL_SUCCESS = 0;
-const NICKEL_BLANK = 1;
-const NICKEL_PARTIAL = 2;
-const NICKEL_ERROR = 3;
+const REPL_RUN_EVENT = 'nickel-repl:run';
 
-export default class XTerm extends React.Component {
+const nickelCodes = {
+    result: {
+        SUCCESS: 0,
+        BLANK: 1,
+        PARTIAL: 2,
+        ERROR: 3,
+    },
+    error: {
+        severity: {
+            HELP: 1,
+            NOTE: 2,
+            WARNING: 3,
+            ERROR: 4,
+            BUG: 5,
+        },
+        label: {
+            PRIMARY: 0,
+            SECONDARY: 1,
+        }
+    }
+};
+
+export default class Repl extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -22,13 +42,14 @@ export default class XTerm extends React.Component {
 
     componentDidMount() {
         const result = wasm_init();
-        if (result.tag === NICKEL_ERROR) {
+        if (result.tag === nickelCodes.result.ERROR) {
             this.writeln(`Initialization error: ${result.msg}`);
         } else {
             // /!\ WARNING: result is moved by the Rust code when calling to the repl() method. Do not use or copy result after this line.
             this.repl = result.repl();
             this.prompt();
         }
+        document.addEventListener(EDITOR_SEND_EVENT, this.onSend.bind(this))
     }
 
     write(data) {
@@ -53,11 +74,9 @@ export default class XTerm extends React.Component {
         this.writeAnsi('\n\u001b[32mnickel>\u001b[0m ')
     };
 
-    send = (input) => {
+    onSend = ({detail: input}) => {
         this.write(input);
-        console.log('Send to text area input ' + input);
         this.run(input);
-        console.log('Global input: ' + this.state.lines);
     };
 
     run = (input) => {
@@ -67,8 +86,11 @@ export default class XTerm extends React.Component {
         }
 
         const result = wasm_input(this.repl, input);
-        console.log('RUN - ');
-        console.log(result.msg);
+
+        // Dispatch the result as an event, so that the editor or other components can react to the outcome of the last input
+        const event = new CustomEvent(REPL_RUN_EVENT, {detail: result});
+        document.dispatchEvent(event);
+
         this.write("\n" + result.msg);
         this.prompt();
         this.forceUpdate();
@@ -86,11 +108,11 @@ export default class XTerm extends React.Component {
     render() {
         const items = this.state.lines.map((line, index) =>
             <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/></div>);
-        return <div style={{'white-space': 'pre'}}>
+        return <div style={{whiteSpace: 'pre'}}>
             {items}
             <div ref={this.endRef}/>
         </div>
     }
 }
 
-export {XTerm};
+export {Repl, REPL_RUN_EVENT, nickelCodes};
