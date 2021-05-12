@@ -18,8 +18,8 @@ export default class Playground extends React.Component {
             <div className={"col-6"}>
                 <Editor onSend={this.onSend.bind(this)}/>
             </div>
-            <div className={"col-6 ansi-monokai playground-terminal-container"}>
-                <XTerm ref={this.terminal} className={"playground-terminal"}/>
+            <div id={"playground-terminal-container"} className={"col-6 ansi-monokai playground-terminal-container"}>
+                <XTerm ref={this.terminal} containerId={"playground-terminal-container"} className={"playground-terminal"}/>
             </div>
         </section>
     }

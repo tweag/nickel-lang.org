@@ -78,11 +78,12 @@ export default class XTerm extends React.Component {
 
     componentDidUpdate = () => {
         // Scroll to the last message
-        this.endRef.current.scrollIntoView()
+        const terminalContainer = document.getElementById(this.props.containerId);
+        //this.endRef.current.scrollIntoView()
+        terminalContainer.scrollTop = terminalContainer.scrollHeight;
     };
 
     render() {
-        console.log(this.state.lines);
         const items = this.state.lines.map((line, index) =>
             <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/></div>);
         return <div style={{'white-space': 'pre'}}>
