@@ -2,6 +2,7 @@ import * as React from 'react';
 import AceEditor from 'react-ace';
 
 import "ace-builds/src-noconflict/theme-solarized_dark";
+import "../ace-nickel-mode/ace-nickel-mode";
 
 const initialContent = `// Try it out! Type Ctrl+Enter (or Cmd+Enter) to send your code to the repl
 let data = {value = "Hello," ++ " world!"} in data.value`;
@@ -32,10 +33,6 @@ export default class Editor extends React.Component {
         this.setFontSize = this.setFontSize.bind(this);
         this.setBoolean = this.setBoolean.bind(this);
         this.send = this.send.bind(this);
-    }
-
-    componentDidMount() {
-        require("../ace-nickel-mode/ace-nickel-mode");
     }
 
     onChange(newValue) {

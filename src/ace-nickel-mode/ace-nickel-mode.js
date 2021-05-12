@@ -1,6 +1,6 @@
 // import * as ace from 'ace-builds/src-min-noconflict/ace.js'
 
-const ace = window.ace;
+import ace from "ace-builds/src-noconflict/ace";
 
 ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (_require, exports, _module) {
     const oop = ace.require("ace/lib/oop");
