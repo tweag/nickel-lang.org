@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {wasm_input, wasm_init} from "nickel-repl";
+import {repl_input, repl_init} from "nickel-repl";
 import Ansi from "ansi-to-react";
 import {EDITOR_SEND_EVENT} from "./editor";
 
@@ -31,6 +31,13 @@ const nickelCodes = {
     }
 };
 
+const modes = {
+    REPL: 'repl',
+    JSON: 'json',
+    TOML: 'toml',
+    YAML: 'yaml',
+};
+
 /**
  * An REPL. This component can run Nickel programs or REPL commands and display a stylized output.
  */
@@ -43,12 +50,17 @@ export default class Repl extends React.Component {
                 "See the output of your snippets here.",
                 "",
             ],
+            output: "",
         };
         this.endRef = React.createRef();
     }
 
+    static defaultProps = {
+        mode: modes.REPL
+    };
+
     componentDidMount() {
-        const result = wasm_init();
+        const result = repl_init();
         if (result.tag === nickelCodes.result.ERROR) {
             this.writeln(`Initialization error: ${result.msg}`);
         } else {
@@ -57,6 +69,10 @@ export default class Repl extends React.Component {
             this.prompt();
         }
         document.addEventListener(EDITOR_SEND_EVENT, this.onSend.bind(this))
+    }
+
+    clear() {
+        this.setState({lines: []});
     }
 
     /**
@@ -85,7 +101,9 @@ export default class Repl extends React.Component {
      * Write a new line followed by a prompt `nickel >` in the output element.
      */
     prompt = () => {
-        this.write('\n\u001b[32mnickel>\u001b[0m ')
+        if(this.props.mode === modes.REPL) {
+            this.write('\n\u001b[32mnickel>\u001b[0m ')
+        }
     };
 
     /**
@@ -93,8 +111,23 @@ export default class Repl extends React.Component {
      * @param input String
      */
     onSend = ({detail: input}) => {
-        this.write(input);
+        if(this.props.mode === modes.REPL) {
+            this.write(input);
+        }
+        else {
+            this.setState({output: ""});
+        }
+
         this.run(input);
+    };
+
+    unescape = (result) => {
+        if(result.charAt(0) === '"' && result.slice(result.length-2, result.length) === '"\n') {
+            return result.slice(1, result.length-2).replaceAll('\\"', '"').replaceAll('\\\\', '\\')
+        }
+        else {
+            return result;
+        }
     };
 
     /**
@@ -108,16 +141,26 @@ export default class Repl extends React.Component {
             return -1;
         }
 
-        const result = wasm_input(this.repl, input);
+        if(this.props.mode !== modes.REPL) {
+            const format = this.props.mode.charAt(0).toUpperCase() + this.props.mode.slice(1);
+            input = `builtins.serialize \`${format} (${input})`;
+        }
+
+        const result = repl_input(this.repl, input);
 
         // Dispatch the result as an event, so that the editor or other components can react to the outcome of the last input
         const event = new CustomEvent(REPL_RUN_EVENT, {detail: result});
         document.dispatchEvent(event);
 
-        this.write("\n" + result.msg);
-        this.prompt();
-        this.forceUpdate();
+        if(this.props.mode === modes.REPL) {
+            this.write("\n" + result.msg);
+            this.prompt();
+        }
+        else {
+            this.setState({output: this.unescape(result.msg)});
+        }
 
+        this.forceUpdate();
         return result.tag;
     };
 
@@ -128,13 +171,20 @@ export default class Repl extends React.Component {
     };
 
     render() {
-        const items = this.state.lines.map((line, index) =>
-            <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/></div>);
+        let content;
+
+        if(this.props.mode === modes.REPL) {
+            content = this.state.lines.map((line, index) => <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/></div>);
+        }
+        else {
+            content = <Ansi useClasses>{this.state.output}</Ansi>;
+        }
+
         return <div style={{whiteSpace: 'pre'}}>
-            {items}
+            {content}
             <div ref={this.endRef}/>
         </div>
     }
 }
 
-export {Repl, REPL_RUN_EVENT, nickelCodes};
+export {Repl, REPL_RUN_EVENT, nickelCodes, modes};

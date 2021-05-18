@@ -32,12 +32,7 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
             showLineNumbers: true,
             annotations: [],
         };
-        this.editorRef = React.createRef();
-        this.setPlaceholder = this.setPlaceholder.bind(this);
-        this.setTheme = this.setTheme.bind(this);
-        this.setMode = this.setMode.bind(this);
         this.onChange = this.onChange.bind(this);
-        this.setFontSize = this.setFontSize.bind(this);
         this.send = this.send.bind(this);
     }
 
@@ -107,7 +102,6 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
 
     render() {
         return <AceEditor
-            ref={this.editorRef}
             placeholder={this.state.placeholder}
             mode={this.state.mode}
             theme={this.state.theme}
