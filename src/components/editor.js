@@ -8,6 +8,9 @@ import ReactDOMServer from "react-dom/server";
 
 const EDITOR_SEND_EVENT = 'nickel-repl:send';
 
+/**
+ * Nickel code editor component, based on the Ace editor.
+ */
 export default class Editor extends React.Component {
     constructor(props) {
         super(props);
@@ -38,6 +41,9 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
         this.send = this.send.bind(this);
     }
 
+    /**
+     * Listen to the REPL's execution events, in order to upgrade potential error messages.
+     */
     componentDidMount() {
         document.addEventListener(REPL_RUN_EVENT, this.onREPLRun.bind(this))
     }
@@ -48,33 +54,12 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
         });
     }
 
-    onSelectionChange(newValue, event) {
-    }
-
-    onCursorChange(newValue, event) {
-    }
-
-    onValidate(_annotations) {
-    }
-
-    setPlaceholder(e) {
-        this.setState({
-            placeholder: e.target.value
-        });
-    }
-
-    setTheme(e) {
-        this.setState({
-            theme: e.target.value
-        });
-    }
-
-    setMode(e) {
-        this.setState({
-            mode: e.target.value
-        });
-    }
-
+    /**
+     * Static component displaying a nickel diagnostic error.
+     * @param diagnostic
+     * @param label
+     * @returns {*}
+     */
     annotationWidget(diagnostic, label) {
         const labelClass = label.style === nickelCodes.error.label.PRIMARY ? 'ansi-red-fg' : 'ansi-blue-fg';
         return (<div>
@@ -86,6 +71,10 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
         </div>)
     }
 
+    /**
+     * Once the REPL has run, update the error messages.
+     * @param result
+     */
     onREPLRun({detail: result}) {
         if (result.tag === nickelCodes.result.ERROR) {
             // In some obscure circumstance (annotation on the last line, and then insertion of a new line), annotations disappear, even if the user send the same input again.
@@ -107,12 +96,9 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
         }
     }
 
-    setFontSize(e) {
-        this.setState({
-            fontSize: parseInt(e.target.value, 10)
-        });
-    }
-
+    /**
+     * Dispatch an EDITOR_SEND_EVENT with the current content as a payload.
+     */
     send() {
         // Dispatch the result as an event, so that the editor or other components can react to the outcome of the last input
         const event = new CustomEvent(EDITOR_SEND_EVENT, {detail: this.state.value});
@@ -149,7 +135,7 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
                 },
             ]}
             setOptions={{
-                useWorker: true,
+                useWorker: false,
                 enableBasicAutocompletion: this.state.enableBasicAutocompletion,
                 enableLiveAutocompletion: this.state.enableLiveAutocompletion,
                 enableSnippets: this.state.enableSnippets,

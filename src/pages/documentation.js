@@ -2,7 +2,6 @@ import * as React from "react"
 import Layout from "../components/layout"
 import { Link } from "gatsby"
 
-// markup
 const IndexPage = () => {
   return (
       <Layout>
@@ -26,6 +25,6 @@ const IndexPage = () => {
         </main>
       </Layout>
   )
-}
+};
 
 export default IndexPage

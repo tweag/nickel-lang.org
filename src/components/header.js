@@ -6,7 +6,7 @@ const Header = ({ siteTitle, menuLinks }) => (
     <header>
         <nav className="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">Nickel</Link>
+                <Link className="navbar-brand" to="/">{siteTitle}</Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,11 +22,14 @@ const Header = ({ siteTitle, menuLinks }) => (
             </div>
         </nav>
     </header>
-)
+);
+
 Header.propTypes = {
     siteTitle: PropTypes.string,
-}
+};
+
 Header.defaultProps = {
-    siteTitle: ``,
-}
+    siteTitle: `Nickel`,
+};
+
 export default Header

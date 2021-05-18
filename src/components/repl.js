@@ -5,6 +5,10 @@ import {EDITOR_SEND_EVENT} from "./editor";
 
 const REPL_RUN_EVENT = 'nickel-repl:run';
 
+/**
+ * Codes returned by the Nickel WASM evaluator.
+ * @type {{result: {BLANK: number, SUCCESS: number, PARTIAL: number, ERROR: number}, error: {severity: {HELP: number, BUG: number, NOTE: number, ERROR: number, WARNING: number}, label: {SECONDARY: number, PRIMARY: number}}}}
+ */
 const nickelCodes = {
     result: {
         SUCCESS: 0,
@@ -27,6 +31,9 @@ const nickelCodes = {
     }
 };
 
+/**
+ * An REPL. This component can run Nickel programs or REPL commands and display a stylized output.
+ */
 export default class Repl extends React.Component {
     constructor(props, context) {
         super(props, context);
@@ -52,6 +59,10 @@ export default class Repl extends React.Component {
         document.addEventListener(EDITOR_SEND_EVENT, this.onSend.bind(this))
     }
 
+    /**
+     * Write text in the output element. Convert newlines and ANSI escape codes to HTML.
+     * @param data String
+     */
     write(data) {
         const dataLines = data.split(/\r?\n/g);
         const lines = this.state.lines;
@@ -62,27 +73,39 @@ export default class Repl extends React.Component {
         this.setState({lines: newLines});
     }
 
+    /**
+     * Write text in the output element, followed by a newline. Convert newlines and ANSI escape codes to HTML.
+     * @param data String
+     */
     writeln(data) {
         this.write(data + "\n");
     }
 
-    writeAnsi(data) {
-        this.write(data)
-    }
-
+    /**
+     * Write a new line followed by a prompt `nickel >` in the output element.
+     */
     prompt = () => {
-        this.writeAnsi('\n\u001b[32mnickel>\u001b[0m ')
+        this.write('\n\u001b[32mnickel>\u001b[0m ')
     };
 
+    /**
+     * Write an input in the output element, and run it.
+     * @param input String
+     */
     onSend = ({detail: input}) => {
         this.write(input);
         this.run(input);
     };
 
+    /**
+     * Run an input in the Nickel REPL, and print the result in the output element.
+     * @param input String
+     * @returns {number} The return code of the execution of the Nickel REPL, or -1 if the REPL wasn't loaded.
+     */
     run = (input) => {
         if (this.repl === null) {
             console.error("Terminal: REPL is not loaded (this.repl === null)");
-            return;
+            return -1;
         }
 
         const result = wasm_input(this.repl, input);
@@ -101,7 +124,6 @@ export default class Repl extends React.Component {
     componentDidUpdate = () => {
         // Scroll to the last message
         const terminalContainer = document.getElementById(this.props.containerId);
-        //this.endRef.current.scrollIntoView()
         terminalContainer.scrollTop = terminalContainer.scrollHeight;
     };
 

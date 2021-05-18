@@ -3,6 +3,9 @@ import * as React from 'react';
 import Editor from "./editor";
 import Repl from "./repl";
 
+/**
+ * Playground component, composed of both a code editor and a REPL component.
+ */
 export default class Playground extends React.Component {
     constructor(props) {
         super(props);

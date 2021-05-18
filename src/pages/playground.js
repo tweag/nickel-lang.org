@@ -20,6 +20,6 @@ const PlaygroundPage = () => {
                 </div>
         </Layout>
     )
-}
+};
 
 export default PlaygroundPage

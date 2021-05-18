@@ -6,7 +6,6 @@ import atomSVG from '../images/atom-electrons.svg';
 import moleculeSVG from '../images/molecules.svg';
 import atomSquareSVG from '../images/atom-square.svg';
 
-// markup
 const IndexPage = () => {
   return (
       <Layout>
@@ -66,6 +65,6 @@ const IndexPage = () => {
         <script src="../asciinema-player/asciinema-player.js"/>
       </Layout>
   )
-}
+};
 
 export default IndexPage
