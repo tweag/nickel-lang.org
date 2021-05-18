@@ -26,7 +26,6 @@ const IndexPage = () => {
             <div className="col">
               <iframe title="asciinema" className="asciinema-iframe" allowFullScreen={true} webkitallowfullscreen="true" mozallowfullscreen="true"
                       src="https://asciinema.org/a/3CG6L6oAfimqtDkoxiUu6VOws/iframe"/>
-              {/*<script id="asciicast-3CG6L6oAfimqtDkoxiUu6VOws" src="https://asciinema.org/a/3CG6L6oAfimqtDkoxiUu6VOws.js" async/>*/}
             </div>
           </section>
 
