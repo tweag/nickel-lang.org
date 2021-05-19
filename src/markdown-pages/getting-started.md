@@ -58,27 +58,28 @@ instructions of the
 ```nickel
 {
   name = "example",
-    description = m#"
+  description = m#"
     This is an awesome software I'm developing.
     Please use it!
-    "#m,
-    version = "0.1.1",
-    main = "index.js",
-    keywords = ["example", "config"],
-    scripts = {
+  "#m,
+  version = "0.1.1",
+  main = "index.js",
+  keywords = ["example", "config"],
+  scripts = {
     test = m#"test.sh --option --install example --version "0.1.1""#m,
     do_stuff = "do_stuff.sh subcommand",
   },
-    contributors = [{
-    name = "John Doe",
-    email = "johndoe@example.com"
-  }, {
-    name = "Ivy Lane",
-    url = "https=//example.com/ivylane"
-  }],
-    dependencies = {
+  contributors = [{
+      name = "John Doe",
+      email = "johndoe@example.com"
+    }, {
+      name = "Ivy Lane",
+      url = "https=//example.com/ivylane"
+    }],
+  dependencies = {
     dep1 = "^1.0.0",
     dep3 = "6.7"
+  }
 }
 ```
 
