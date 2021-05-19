@@ -33,8 +33,14 @@
     width: 100%;
 }
 
-.playground-container {
+
+.playground-tab {
     margin-top: 2.5em;
+    margin-bottom: 0.5em;
+    width: 100%;
+}
+
+.playground-container {
     width: 100%;
     overflow: hidden;
 }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import Editor from "./editor";
-import {Repl, modes} from "./repl";
+import {modes, Repl} from "./repl";
 
 /**
  * Playground component, composed of both a code editor and a REPL component.
@@ -20,29 +20,35 @@ export default class Playground extends React.Component {
     };
 
     render() {
-        return <section className={"row playground-container flex-grow-1"}>
-                <div class={"col-12"}>
-                    <ul className="nav nav-pills">
-                        <li className="nav-item">
-                            <a className={this.replTabStyle(modes.REPL)} onClick={() => this.setMode(modes.REPL)}>REPL</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className={this.replTabStyle(modes.JSON)} onClick={() => this.setMode(modes.JSON)}>JSON</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className={this.replTabStyle(modes.YAML)} onClick={() => this.setMode(modes.YAML)}>YAML</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className={this.replTabStyle(modes.TOML)} onClick={() => this.setMode(modes.TOML)}>TOML</a>
-                        </li>
-                    </ul>
-                </div>
+        return <React.Fragment>
+            <div className={"row"}>
+                <div class={"col-6"}/>
+                <ul className="nav nav-pills playground-tab col-6">
+                    <li className="nav-item">
+                        <a className={this.replTabStyle(modes.REPL)} onClick={() => this.setMode(modes.REPL)}>REPL</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className={this.replTabStyle(modes.JSON)} onClick={() => this.setMode(modes.JSON)}>JSON</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className={this.replTabStyle(modes.YAML)} onClick={() => this.setMode(modes.YAML)}>YAML</a>
+                    </li>
+                    <li className="nav-item">
+                        <a className={this.replTabStyle(modes.TOML)} onClick={() => this.setMode(modes.TOML)}>TOML</a>
+                    </li>
+                </ul>
+            </div>
+
+            <section className={"row playground-container flex-grow-1"}>
+
                 <div className={"col-6"}>
                     <Editor/>
                 </div>
                 <div id={"playground-terminal-container"} className={"col-6 ansi-monokai playground-terminal-container"}>
-                    <Repl containerId={"playground-terminal-container"} className={"playground-terminal"} mode={this.state.mode}/>
+                    <Repl containerId={"playground-terminal-container"} className={"playground-terminal"}
+                          mode={this.state.mode}/>
                 </div>
             </section>
+            </React.Fragment>
     }
 }
