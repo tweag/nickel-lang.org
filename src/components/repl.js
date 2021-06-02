@@ -187,7 +187,6 @@ export default class Repl extends React.Component {
         const event = new CustomEvent(REPL_RUN_EVENT, {detail: result});
         document.dispatchEvent(event);
 
-        this.forceUpdate();
         return result.tag;
     };
 
