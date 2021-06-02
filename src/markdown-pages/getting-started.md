@@ -97,7 +97,7 @@ illustrated here:
 - Writing strings with special characters in it, without having to
   escape them (", \, and so on).
 
-##Export
+## Export
 
 Now, save the content in "example.ncl" and run nickel export (or
 ./result/bin/nickel export if you haven't made a symbolic link):
