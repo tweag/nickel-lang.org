@@ -11,14 +11,14 @@ const IndexPage = () => {
 
             <div className="mt-4 col-12">
               <div className="list-group">
-                <Link to="#" className="list-group-item list-group-item-action
-                disabled">Tutorials</Link>
-                <Link to="#" className="list-group-item list-group-item-action disabled">The Nickel Manual</Link>
                 <Link to="https://github.com/tweag/nickel/#readme" className="list-group-item list-group-item-action">The
                   Nickel README</Link>
                 <Link to="https://github.com/tweag/nickel/blob/master/RATIONALE.md"
-                   className="list-group-item list-group-item-action">Design rationale</Link>
-                <Link to="#" className="list-group-item list-group-item-action disabled">Language specification</Link>
+                      className="list-group-item list-group-item-action">Design rationale</Link>
+                <Link to="#" className="list-group-item list-group-item-action
+                disabled">Tutorials<span className={'text-primary'}> - coming soon</span></Link>
+                <Link to="#" className="list-group-item list-group-item-action disabled">The Nickel Manual <span className={'text-primary'}> - coming soon</span></Link>
+                <Link to="#" className="list-group-item list-group-item-action disabled">Language specification<span className={'text-primary'}> - coming soon</span></Link>
               </div>
             </div>
           </div>
