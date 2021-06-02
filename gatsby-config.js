@@ -1,15 +1,17 @@
 module.exports = {
     siteMetadata: {
-        title: "nickel-lang.org",
+        title: "Nickel",
         menuLinks: [
             {
                 name: 'Getting started',
                 link: '/getting-started'
             },
-            {
+            // Disabling the documentation page for now.
+            // There is just not enough interesting content to show.
+            /*{
                 name: 'Documentation',
                 link: '/documentation'
-            },
+            },*/
             {
                 name: 'Playground',
                 link: '/playground'
