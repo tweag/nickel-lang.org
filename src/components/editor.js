@@ -1,6 +1,7 @@
 import * as React from 'react';
 import AceEditor from 'react-ace';
-import {REPL_RUN_EVENT, nickelCodes} from './repl'
+import {nickelCodes, REPL_RUN_EVENT} from './repl'
+import {PLAYGROUND_SEND_EVENT} from "./playground";
 
 import "ace-builds/src-noconflict/theme-solarized_dark";
 import "../ace-nickel-mode/ace-nickel-mode";
@@ -33,6 +34,7 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
             annotations: [],
         };
         this.onChange = this.onChange.bind(this);
+        this.onREPLRun = this.onREPLRun.bind(this);
         this.send = this.send.bind(this);
     }
 
@@ -40,7 +42,8 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
      * Listen to the REPL's execution events, in order to upgrade potential error messages.
      */
     componentDidMount() {
-        document.addEventListener(REPL_RUN_EVENT, this.onREPLRun.bind(this))
+        document.addEventListener(REPL_RUN_EVENT, this.onREPLRun);
+        document.addEventListener(PLAYGROUND_SEND_EVENT, this.send);
     }
 
     onChange(newValue) {

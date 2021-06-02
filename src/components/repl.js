@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {repl_input, repl_init} from "nickel-repl";
+import {repl_init, repl_input} from "nickel-repl";
 import Ansi from "ansi-to-react";
 import {EDITOR_SEND_EVENT} from "./editor";
 
@@ -46,18 +46,12 @@ export default class Repl extends React.Component {
         super(props, context);
         this.state = {
             lastInput: '',
+            output_repl: "Nickel Online REPL | Welcome to the Nickel online REPL.\n"
+                + "See the output of your snippets here.\n\n",
             /**
-             * Lines are what is displayed in REPL mode.
+             * Output displayed in serialize mode. It is cleared at each new run.
              */
-            lines: [
-                "Nickel Online REPL | Welcome to the Nickel online REPL.",
-                "See the output of your snippets here.",
-                "",
-            ],
-            /**
-             * Output is displayed in serialize mode. It is cleared at each new run.
-             */
-            output: "",
+            output_serialize: '',
         };
         this.endRef = React.createRef();
     }
@@ -66,13 +60,17 @@ export default class Repl extends React.Component {
         mode: modes.REPL
     };
 
+    lines() {
+        return this.state.output_repl.split(/\r?\n/g);
+    }
+
     componentDidMount() {
         const result = repl_init();
 
         if (result.tag === nickelCodes.result.ERROR) {
-            this.writeln(`Initialization error: ${result.msg}`);
+            this.write(`Initialization error: ${result.msg}\n`);
         } else {
-            // /!\ WARNING: result is moved by the Rust code when calling to the repl() method. Do not use or copy result after this line.
+            // /!\ WARNING: result is moved by the Rust code when calling to the repl() method. Do not use or copy result after this call to repl().
             this.repl = result.repl();
             this.prompt();
         }
@@ -81,33 +79,44 @@ export default class Repl extends React.Component {
 
     /**
      * Write text. Convert newlines and ANSI escape codes to HTML.
-     * In serialize mode, the new data erases the old content. In REPL mode, the new data are appended to the old content.
+     * In serialize mode, the new output_repl erase the old content. In REPL mode, the new output_repl are appended to the old content. Because state update is asynchronous,
+     * return a Promise.
      * @param data String
+     * @returns {Promise<unknown>}
      */
     write(data) {
-        const dataLines = data.split(/\r?\n/g);
-        const lines = this.state.lines;
-        let lastLine = lines.slice(-1);
-        lastLine += dataLines[0];
-        const newLines = lines.slice(0, -1).concat([lastLine]).concat(dataLines.slice(1));
-
-        this.setState({lines: newLines});
+        return new Promise(resolve => {
+                if (this.props.mode === modes.REPL) {
+                    this.setState({output_repl: this.state.output_repl + data}, resolve);
+                } else {
+                    this.setState({output_serialize: data}, resolve);
+                }
+            }
+        );
     }
 
     /**
-     * Same as write(), but add a new line at the end.
-     * @param data String
+     * Clear the output.
+     * @returns {Promise<unknown>}
      */
-    writeln(data) {
-        this.write(data + "\n");
+    clear() {
+        return new Promise(resolve => {
+                if (this.props.mode === modes.REPL) {
+                    this.setState({output_repl: ''}, resolve);
+                } else {
+                    this.setState({output_serialize: ''}, resolve);
+                }
+            }
+        ).then(() => this.prompt());
     }
 
     /**
      * Write a new line followed by a prompt if in REPL mode.
+     * @returns {Promise<unknown>}
      */
     prompt = () => {
-        if(this.props.mode === modes.REPL) {
-            this.write('\n\u001b[32mnickel>\u001b[0m ')
+        if (this.props.mode === modes.REPL) {
+            return this.write('\n\u001b[32mnickel>\u001b[0m ');
         }
     };
 
@@ -116,27 +125,23 @@ export default class Repl extends React.Component {
      * @param input String
      */
     onSend = ({detail: input}) => {
-        if(this.props.mode === modes.REPL) {
-            this.write(input);
+        if (this.props.mode === modes.REPL) {
+            return this.write(input).then(() => this.run(input));
+        } else {
+            return this.run(input);
         }
-        else {
-            this.setState({output: ""});
-        }
-
-        this.run(input);
     };
 
     /**
-     * Unescape serialized data. To serialize an input, this component wraps the program in a call to `builtins.serialize`.
+     * Unescape serialized output_repl. To serialize an input, this component wraps the program in a call to `builtins.serialize`.
      * The returned result is a string with escaped characters. This function unescapes them.
      * @param result String
      * @returns String
      */
     unescape = (result) => {
-        if(result.charAt(0) === '"' && result.slice(result.length-2, result.length) === '"\n') {
-            return result.slice(1, result.length-2).replaceAll('\\"', '"').replaceAll('\\\\', '\\')
-        }
-        else {
+        if (result.charAt(0) === '"' && result.slice(result.length - 2, result.length) === '"\n') {
+            return result.slice(1, result.length - 2).replaceAll('\\"', '"').replaceAll('\\\\', '\\')
+        } else {
             return result;
         }
     };
@@ -144,42 +149,40 @@ export default class Repl extends React.Component {
     /**
      * Run an input in the Nickel REPL, and write the result.
      * @param input String
-     * @returns {number} The return code of the execution of the Nickel REPL, or -1 if the REPL wasn't loaded.
+     * @returns {Promise<number>} A promise resolving to the return code of the execution of the Nickel REPL, or -1 if the REPL wasn't loaded.
      */
     run = (input) => {
         if (this.repl === null) {
             console.error("Terminal: REPL is not loaded (this.repl === null)");
-            return -1;
+            return new Promise(resolve => resolve(-1));
         }
 
         this.setState({lastInput: input});
 
-        if(this.props.mode !== modes.REPL) {
+        if (this.props.mode !== modes.REPL) {
             const format = this.props.mode.charAt(0).toUpperCase() + this.props.mode.slice(1);
             input = `builtins.serialize \`${format} (${input})`;
         }
 
         let result = repl_input(this.repl, input);
+        let task;
 
-        if(this.props.mode === modes.REPL) {
-            this.write("\n" + result.msg);
-            this.prompt();
-        }
-        else {
+        if (this.props.mode === modes.REPL) {
+            task = this.write("\n" + result.msg).then(() => this.prompt());
+        } else {
             //If there's an error, we run the original snippet in order to have a better error message.
-            if(result.tag === nickelCodes.result.ERROR) {
+            if (result.tag === nickelCodes.result.ERROR) {
                 const resultAlone = repl_input(this.repl, this.state.lastInput);
 
                 // If there's no error for the original snippet alone, this may be a NonSerializable error. In this case,
                 // we keep the first error message.
-                if(resultAlone.tag === nickelCodes.result.ERROR) {
+                if (resultAlone.tag === nickelCodes.result.ERROR) {
                     result = resultAlone;
                 }
 
-                this.setState({output: result.msg});
-            }
-            else {
-                this.setState({output: this.unescape(result.msg)});
+                task = this.write(result.msg);
+            } else {
+                task = this.write(this.unescape(result.msg));
             }
         }
 
@@ -187,12 +190,12 @@ export default class Repl extends React.Component {
         const event = new CustomEvent(REPL_RUN_EVENT, {detail: result});
         document.dispatchEvent(event);
 
-        return result.tag;
+        return task.then(() => result.tag);
     };
 
     componentDidUpdate = (prevProps) => {
-        // If we switched mode to a serialization mode, we re-run the last input
-        if(this.props.mode !== prevProps.mode && this.props.mode !== modes.REPL) {
+        // If we switched mode to a serialization mode and there is a last input, we re-run the last input
+        if (this.props.mode !== prevProps.mode && this.props.mode !== modes.REPL && this.state.lastInput !== '') {
             this.run(this.state.lastInput);
         }
 
@@ -204,11 +207,11 @@ export default class Repl extends React.Component {
     render() {
         let content;
 
-        if(this.props.mode === modes.REPL) {
-            content = this.state.lines.map((line, index) => <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/></div>);
-        }
-        else {
-            content = <Ansi useClasses>{this.state.output}</Ansi>;
+        if (this.props.mode === modes.REPL) {
+            content = this.lines().map((line, index) => <div key={index}><Ansi useClasses>{line.toString()}</Ansi><br/>
+            </div>);
+        } else {
+            content = <Ansi useClasses>{this.state.output_serialize}</Ansi>;
         }
 
         return <div style={{whiteSpace: 'pre'}}>
