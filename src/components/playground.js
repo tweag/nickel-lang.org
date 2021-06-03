@@ -12,10 +12,19 @@ const PLAYGROUND_SEND_EVENT = 'playground:send';
 export default class Playground extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {mode: modes.REPL};
+
+        this.state = {mode: this.props.mode};
         this.setMode = this.setMode.bind(this);
         this.dispatchSendEvent = this.dispatchSendEvent.bind(this);
     }
+
+    componentDidMount() {
+        this.forceUpdate();
+    }
+
+    static defaultProps = {
+        mode: modes.REPL
+    };
 
     replTabStyle = (mode) => ('nav-link' + (this.state.mode === mode ? ' active' : ''));
 
@@ -56,7 +65,7 @@ export default class Playground extends React.Component {
 
             <section className={"row playground-container flex-grow-1"}>
                 <div className={"col-6"}>
-                    <Editor/>
+                    <Editor value={this.props.value}/>
                 </div>
                 <div id={"playground-terminal-container"}
                      className={"col-6 ansi-monokai playground-terminal-container"}>

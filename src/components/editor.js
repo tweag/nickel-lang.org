@@ -15,9 +15,12 @@ const EDITOR_SEND_EVENT = 'nickel-repl:send';
 export default class Editor extends React.Component {
     constructor(props) {
         super(props);
+
+        console.log(this.props.value);
+        const value = this.props.value ? this.props.value : `let data = {value = "Hello," ++ " world!"} in data.value`;
+
         this.state = {
-            value: `// Try it out! Type Ctrl+Enter (Cmd+Enter on Mac) to send your code to the repl
-let data = {value = "Hello," ++ " world!"} in data.value`,
+            value,
             placeholder: 'Write your code here and press Ctrl+Enter (Cmd+Enter on Mac) to run it',
             theme: "solarized_dark",
             mode: "nickel",
@@ -44,6 +47,11 @@ let data = {value = "Hello," ++ " world!"} in data.value`,
     componentDidMount() {
         document.addEventListener(REPL_RUN_EVENT, this.onREPLRun);
         document.addEventListener(PLAYGROUND_SEND_EVENT, this.send);
+
+        // If a program was provided initially, run it
+        if(this.props.value) {
+            this.send();
+        }
     }
 
     onChange(newValue) {
