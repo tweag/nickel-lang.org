@@ -6,9 +6,6 @@ import PlaygroundComponent from "../components/playground";
 const PlaygroundPage = () => {
     return (
         <Layout>
-            <Helmet>
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/xterm/2.6.0/xterm.css"/>
-            </Helmet>
                 <div className={"container-fluid playground-main-container d-flex flex-column"}>
                     <section className={"row"}>
                         <div className={"col-12 text-center"}>

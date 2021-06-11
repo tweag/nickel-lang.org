@@ -16,12 +16,11 @@ export default class Editor extends React.Component {
     constructor(props) {
         super(props);
 
-        console.log(this.props.value);
         const value = this.props.value ? this.props.value : `let data = {value = "Hello," ++ " world!"} in data.value`;
 
         this.state = {
             value,
-            placeholder: 'Write your code here and press Ctrl+Enter (Cmd+Enter on Mac) to run it',
+            placeholder: 'Write your code. Press Ctrl+Enter (Cmd+Enter) to run it',
             theme: "solarized_dark",
             mode: "nickel",
             height: "100%",
@@ -41,14 +40,12 @@ export default class Editor extends React.Component {
         this.send = this.send.bind(this);
     }
 
-    /**
-     * Listen to the REPL's execution events, in order to upgrade potential error messages.
-     */
     componentDidMount() {
+        // Listen to the REPL's execution events, in order to update potential error messages.
         document.addEventListener(REPL_RUN_EVENT, this.onREPLRun);
         document.addEventListener(PLAYGROUND_SEND_EVENT, this.send);
 
-        // If a program was provided initially, run it
+        // If a program was provided initially, run it.
         if(this.props.value) {
             this.send();
         }
@@ -61,7 +58,7 @@ export default class Editor extends React.Component {
     }
 
     /**
-     * Static component displaying a nickel diagnostic error.
+     * Static component displaying a Nickel diagnostic error.
      * @param diagnostic
      * @param label
      * @returns {*}
@@ -83,9 +80,6 @@ export default class Editor extends React.Component {
      */
     onREPLRun({detail: result}) {
         if (result.tag === nickelCodes.result.ERROR) {
-            // In some obscure circumstance (annotation on the last line, and then insertion of a new line), annotations disappear, even if the user send the same input again.
-            // To avoid this and make annotations reappear at least when sending an input, we clear the old one first, to triggers reactive updates.
-            this.setState({annotations: []});
             const annotations = result.errors.filter(diagnostic => diagnostic.severity >= nickelCodes.error.severity.WARNING)
                 .map(diagnostic => (
                     diagnostic.labels.map(label => ({
@@ -96,7 +90,9 @@ export default class Editor extends React.Component {
                     }))
                 )).flat();
 
-            this.setState({annotations});
+            // In some obscure circumstances (annotation on the last line, and then insertion of a new line), annotations disappear, even if the user send the same input again.
+            // To avoid this and make annotations reappear at least when sending an input, we clear the old one first, to triggers reactive updates.
+            this.setState({annotations: []}, () => this.setState({annotations}));
         } else {
             this.setState({annotations: []});
         }

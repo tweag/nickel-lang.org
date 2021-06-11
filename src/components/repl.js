@@ -46,11 +46,10 @@ export default class Repl extends React.Component {
         super(props, context);
         this.state = {
             lastInput: '',
+            // Output displayed in REPL mode. It is appended to at each run.
             output_repl: "Nickel Online REPL | Welcome to the Nickel online REPL.\n"
                 + "See the output of your snippets here.\n\n",
-            /**
-             * Output displayed in serialize mode. It is cleared at each new run.
-             */
+            // Output displayed in serialize mode. Cleared at each new run.
             output_serialize: '',
         };
         this.endRef = React.createRef();
@@ -60,6 +59,10 @@ export default class Repl extends React.Component {
         mode: modes.REPL
     };
 
+    /**
+     * Return the current REPL output as an array of lines.
+     * @returns {string[]}
+     */
     lines() {
         return this.state.output_repl.split(/\r?\n/g);
     }
@@ -78,9 +81,9 @@ export default class Repl extends React.Component {
     }
 
     /**
-     * Write text. Convert newlines and ANSI escape codes to HTML.
-     * In serialize mode, the new output_repl erase the old content. In REPL mode, the new output_repl are appended to the old content. Because state update is asynchronous,
-     * return a Promise.
+     * Write text. Newlines and ANSI escape codes are converted to HTML before rendering.
+     * In serialize mode, the new output erase the old content. In REPL mode, the new output is appended to.
+     * Because state updates are asynchronous, this returns a Promise that resolves when everything is up to date.
      * @param data String
      * @returns {Promise<unknown>}
      */
@@ -111,7 +114,7 @@ export default class Repl extends React.Component {
     }
 
     /**
-     * Write a new line followed by a prompt if in REPL mode.
+     * Write a new line followed by a prompt, if in REPL mode. Do nothing otherwise.
      * @returns {Promise<unknown>}
      */
     prompt = () => {
@@ -121,7 +124,7 @@ export default class Repl extends React.Component {
     };
 
     /**
-     * Write an input and run it.
+     * Run it. In REPL mode, the input is also appended to the output.
      * @param input String
      */
     onSend = ({detail: input}) => {
@@ -133,8 +136,8 @@ export default class Repl extends React.Component {
     };
 
     /**
-     * Unescape serialized output_repl. To serialize an input, this component wraps the program in a call to `builtins.serialize`.
-     * The returned result is a string with escaped characters. This function unescapes them.
+     * Unescape serialized output_repl. To serialize an input, the REPL component wraps the program in a call to `builtins.serialize`.
+     * The returned result is a Nickel string with escaped characters. This function unescapes them.
      * @param result String
      * @returns String
      */
@@ -147,7 +150,7 @@ export default class Repl extends React.Component {
     };
 
     /**
-     * Run an input in the Nickel REPL, and write the result.
+     * Run an input and write the result in the output.
      * @param input String
      * @returns {Promise<number>} A promise resolving to the return code of the execution of the Nickel REPL, or -1 if the REPL wasn't loaded.
      */
