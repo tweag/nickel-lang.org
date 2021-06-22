@@ -19,12 +19,24 @@ export default class Playground extends React.Component {
     }
 
     componentDidMount() {
-        this.forceUpdate();
+        // In fit-to-code mode, fix the height of the output (terminal) element to the height of the current code
+        if(this.props.fit === 'code') {
+            this.terminalContainer.style.height = this.editor.getHeight() + "px";
+        }
+
+        // If a program was provided initially, run it.
+        if(this.props.value) {
+            this.editor.send();
+        }
     }
 
     static defaultProps = {
-        mode: modes.REPL
+        mode: modes.REPL,
+        fit: 'page',
     };
+
+    setTerminalContainer = element => this.terminalContainer = element;
+    setEditor = editor => this.editor = editor;
 
     replTabStyle = (mode) => ('nav-link' + (this.state.mode === mode ? ' active' : ''));
 
@@ -47,7 +59,7 @@ export default class Playground extends React.Component {
                     </kbd>+<kbd>Enter</kbd>)
                     </div>
                 </div>
-                <ul className={"nav nav-pills playground-tab col-6"}>
+                <ul className={"col-6 nav nav-pills playground-tab"}>
                     <li className="nav-item">
                         <a className={this.replTabStyle(modes.REPL)} onClick={() => this.setMode(modes.REPL)}>REPL</a>
                     </li>
@@ -63,13 +75,14 @@ export default class Playground extends React.Component {
                 </ul>
             </div>
 
-            <section className={"row playground-container flex-grow-1"}>
-                <div className={"col-6"}>
-                    <Editor value={this.props.value}/>
+            <section className={'row playground-container overflow-hidden flex-grow-1'}>
+                <div className={'col-6'}>
+                    <Editor ref={this.setEditor} fit={this.props.fit} value={this.props.value}/>
                 </div>
                 <div id={"playground-terminal-container"}
-                     className={"col-6 ansi-monokai playground-terminal-container"}>
-                    <Repl containerId={"playground-terminal-container"} className={"playground-terminal"}
+                     ref={this.setTerminalContainer}
+                     className={'col-6 ansi-monokai playground-terminal-container'}>
+                    <Repl containerId={"playground-terminal-container"} className={'playground-terminal'}
                           mode={this.state.mode}/>
                 </div>
             </section>

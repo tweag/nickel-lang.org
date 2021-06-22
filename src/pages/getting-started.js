@@ -12,7 +12,7 @@ import "prismjs/plugins/command-line/prism-command-line.css";
 import Playground from "../components/playground";
 import {modes} from "../components/repl";
 
-// Escaping curly braces and other stuff in JSX can be a bit of a nightmare, so we define all code examples outside
+// Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
         clone: `$ git clone git@github.com:tweag/nickel.git
@@ -20,7 +20,7 @@ Cloning in 'nickel'...
 [..]
 $ cd nickel
 devops@nickel-lang:~/nickel$`,
-     build: `devops@nickel-lang:~/nickel$ nix build
+        build: `devops@nickel-lang:~/nickel$ nix build
 [1 built, 0.0 MiB DL]
 devops@nickel-lang:~/nickel$`,
         run: `devops@nickel-lang:~/nickel$ ./result/bin/nickel -V
@@ -77,8 +77,7 @@ version: 0.1.1`,
 version = "0.1.1",
 scripts = {
   test = m#"test.sh --option --install example --version "0.1.1""#m,`,
-        diff: `
-        name = "example",
+        diff: `name = "example",
 version = "0.1.1",
 scripts = {
   test = m#"test.sh --option --install #{name} --version "#{version}""#m`,
@@ -122,10 +121,10 @@ const IndexPage = () => {
 
                 <h2 id="build-from-source-without-nix">Build from source without Nix</h2>
 
-                <p>You will find alternative ways to build Nickel from source by cloning the
-                    <a href="href=&quot;https://github.io/tweag/nickel">repository</a> and following the
-                    instructions of the
-                    <a href="href=&quot;https://github.com/tweag/nickel/#getting-started&quot;">README</a>.</p>
+                <p>You will find alternative ways to build Nickel from source by cloning the <a
+                    href="href=&quot;https://github.io/tweag/nickel">repository</a> and following the
+                    instructions of the <a
+                        href="href=&quot;https://github.com/tweag/nickel/#getting-started&quot;">README</a>.</p>
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
 
@@ -134,11 +133,9 @@ const IndexPage = () => {
                     basic configuration is almost as writing JSON or YAML. Let us start with a
                     basic fictional app configuration:</p>
 
-                <div style={{'min-height': '500px'}}>
-                    <Playground/>
-                </div>
+                <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig}/>
 
-                <p>This program describe a record delimited
+                <p>This program describes a record delimited
                     by <code>{'{'}</code> and <code>{'}'}</code>, consisting in a list of
                     key-value pairs, akin to JSON&#39;s objects. Nickel basic datatypes include strings
                     delimited by <code>&quot;</code> and lists, by <code>[</code> and <code>]</code>.</p>

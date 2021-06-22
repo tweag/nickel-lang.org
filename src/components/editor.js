@@ -35,26 +35,33 @@ export default class Editor extends React.Component {
             showLineNumbers: true,
             annotations: [],
         };
+
+        if(this.props.fit && this.props.fit === 'code') {
+            const lines = value.split(/\r?\n/g).length;
+            this.state.maxLines = lines;
+            this.state.minLines = lines;
+        }
+
         this.onChange = this.onChange.bind(this);
         this.onREPLRun = this.onREPLRun.bind(this);
         this.send = this.send.bind(this);
+        this.aceEditorRef = React.createRef();
     }
 
     componentDidMount() {
         // Listen to the REPL's execution events, in order to update potential error messages.
         document.addEventListener(REPL_RUN_EVENT, this.onREPLRun);
         document.addEventListener(PLAYGROUND_SEND_EVENT, this.send);
-
-        // If a program was provided initially, run it.
-        if(this.props.value) {
-            this.send();
-        }
     }
 
     onChange(newValue) {
         this.setState({
             value: newValue
         });
+    }
+
+    getHeight() {
+        return this.aceEditorRef.current.editor.getSession().getScreenLength() * this.aceEditorRef.current.editor.renderer.lineHeight + this.aceEditorRef.current.editor.renderer.scrollBarH.height;
     }
 
     /**
@@ -109,12 +116,15 @@ export default class Editor extends React.Component {
 
     render() {
         return <AceEditor
+            ref={this.aceEditorRef}
             placeholder={this.state.placeholder}
             mode={this.state.mode}
             theme={this.state.theme}
             name={"nickel-repl-input"}
             height={this.state.height}
             width={this.state.width}
+            minLines={this.state.minLines}
+            maxLines={this.state.maxLines}
             onChange={this.onChange}
             onSelectionChange={this.onSelectionChange}
             onCursorChange={this.onCursorChange}
