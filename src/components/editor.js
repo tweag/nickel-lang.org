@@ -41,6 +41,10 @@ export default class Editor extends React.Component {
             this.state.maxLines = lines;
             this.state.minLines = lines;
         }
+        else if(this.props.fit && this.props.fit === 'lines' && this.props.lines) {
+            this.state.maxLines = this.props.lines;
+            this.state.minLines = this.props.lines;
+        }
 
         this.onChange = this.onChange.bind(this);
         this.onREPLRun = this.onREPLRun.bind(this);

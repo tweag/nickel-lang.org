@@ -20,7 +20,7 @@ export default class Playground extends React.Component {
 
     componentDidMount() {
         // In fit-to-code mode, fix the height of the output (terminal) element to the height of the current code
-        if(this.props.fit === 'code') {
+        if(this.props.fit === 'code' || this.props.fit === 'lines') {
             this.terminalContainer.style.height = this.editor.getHeight() + "px";
         }
 
@@ -38,7 +38,7 @@ export default class Playground extends React.Component {
     setTerminalContainer = element => this.terminalContainer = element;
     setEditor = editor => this.editor = editor;
 
-    replTabStyle = (mode) => ('nav-link' + (this.state.mode === mode ? ' active' : ''));
+    replTabStyle = (mode) => ('nav-link link-secondary' + (this.state.mode === mode ? ' active' : ''));
 
     setMode = (mode) => {
         this.setState({mode});
@@ -77,7 +77,7 @@ export default class Playground extends React.Component {
 
             <section className={'row playground-container overflow-hidden flex-grow-1'}>
                 <div className={'col-6'}>
-                    <Editor ref={this.setEditor} fit={this.props.fit} value={this.props.value}/>
+                    <Editor ref={this.setEditor} fit={this.props.fit} lines={this.props.lines} value={this.props.value}/>
                 </div>
                 <div id={"playground-terminal-container"}
                      ref={this.setTerminalContainer}
