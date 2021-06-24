@@ -19,9 +19,8 @@ $theme-colors: (
 .link-secondary.active {
   background-color: map.get($theme-colors, "secondary") !important;
 }
-/*
 
-.link-secondary:hover {
-  color:
+.horizontal-sep {
+  height: 5px;
+  background: map.get($theme-colors, "primary");
 }
-*/

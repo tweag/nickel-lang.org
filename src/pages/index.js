@@ -43,10 +43,12 @@ const IndexPage = () => {
               </div>
 
               <div className="mt-4 mb-4 main-text">
-                Write complex configurations. Modular, correct and free of boilerplate.
+                Write complex configurations. Modular, correct and boilerplate-free.
               </div>
             </div>
           </section>
+
+          <hr className={'horizontal-sep'}/>
 
           <section className={'row section-block'}>
             <div className="col-12 text-center">
@@ -60,6 +62,8 @@ const IndexPage = () => {
               </div>
             </div>
           </section>
+
+          <hr className={'horizontal-sep'}/>
 
           <section className="row section-block">
             <div className="col-4 main-text text-center landingpage-column">
