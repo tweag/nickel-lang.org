@@ -62,15 +62,37 @@
     padding-bottom: 7.5em;
 }
 
+.first-section-block {
+    padding-top: 2.5em;
+    padding-bottom: 7.5em;
+}
+
 .landingpage-column {
     padding-left: 2em;
     padding-right: 2em;
 }
 
 .logo {
-    height: 1.5em;
-    width: 1.5em;
+    height: auto;
+    width: 100px;
+    vertical-align: middle;
     margin-right: 0.2em;
+}
+
+.logo-navbar {
+    height: auto;
+    width: 50px;
+    vertical-align: middle;
+    margin-right: 0.1em;
+}
+
+@font-face {
+    font-family: "Century Gothic";
+    src: url('../fonts/century-gothic.woff')
+}
+
+.nickel {
+    font-family: "Century Gothic";
 }
 
 .list-elt {
@@ -79,7 +101,7 @@
 }
 
 .abstract-illustration {
-    width: 7em;
+    height: 6em;
 }
 
 .code {
@@ -189,4 +211,20 @@
 .ansi-bright-black-fg, .ansi-bright-red-fg, .ansi-bright-green-fg, .ansi-bright-yellow-fg,
 .ansi-bright-blue-fg, .ansi-bright-magenta-fg, .ansi-bright-cyan-fg, .ansi-bright-white-fg {
     font-weight: bold;
+}
+
+.nickel-primary {
+    color: #e0c3fc;
+}
+
+.nickel-bg-primary {
+    background-color: #e0c3fc;
+}
+
+.nickel-secondary {
+    color: #8ec5fc;
+}
+
+.nickel-bg-secondary {
+    background-color: #8ec5fc;
 }

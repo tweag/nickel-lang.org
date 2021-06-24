@@ -28,6 +28,7 @@
     "gatsby-plugin-fontawesome-css": "^1.1.0",
     "gatsby-plugin-image": "^1.3.0",
     "gatsby-plugin-react-helmet": "^4.3.0",
+    "gatsby-plugin-sass": "^4.8.0",
     "gatsby-plugin-sharp": "^3.3.0",
     "gatsby-remark-prismjs": "^5.0.0",
     "gatsby-source-filesystem": "^3.3.0",

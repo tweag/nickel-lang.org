@@ -1,0 +1,27 @@
+@use "sass:map";
+@use "sass:color";
+
+$theme-colors: (
+        "primary": #e0c3fc,
+        "secondary": #8ec5fc
+);
+
+@import '~bootstrap/scss/bootstrap.scss';
+
+.link-secondary {
+  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -10%);
+}
+
+.link-secondary:hover, .link-secondary:focus {
+  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -40%);
+}
+
+.link-secondary.active {
+  background-color: map.get($theme-colors, "secondary") !important;
+}
+/*
+
+.link-secondary:hover {
+  color:
+}
+*/
