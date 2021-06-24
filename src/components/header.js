@@ -1,12 +1,15 @@
 import React from "react"
 import { Link } from "gatsby"
 import PropTypes from "prop-types"
+import {StaticImage} from "gatsby-plugin-image";
 
 const Header = ({ siteTitle, menuLinks }) => (
     <header>
-        <nav className="navbar navbar-expand-lg navbar-light navbar-dark bg-primary">
+        <nav className="navbar navbar-expand-lg navbar-light bg-primary">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">{siteTitle}</Link>
+                <Link className="navbar-brand" to="/">
+                    <StaticImage className={"logo-navbar"} src="../images/nickel-logo-2.svg" alt="logo"/><span className="nickel">Nickel</span>
+                </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarNavAltMarkup"
                         aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
