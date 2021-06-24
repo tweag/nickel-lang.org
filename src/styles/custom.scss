@@ -31,25 +31,6 @@ a:hover { text-decoration: none; }
   @include link("secondary");
 }
 
-/* .link-secondary {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -10%);
-}
-
-.link-secondary:hover, .link-secondary:focus {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -40%);
-}
-
-.link-secondary {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -10%);
-}
-
-.link-secondary:hover, .link-secondary:focus {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -40%);
-}
-
-.link-secondary.active {
-}*/
-
 .horizontal-sep {
   height: 5px;
   background: map.get($theme-colors, "primary");
