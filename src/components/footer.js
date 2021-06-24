@@ -12,10 +12,10 @@ const Footer = () => (
     <footer className="bg-primary text-center text-white">
         <div className="container p-4">
             <section className="mb-4">
-                <Link className="btn btn-outline-light btn-floating m-1" to="#!" role="button"
+                <Link className="btn btn-outline-light btn-floating m-1" to="https://twitter.com/nickel_lang" role="button"
                 ><FontAwesomeIcon icon={faTwitter}/></Link>
 
-                <Link className="btn btn-outline-light btn-floating m-1" to="#!" role="button"
+                <Link className="btn btn-outline-light btn-floating m-1" to="https://github.com/tweag/nickel/" role="button"
                 ><FontAwesomeIcon icon={faGithub}/></Link>
 
                 <Link className="btn btn-outline-light btn-floating m-1" to="#!" role="button"
