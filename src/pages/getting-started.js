@@ -105,8 +105,8 @@ const IndexPage = () => {
                     running:</p>
 
                 <ol>
-                    <li><p>Clone the <a href="https://github.io/tweag/nickel">Nickel repository</a>
-                        locally and set it as the current directory:</p>
+                    <li><p>Clone the <a href="https://github.io/tweag/nickel">Nickel repository</a> locally
+                        and set it as the current directory:</p>
 
                         <pre><code>{codeExamples.withNix.clone}</code></pre>
                     </li>
