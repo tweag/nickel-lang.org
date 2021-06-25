@@ -1,9 +1,8 @@
 import * as React from "react"
+import {useEffect} from "react"
 import Layout from "../components/layout"
 
-import "prismjs";
-import "prismjs/components/prism-nix";
-import "prismjs/components/prism-shell-session";
+import Prism from "prismjs";
 import "prismjs/components/prism-bash";
 import "prismjs/components/prism-yaml";
 import "prismjs/themes/prism-tomorrow.css";
@@ -11,21 +10,19 @@ import "prismjs/plugins/command-line/prism-command-line";
 import "prismjs/plugins/command-line/prism-command-line.css";
 import Playground from "../components/playground";
 import {modes} from "../components/repl";
+import nickelLanguageDefinition from "../prism/nickel";
 
 // Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
-        clone: `$ git clone git@github.com:tweag/nickel.git
+        clone: `git clone git@github.com:tweag/nickel.git
 Cloning in 'nickel'...
 [..]
-$ cd nickel
-devops@nickel-lang:~/nickel$`,
-        build: `devops@nickel-lang:~/nickel$ nix build
-[1 built, 0.0 MiB DL]
-devops@nickel-lang:~/nickel$`,
-        run: `devops@nickel-lang:~/nickel$ ./result/bin/nickel -V
-nickel 0.1.0
-devops@nickel-lang:~/nickel$ `,
+cd nickel`,
+        build: `nix build
+[1 built, 0.0 MiB DL]`,
+        run: `./result/bin/nickel -V
+nickel 0.1.0`,
     },
     firstConfig: `{
   name = "example",
@@ -52,7 +49,7 @@ devops@nickel-lang:~/nickel$ `,
     dep3 = "6.7"
   }
 }`,
-    export: `devops@nickel-lang:~/nickel$ nickel -f example.ncl export --format yaml
+    export: `nickel -f example.ncl export --format yaml
 ---
 contributors:
   - email: johndoe@example.com
@@ -90,6 +87,11 @@ scripts:
 };
 
 const IndexPage = () => {
+    useEffect(() => {
+        Prism.languages.nickel = nickelLanguageDefinition;
+        Prism.highlightAll();
+    }, []);
+
     return (
         <Layout>
             <main className="container main-container">
@@ -101,29 +103,31 @@ const IndexPage = () => {
 
                 <h2 id="build-from-source-using-nix">Build from source using Nix</h2>
 
-                <p>Using <a href="&quot;https://nixos.org/&quot;">Nix</a> is the easiest way to get a Nickel executable
+                <p>Using <a className={"link-primary"} href="&quot;https://nixos.org/&quot;">Nix</a> is the easiest way to get a Nickel executable
                     running:</p>
 
                 <ol>
-                    <li><p>Clone the <a href="https://github.io/tweag/nickel">Nickel repository</a> locally
+                    <li><p>Clone the <a className={"link-primary"} href="https://github.io/tweag/nickel">Nickel repository</a> locally
                         and set it as the current directory:</p>
 
-                        <pre><code>{codeExamples.withNix.clone}</code></pre>
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output="2-3:"><code>{codeExamples.withNix.clone}</code></pre>
                     </li>
                     <li><p>Invoke nix build:</p>
-                        <pre><code>{codeExamples.withNix.build}</code></pre>
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel" data-output="2:"><code>{codeExamples.withNix.build}</code></pre>
                     </li>
                     <li><p>If everything went right, a binary is now available in the
                         result directory:</p>
-                        <pre><code>{codeExamples.withNix.run}</code></pre>
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel" data-output="2:"><code>{codeExamples.withNix.run}</code></pre>
                     </li>
                 </ol>
 
                 <h2 id="build-from-source-without-nix">Build from source without Nix</h2>
 
                 <p>You will find alternative ways to build Nickel from source by cloning the <a
+                    className={"link-primary"}
                     href="href=&quot;https://github.io/tweag/nickel">repository</a> and following the
                     instructions of the <a
+                        className={"link-primary"}
                         href="href=&quot;https://github.com/tweag/nickel/#getting-started&quot;">README</a>.</p>
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
@@ -133,13 +137,15 @@ const IndexPage = () => {
                     basic configuration is almost as writing JSON or YAML. Let us start with a
                     basic fictional app configuration:</p>
 
-                <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig}/>
+                <div className={'mb-4'}>
+                    <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig}/>
+                </div>
 
                 <p>This program describes a record delimited
                     by <code>{'{'}</code> and <code>{'}'}</code>, consisting in a list of
                     key-value pairs, akin to JSON&#39;s objects. Nickel basic datatypes include strings
                     delimited by <code>&quot;</code> and lists, by <code>[</code> and <code>]</code>.</p>
-                <p>The m#&quot; and &quot;#m delimits multiline strings. In such strings, the common
+                <p>The <code>m#&quot;</code> and <code>&quot;#m</code> delimits multiline strings. In such strings, the common
                     indentation prefix is stripped, and special characters (excepted
                     interpolation #{}) loose their meaning. It is useful for two purpose
                     illustrated here:</p>
@@ -154,7 +160,7 @@ const IndexPage = () => {
                 <h2 id="export">Export</h2>
                 <p>Now, save the content in &quot;example.ncl&quot; and run nickel export (or
                     ./result/bin/nickel export if you haven&#39;t made a symbolic link):</p>
-                <pre><code>{codeExamples.export}</code></pre>
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel" data-output="2-21:"><code>{codeExamples.export}</code></pre>
 
                 <p>Currently supported formats are yaml, toml, json, and raw. json is the
                     default, while raw expect a string result that it output directly, useful to
@@ -165,19 +171,19 @@ const IndexPage = () => {
                 <p>Nickel is a programming language. This allows you not only to describe, but to
                     generate data. There&#39;s some repetition in our previous example (reproducing only
                     the interesting part):</p>
-                <pre><code>{codeExamples.reuse.problem}</code></pre>
+                <pre><code className={'language-nickel'}>{codeExamples.reuse.problem}</code></pre>
 
                 <p>Apart from aesthetics, a more serious issue is inconsistency. If you bump the
                     version number in version, you may forget to do so in the test scripts as well,
                     leading to an incorrect configuration. To remedy this problem, let us have a
                     single source of truth by reusing the value of name and version in test, using
                     the interpolation syntax <code>#{'{expr}'}</code>:</p>
-                <pre><code>{codeExamples.reuse.diff}</code></pre>
+                <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
 
                 <p>Now, if we change version to &quot;0.1.2&quot; and export the result, the test script
                     invocation is updated as well:</p>
 
-                <pre><code>{codeExamples.reuse.result}</code></pre>
+                <pre><code className={'language-yaml'}>{codeExamples.reuse.result}</code></pre>
 
                 <h2 id="going-further">Going further</h2>
 

@@ -8,16 +8,27 @@ $theme-colors: (
 
 @import '~bootstrap/scss/bootstrap.scss';
 
+@mixin link($color) {
+  $selected: map.get($theme-colors, $color);
+  color: color.adjust($selected, $lightness: -10%);
+
+  &:hover, &:focus {
+    color: color.adjust($selected, $lightness: -40%);
+  }
+
+  &.active {
+    background-color: $selected !important;
+  }
+}
+
+a:hover { text-decoration: none; }
+
+.link-primary {
+  @include link("primary");
+}
+
 .link-secondary {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -10%);
-}
-
-.link-secondary:hover, .link-secondary:focus {
-  color: color.adjust(map.get($theme-colors, "secondary"), $lightness: -40%);
-}
-
-.link-secondary.active {
-  background-color: map.get($theme-colors, "secondary") !important;
+  @include link("secondary");
 }
 
 .horizontal-sep {
