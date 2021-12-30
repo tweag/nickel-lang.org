@@ -26,7 +26,6 @@ jobs:
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
       - name: Build WASM
         run: |
-          git clone https://github.com/tweag/nickel
           nix build nickel/#buildWasm
           find -L result
       - uses: actions/setup-node@v1
@@ -34,8 +33,8 @@ jobs:
           node-version: 14
       - run: npm ci --only=production
       - run: npm run build
-      - name: Publish
-        id: publish
+      - name: Deploy to Netlify
+        id: deploy
         uses: netlify/actions/cli@master
         with:
           args: deploy --dir=public
@@ -46,4 +45,4 @@ jobs:
         with:
           name: Test XYZ
           conclusion: ${{ job.status }}
-          details_url: ${{ steps.publish.outputs.NETLIFY_URL }}
+          details_url: ${{ steps.deploy.outputs.NETLIFY_URL }}
