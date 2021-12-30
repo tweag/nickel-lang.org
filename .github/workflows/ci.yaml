@@ -47,3 +47,4 @@ jobs:
           name: Test XYZ
           conclusion: ${{ job.status }}
           details_url: ${{ steps.deploy.outputs.NETLIFY_URL }}
+          token: ${{ secrets.GITHUB_TOKEN }}
