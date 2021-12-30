@@ -35,18 +35,18 @@ jobs:
       - run: npm ci --only=production
       - run: npm run build
       - name: Deploy to Netlify
-        id: deploy
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --dir=public
+        uses: nwtgck/actions-netlify@v1.2
         env:
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-      - run: |
-          echo ${{ steps.deploy.outputs.NETLIFY_URL }}
-      - uses: LouisBrunner/checks-action@v1.1.1
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
         with:
-          name: Test XYZ
-          conclusion: ${{ job.status }}
-          details_url: ${{ steps.deploy.outputs.NETLIFY_URL }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          production-branch: 'master'
+          production-deploy: ${{ github.event_name == 'push' }}
+          publish-dir: 'public'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          enable-commit-status: true
+          overwrites-pull-request-comment: false
+        if: github.repository == 'tweag/nickel-lang.org'
