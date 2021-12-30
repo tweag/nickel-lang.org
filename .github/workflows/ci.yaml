@@ -42,8 +42,8 @@ jobs:
         env:
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-    - uses: LouisBrunner/checks-action@v1.1.1
-      with:
-        name: Test XYZ
-        conclusion: ${{ job.status }}
-        details_url: ${{ steps.publish.outputs.NETLIFY_URL }}
+      - uses: LouisBrunner/checks-action@v1.1.1
+        with:
+          name: Test XYZ
+          conclusion: ${{ job.status }}
+          details_url: ${{ steps.publish.outputs.NETLIFY_URL }}
