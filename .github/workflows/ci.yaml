@@ -26,4 +26,4 @@ jobs:
         run: |
           git clone https://github.com/tweag/nickel
           nix build nickel/#buildWasm
-          find result
+          find -L result
