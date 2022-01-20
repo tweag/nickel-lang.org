@@ -1,12 +1,12 @@
 @use "sass:map";
 @use "sass:color";
 
+@import "~bootstrap/scss/bootstrap.scss";
+
 $theme-colors: (
   "primary": #e0c3fc,
   "secondary": #8ec5fc,
 );
-
-@import '~bootstrap/scss/bootstrap.scss';
 
 a:hover { text-decoration: none};
 
@@ -60,14 +60,14 @@ a:hover { text-decoration: none};
 }
 
 /* Augment bootstrap with breakpoint variants of w-100, w-50, and so on. */
-
-@each $breakpoint in map-keys($grid-breakpoints) {
-  @each $size, $length in $sizes {
-    @include media-breakpoint-up($breakpoint) {
-      .w-#{$breakpoint}-#{$size} {width: $length !important;}
-    }
-  }
-}
+$utilities: map-merge(
+  $utilities, (
+    "width": map-merge(
+      map-get($utilities, "width"),
+      ( responsive: true ),
+    ),
+  )
+);
 
 /* Animation of the landing page's scrolldown arrow */
 
