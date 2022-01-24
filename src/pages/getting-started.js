@@ -24,8 +24,71 @@ cd nickel`,
         run: `./result/bin/nickel -V
 nickel 0.1.0`,
     },
-    firstConfig: `{
-  name = "example",
+    firstConfig: `let Version
+    | doc "Contract: check if version is correctly formatted"
+    = contracts.from_predicate (fun version =>
+        strings.is_match "^\\^?\\d+(\\.[0-9a-z]+)*$" version) in
+
+let Contributor
+    | doc "Contract: contributor is a record who have at least a name"
+    = fun label contributor =>
+        let is_name = fun name
+                => lists.all
+                    (strings.is_match "^[A-Z][a-z]*$")
+                    (strings.split " " name) in
+        if records.has_field "name" contributor && is_name contributor.name then
+                contributor
+            else
+                contracts.blame label in
+
+let Command
+    | doc "Contract: a command starts with a shell executable and may have arguments"
+    = fun label command =>
+        let extract_command = fun com => lists.head (strings.split " " com) in
+        let is_shell_exe = strings.is_match "\\.sh$" in
+        let extracted = extract_command command in
+        if command != "" && is_shell_exe extracted then
+            command
+        else
+            contracts.blame_with (extracted ++ " should be a shell command") label in
+
+let Scripts
+    = fun test =>
+        let init_contract = { do_stuff | #Command, .. } in
+        let test_contract = if test then { } else { test | #Command } in
+        init_contract & test_contract in
+
+let Configuration
+    | doc m#"
+      Contract: a configuration contains the correct requirements
+      for name, description, version, main, keywords, scripts,
+      contributors and dependencies.
+      "#m
+    = {
+        name | #strings.NonEmpty,
+        description | Str,
+        version | #Version,
+        main | #strings.NonEmpty
+             | doc "location of main file"
+             | default = "main.js",
+        has_tests | Bool
+                  | doc "indicate if should be tested"
+                  | default = true,
+        keywords | List Str,
+        scripts | #(Scripts has_tests)
+                | doc m#"
+                    List of commands.
+                    Contains at least a *do_stuff* key which is an executable.
+                    If *test* is set, should also contains a *test* key.
+                    May have other keys.
+                    "#m,
+        contributors | List #Contributor,
+        dependencies | {_ : #Version},
+        ..
+    } in
+
+{
+  name = strings.lowercase "Example",
   description = m#"
     This is an awesome software I'm developing.
     Please use it!
@@ -48,18 +111,19 @@ nickel 0.1.0`,
     dep1 = "^1.0.0",
     dep3 = "6.7"
   }
-}`,
+} | #Configuration`,
     export: `./result/bin/nickel -f example.ncl export --format yaml
 ---
 contributors:
   - email: johndoe@example.com
     name: John Doe
   - name: Ivy Lane
-    url: https://example.com/ivylane
+    url: "https://example.com/ivylane"
 dependencies:
   dep1: ^1.0.0
   dep3: "6.7"
 description: "This is an awesome software I'm developing.\\nPlease use it!"
+has_tests: true
 keywords:
   - example
   - config
