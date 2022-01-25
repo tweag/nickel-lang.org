@@ -12,10 +12,6 @@ on:
       website_ref:
         type: string
         default: master
-      nickel_repository:
-        type: string
-      nickel_ref:
-        type: string
       production_deploy:
         required: true
         type: boolean
@@ -36,13 +32,6 @@ jobs:
           submodules: true
           repository: ${{ inputs.website_repository }}
           ref: ${{ inputs.website_ref }}
-      - name: Checkout Nickel
-        if: ${{ inputs.nickel_repository && inputs.nickel_ref }}
-        run: |
-          cd nickel
-          git remote set-url origin https://github.com/${{ inputs.nickel_repository }}
-          git fetch origin ${{ inputs.nickel_ref }}
-          git checkout ${{ inputs.nickel_ref }}
       - name: Installing Nix
         uses: cachix/install-nix-action@v16
         with:
@@ -54,18 +43,10 @@ jobs:
         with:
           name: nickel
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
-      - name: Build WASM
+      - name: Build Website
         run: |
-          (cd nickel; git fetch --unshallow) # Flakes needs non-shallow
-          nix build nickel/#buildWasm
-          ln -s result/nickel-repl nickel-repl
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - name: Build
-        run: |
-          npm ci --only=production
-          npm run build
+          nix develop --command npm ci --only=production
+          nix develop --command npm run build
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         env:
