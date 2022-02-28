@@ -15,6 +15,7 @@ import nickelLanguageDefinition from "../prism/nickel";
 // Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
+        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel`,
         clone: `git clone git@github.com:tweag/nickel.git
 Cloning in 'nickel'...
 [..]
@@ -22,7 +23,19 @@ cd nickel`,
         build: `nix-build
 [1 built, 0.0 MiB DL]`,
         run: `./result/bin/nickel -V
-nickel 0.1.0`,
+nickel-lang 0.1.0`,
+    },
+    withCargo: {
+        clone: `git clone git@github.com:tweag/nickel.git
+Cloning in 'nickel'...
+[..]
+cd nickel`,
+        build: `cargo build --release
+Finished release [optimized] target(s) in 57.42s`,
+        run: `./target/release/nickel --version
+nickel-lang 0.1.0`,
+        cargo_run: `cargo run --release -- --version
+nickel-lang 0.1.0`,
     },
     firstConfig: `{
   name = "example",
@@ -100,11 +113,17 @@ const IndexPage = () => {
                 <p>Nickel is still young and the installation process is not yet optimal. Sorry about that! We are focused on improving the
                     experience, so stay tuned. </p>
 
-                <h2 id="build-from-source-using-nix">Build from source using Nix</h2>
+                <h2 id="build-from-source-using-nix">Get a Nickel binary using Nix</h2>
 
                 <p>Using <a className={"link-primary"} href="https://nixos.org/">Nix</a> is the easiest way
-                    to get a Nickel executable
-                    running.</p>
+                    to run the Nickel executable. You also need to have Git installed.</p>
+
+                <p>With a recent version of Nix (> 2.4.0), you can build an run Nickel in one shot by just typing:</p>
+
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
+                     data-output="2-3:"><code>{codeExamples.withNix.nix_run}</code></pre>
+
+                <p>If you are planning to try Nickel a bit more extensively, you can build the binary to avoid having to go through Nix at each execution (works for Nix versions prior to 2.4.0 too):</p>
 
                 <ol>
                     <li><p>Clone the <a className={"link-primary"} href="https://github.com/tweag/nickel">Nickel
@@ -123,13 +142,39 @@ const IndexPage = () => {
                     </li>
                 </ol>
 
-                <h2 id="build-from-source-without-nix">Build from source without Nix</h2>
+                <h2 id="build-from-source-using-nix">Get a Nickel binary using Cargo</h2>
 
-                <p>Please refer to the <a
-                    className={"link-primary"}
-                    href="https://github.com/tweag/nickel/#getting-started">README</a> of the <a
-                    className={"link-primary"}
-                    href="https://github.com/tweag/nickel">Nickel repository</a> for alternative ways of building Nickel.</p>
+                <p>If you are a Rust developer, the <a className={"link-primary"} href={""}>Cargo</a> build tool is an alternative to build Nickel. You also need to have Git installed.</p>
+
+                <ol>
+                    <li><p>Clone the <a className={"link-primary"} href="https://github.com/tweag/nickel">Nickel
+                        repository</a> and set it as the current directory:</p>
+
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
+                             data-output="2-3:"><code>{codeExamples.withCargo.clone}</code></pre>
+                    </li>
+                    <li><p>Invoke <code>cargo run --release</code> to build and run Nickel at once. Use <code>cargo run --release -- args</code> to pass arguments to the nickel interpreter:</p>
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
+                             data-output="2:"><code>{codeExamples.withCargo.cargo_run}</code></pre>
+                    </li>
+                    <li><p>You can also build Nickel first, and then run it manually.</p>
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
+                             data-output="2:"><code>{codeExamples.withCargo.build}</code></pre>
+
+                        <p>If everything went right, a binary is now available in the <code>target/release/bin</code> directory:</p>
+
+                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
+                             data-output="2:"><code>{codeExamples.withCargo.run}</code></pre>
+                    </li>
+                </ol>
+
+                {/*<h2 id="build-from-source-without-nix">Build from source with other methods</h2>*/}
+
+                {/*<p>Please refer to the <a*/}
+                {/*    className={"link-primary"}*/}
+                {/*    href="https://github.com/tweag/nickel/#getting-started">README</a> of the <a*/}
+                {/*    className={"link-primary"}*/}
+                {/*    href="https://github.com/tweag/nickel">Nickel repository</a> for alternative ways of building Nickel.</p>*/}
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
 
@@ -143,7 +188,7 @@ const IndexPage = () => {
                 <div className={'d-block d-md-none'}>
                     <pre><code className={'language-nickel'}>{codeExamples.firstConfig}</code></pre>
                 </div>
-                <p/>This program is composed of <i>record</i>. A record is the same thing as an object in JSON. It is a list of
+                <p/>This program is composed of a <i>record</i>. A record is the same thing as an object in JSON, that is a list of
                     key-value pairs delimited
                     by <code>{'{'}</code> and <code>{'}'}</code>. In general, the values of Nickel map directly to
                     corresponding values in JSON (excluding functions). Thus, the basic datatypes of Nickel are the same as in JSON:
@@ -196,13 +241,17 @@ const IndexPage = () => {
 
                 <p>This short introduction should get you started. Nickel is a
                     full-fledged programming language, featuring higher-order functions, gradual
-                    typing, contracts, and more! Additional resources are to come on this website. In the meantime, you can find <a
+                    typing, contracts, and more! To explore further, read the
+                    <a
                         className={"link-primary"}
-                        href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. You will also find more details on the language and its design in the <a
+                        href="/user-manual">user manual</a>
+                    . You will also find <a
                         className={"link-primary"}
-                        href="https://github.com/tweag/nickel/#nickel">README</a> and in the <a
+                        href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a
+                        className={"link-primary"}
+                        href="https://github.com/tweag/nickel/#nickel">README</a> and the <a
                 className={"link-primary"}
-                href="https://github.com/tweag/nickel/blob/master/RATIONALE.md">design rationale</a>.</p>
+                href="https://github.com/tweag/nickel/blob/master/RATIONALE.md">design rationale document</a>.</p>
             </main>
         </Layout>
     );

@@ -8,7 +8,7 @@ export default function Layout({children}) {
     return (
         <StaticQuery
             query={graphql`
-      query SiteTitleQuery {
+      query SiteData {
         site {
           siteMetadata {
             title
