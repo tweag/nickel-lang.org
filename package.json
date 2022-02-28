@@ -36,7 +36,7 @@
     "jquery": "^3.6.0",
     "nickel-repl": "file:nickel-repl",
     "popper.js": "^1.16.1",
-    "prismjs": "^1.26.0",
+    "prismjs": "^1.27.0",
     "react": "^17.0.2",
     "react-ace": "^9.5.0",
     "react-bootstrap": "^2.1.1",
