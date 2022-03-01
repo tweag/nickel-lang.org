@@ -21,6 +21,7 @@
         pkgs = nixpkgs.legacyPackages.${system};
         packageInfo = pkgs.lib.importJSON ./package.json;
         nickelWasm = nickel.packages.${system}.buildWasm;
+        nickelUserManual = nickel.packages.${system}.userManual;
       in rec {
         devShell = pkgs.mkShell {
           packages = with pkgs; [
@@ -38,6 +39,7 @@
           shellHook = ''
             rm -rf nickel-repl
             ln -s ${nickelWasm}/nickel-repl nickel-repl
+            ln -s ${nickelUserManual} src/nickel-manual
 
             echo "== Run \`npm run develop\` to start developing"
             echo " or"
