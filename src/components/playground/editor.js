@@ -54,7 +54,7 @@ export default class Editor extends React.Component {
     }
 
     static defaultProps = {
-        value: `let data = {value = "Hello," ++ " world!"} in data.value`,
+        value: `let data = {value = "Hello," ++ " world!"} in data`,
         name: 'nickel-repl-input',
     };
 
