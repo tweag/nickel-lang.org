@@ -26,15 +26,15 @@ nickel 0.1.0`,
     },
     firstConfig: `{
   name = "example",
-  description = m#"
+  description = m%"
     This is an awesome software I'm developing.
     Please use it!
-  "#m,
+  "%m,
   version = "0.1.1",
   main = "index.js",
   keywords = ["example", "config"],
   scripts = {
-    test = m#"test.sh --option --install example --version "0.1.1""#m,
+    test = m%"test.sh --option --install example --version "0.1.1""%m,
     do_stuff = "do_stuff.sh subcommand",
   },
   contributors = [{
@@ -73,11 +73,11 @@ version: 0.1.1`,
         problem: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m#"test.sh --option --install example --version "0.1.1""#m,`,
+  test = m%"test.sh --option --install example --version "0.1.1""%m,`,
         diff: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m#"test.sh --option --install #{name} --version "#{version}""#m`,
+  test = m%"test.sh --option --install %{name} --version "%{version}""%m`,
         result: `# [...]
 scripts:
   do_stuff: do_stuff.sh subcommand
@@ -149,7 +149,7 @@ const IndexPage = () => {
                     corresponding values in JSON (excluding functions). Thus, the basic datatypes of Nickel are the same as in JSON:
                     <ul>
                         <li>Records (objects), delimited by <code>{'{'}</code> and <code>{'}'}</code>.</li>
-                        <li>Strings, delimited by <code>&quot;</code>. The sequence <code>m#&quot;</code> and <code>&quot;#m</code> delimits multiline strings.
+                        <li>Strings, delimited by <code>&quot;</code>. The sequence <code>m%&quot;</code> and <code>&quot;%m</code> delimits multiline strings.
                         </li>
                         <li>Numbers</li>
                         <li>Lists, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
@@ -184,7 +184,7 @@ const IndexPage = () => {
                     version number in <code>version</code>, you may forget to do so in the <code>scripts.test</code> as well,
                     ending up wih incoherent version numbers in the same configuration. To remedy the problem, let's have a
                     single source of truth by reusing the value of <code>name</code> and <code>version</code> in <code>scripts.test</code>, using
-                    the string interpolation syntax <code>#{'{expr}'}</code>:</p>
+                    the string interpolation syntax <code>%{'{expr}'}</code>:</p>
                 <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
 
                 <p>Now, if we change version to <code>0.1.2</code> and export the result, the test script

@@ -20,20 +20,20 @@ const codeExample = `let conf = {
 
 let SemanticVersion = fun label value =>
   let pattern = "^\\\\d{1,2}\\\\.\\\\d{1,2}(\\\\.\\\\d{1,2})?$" in
-  if strings.is_match pattern value then
+  if string.is_match pattern value then
     value
   else
     let msg = "invalid version number" in
-    contracts.blame_with msg label
+    contract.blame_with msg label
   in
 
 let AppSchema = {
   name | Str,
-  version | #SemanticVersion,
+  version | SemanticVersion,
   description | Str,
 } in
 
-conf | #AppSchema`;
+conf | AppSchema`;
 
 /**
  * Scroll offset after which the scrolldown arrow is hidden, in pixels.
