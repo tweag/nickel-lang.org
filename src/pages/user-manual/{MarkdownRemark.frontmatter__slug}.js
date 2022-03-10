@@ -27,10 +27,10 @@ const UserManual = ({data}) => {
         <div className="container-fluid">
             <div className={"row"}>
                 {/*col-md-4 col-lg-3 col-xl-3*/}
-                <div className={"col-xl-auto col-lg-3 col-md-4 order-1"}>
+                <div className={"col-xl-3 col-lg-4 col-md-5 order-1"}>
                     <SidebarToc {...sidebarProps}/>
                 </div>
-                <div className={"col-xl col-lg-9 col-md-8 order-2"}>
+                <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
                     <div className={"container content-main-container content all-links-primary"} dangerouslySetInnerHTML={{ __html: html }}>
                     </div>
                 </div>
