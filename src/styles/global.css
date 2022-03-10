@@ -254,3 +254,8 @@
 .ansi-bright-blue-fg, .ansi-bright-magenta-fg, .ansi-bright-cyan-fg, .ansi-bright-white-fg {
     font-weight: bold;
 }
+
+:not(pre) > code {
+    background: transparent !important;
+    color: #1285f9 !important;
+}
