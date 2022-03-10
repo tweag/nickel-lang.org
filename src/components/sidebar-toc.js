@@ -9,10 +9,13 @@ export default function SidebarToc({active, headings}) {
         if(name.toLowerCase() === active) {
             return (
                 <ol>
-                    { headings.map(({value, id}) => (
-                        <li>
-                            <Link key={id} className="link-secondary" to={`#${id}`}>{value}</Link>
-                        </li>))
+                    { headings.map(({value, id}, index) => {
+                        const key = `sub-${index}-${id}`;
+                        return (
+                            <li key={key}>
+                                <Link key={key} className="link-secondary" to={`#${id}`}>{value}</Link>
+                            </li>
+                        )})
                     }
                 </ol>
             )
@@ -43,12 +46,15 @@ export default function SidebarToc({active, headings}) {
                         </div>
 
                         <ol type="I">
-                            {data.site.siteMetadata.userManual.sections.map(section => (
-                                <li>
-                                    <Link key={section.name} className="link-primary" activeClassName="sidebar-link-active" to={section.link}>{section.name}</Link>
-                                    { subMenu(section.name) }
-                                </li>
-                            ))}
+                            {data.site.siteMetadata.userManual.sections.map((section, index) => {
+                                const key = `sec-${index}-${section.name}`;
+                                return (
+                                    <li key={key}>
+                                        <Link key={key} className="link-primary" activeClassName="sidebar-link-active" to={section.link}>{section.name}</Link>
+                                        { subMenu(section.name) }
+                                    </li>
+                                )
+                            })}
                         </ol>
                     </div>
                 </nav>
