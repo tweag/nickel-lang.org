@@ -8,7 +8,7 @@
 
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nickel.url = "github:tweag/nickel/0.1.0";
+  inputs.nickel.url = "github:tweag/nickel/0.1.0-website";
 
   outputs =
     { self
