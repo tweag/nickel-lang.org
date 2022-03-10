@@ -15,7 +15,8 @@ import nickelLanguageDefinition from "../prism/nickel";
 // Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
-        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel`,
+        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel -- repl
+nickel>`,
         clone: `git clone git@github.com:tweag/nickel.git
 Cloning in 'nickel'...
 [..]
@@ -26,6 +27,7 @@ cd nickel`,
 nickel-lang 0.1.0`,
     },
     withCargo: {
+        install: `cargo install nickel-lang --path /path/to/installation`,
         clone: `git clone git@github.com:tweag/nickel.git
 Cloning in 'nickel'...
 [..]
@@ -113,15 +115,27 @@ const IndexPage = () => {
                 <p>Nickel is still young and the installation process is not yet optimal. Sorry about that! We are focused on improving the
                     experience, so stay tuned. </p>
 
-                <h2 id="build-from-source-using-nix">Get a Nickel binary using Nix</h2>
+                We give three alternative ways of obtaining a running Nickel executable:
+                <ol>
+                    <li>Using <a className={"link-primary"} href="https://nixos.org/">Nix</a></li>
+                    <li>Using <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a></li>
+                    <li>Using <a className={"link-primary"} href="https://www.docker.com/">Docker</a></li>
+                </ol>
 
-                <p>Using <a className={"link-primary"} href="https://nixos.org/">Nix</a> is the easiest way
-                    to run the Nickel executable. You also need to have Git installed.</p>
+                If you have neither of these tools, Nix is the preferred way. If you don't have Nix but you are a user of Cargo or Docker, you may prefer the corresponding installation method.
 
-                <p>With a recent version of Nix (> 2.4.0), you can build an run Nickel in one shot by just typing:</p>
+                <h2 id="build-using-nix">Get a Nickel binary using Nix</h2>
+
+                <h3>Run</h3>
+
+                <p>With a recent version of Nix (> 2.4.0), you can build an run Nickel in one shot. If you haven't installed Nix yet, please follow
+                    <a className={"link-primary"} href={"https://nixos.org/guides/nix-pills/install-on-your-running-system.html"}> this installation guide</a>. Once Nix is installed, use <code>nix run</code> to start Nickel
+                    and append <code>-- args</code> to pass arguments to the Nickel executable (here we launch an REPL session)</p>
 
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                     data-output="2-3:"><code>{codeExamples.withNix.nix_run}</code></pre>
+                     data-output="2:"><code>{codeExamples.withNix.nix_run}</code></pre>
+
+                <h3>Build from source</h3>
 
                 <p>If you are planning to try Nickel a bit more extensively, you can build the binary to avoid having to go through Nix at each execution (works for Nix versions prior to 2.4.0 too):</p>
 
@@ -142,9 +156,19 @@ const IndexPage = () => {
                     </li>
                 </ol>
 
-                <h2 id="build-from-source-using-nix">Get a Nickel binary using Cargo</h2>
+                <h2 id="build-using-cargo">Get a Nickel binary using Cargo</h2>
 
-                <p>If you are a Rust developer, the <a className={"link-primary"} href={""}>Cargo</a> build tool is an alternative to build Nickel. You also need to have Git installed.</p>
+                <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative to install or build Nickel.</p>
+
+                <h3>Install</h3>
+
+                Cargo is capable of directly installing the Nickel binary and make it available in the path. You just have to provide a target directory:
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
+                     data-output="2-3:"><code>{codeExamples.withCargo.install}</code></pre>
+
+                <h3>Build from source</h3>
+
+                Alternatively, you can build Nickel from source:
 
                 <ol>
                     <li><p>Clone the <a className={"link-primary"} href="https://github.com/tweag/nickel">Nickel
@@ -168,13 +192,11 @@ const IndexPage = () => {
                     </li>
                 </ol>
 
-                {/*<h2 id="build-from-source-without-nix">Build from source with other methods</h2>*/}
+                <h2 id="build-using-docker">Get a Docker image</h2>
 
-                {/*<p>Please refer to the <a*/}
-                {/*    className={"link-primary"}*/}
-                {/*    href="https://github.com/tweag/nickel/#getting-started">README</a> of the <a*/}
-                {/*    className={"link-primary"}*/}
-                {/*    href="https://github.com/tweag/nickel">Nickel repository</a> for alternative ways of building Nickel.</p>*/}
+                A last alternative is to use <a className={"link-primary"} href="https://www.docker.com/">Docker</a>: you can download the
+                <a className={"link-primary"} href={"https://github.com/tweag/nickel/releases/download/0.1.0/nickel-0.1.0-docker-image.tar.gz"}> nickel-0.1.0-docker-image.tar.gz</a>.
+                Please refer to the official Docker documentation to know how to load and run a Docker image.
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
 
