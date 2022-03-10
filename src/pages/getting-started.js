@@ -17,27 +17,14 @@ const codeExamples = {
     withNix: {
         nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel -- repl
 nickel>`,
-        clone: `git clone git@github.com:tweag/nickel.git
-Cloning in 'nickel'...
-[..]
-cd nickel`,
-        build: `nix-build
-[1 built, 0.0 MiB DL]`,
-        run: `./result/bin/nickel -V
-nickel-lang 0.1.0`,
+        install: `nix profile install github:tweag/nickel
+nickel repl
+nickel>`,
     },
     withCargo: {
-        install: `cargo install nickel-lang --path /path/to/installation`,
-        clone: `git clone git@github.com:tweag/nickel.git
-Cloning in 'nickel'...
-[..]
-cd nickel`,
-        build: `cargo build --release
-Finished release [optimized] target(s) in 57.42s`,
-        run: `./target/release/nickel --version
-nickel-lang 0.1.0`,
-        cargo_run: `cargo run --release -- --version
-nickel-lang 0.1.0`,
+        install: `cargo install nickel-lang
+nickel repl
+nickel>`,
     },
     firstConfig: `{
   name = "example",
@@ -135,62 +122,19 @@ const IndexPage = () => {
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
                      data-output="2:"><code>{codeExamples.withNix.nix_run}</code></pre>
 
-                <h3>Build from source</h3>
+                <h3>Install</h3>
 
-                <p>If you are planning to try Nickel a bit more extensively, you can build the binary to avoid having to go through Nix at each execution (works for Nix versions prior to 2.4.0 too):</p>
+                <p>If you are planning to try Nickel a bit more extensively, you can install the Nickel binary using <code>nix profile</code>:</p>
 
-                <ol>
-                    <li><p>Clone the <a className={"link-primary"} href="https://github.com/tweag/nickel">Nickel
-                        repository</a> and set it as the current directory:</p>
-
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                             data-output="2-3:"><code>{codeExamples.withNix.clone}</code></pre>
-                    </li>
-                    <li><p>Invoke <code>nix-build</code>:</p>
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                             data-output="2:"><code>{codeExamples.withNix.build}</code></pre>
-                    </li>
-                    <li><p>If everything went right, a binary is now available in the <code>result</code> directory:</p>
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                             data-output="2:"><code>{codeExamples.withNix.run}</code></pre>
-                    </li>
-                </ol>
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output={"3"}>
+                    <code>{codeExamples.withNix.install}</code>
+                </pre>
 
                 <h2 id="build-using-cargo">Get a Nickel binary using Cargo</h2>
 
-                <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative to install or build Nickel.</p>
-
-                <h3>Install</h3>
-
-                Cargo is capable of directly installing the Nickel binary and make it available in the path. You just have to provide a target directory:
+                <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative to install a Nickel binary:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                     data-output="2-3:"><code>{codeExamples.withCargo.install}</code></pre>
-
-                <h3>Build from source</h3>
-
-                Alternatively, you can build Nickel from source:
-
-                <ol>
-                    <li><p>Clone the <a className={"link-primary"} href="https://github.com/tweag/nickel">Nickel
-                        repository</a> and set it as the current directory:</p>
-
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                             data-output="2-3:"><code>{codeExamples.withCargo.clone}</code></pre>
-                    </li>
-                    <li><p>Invoke <code>cargo run --release</code> to build and run Nickel at once. Use <code>cargo run --release -- args</code> to pass arguments to the nickel interpreter:</p>
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                             data-output="2:"><code>{codeExamples.withCargo.cargo_run}</code></pre>
-                    </li>
-                    <li><p>You can also build Nickel first, and then run it manually.</p>
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                             data-output="2:"><code>{codeExamples.withCargo.build}</code></pre>
-
-                        <p>If everything went right, a binary is now available in the <code>target/release/bin</code> directory:</p>
-
-                        <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                             data-output="2:"><code>{codeExamples.withCargo.run}</code></pre>
-                    </li>
-                </ol>
+                     data-output="3"><code>{codeExamples.withCargo.install}</code></pre>
 
                 <h2 id="build-using-docker">Get a Docker image</h2>
 
