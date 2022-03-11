@@ -108,14 +108,14 @@
 .logo {
     height: auto;
     width: 100px;
-    vertical-align: middle;
+    vertical-align: middle !important;
     margin-right: 0.3em;
 }
 
 .logo-navbar {
     height: auto;
     width: 50px;
-    vertical-align: middle;
+    vertical-align: middle !important;
     margin-right: 0.3em;
 }
 
