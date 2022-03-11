@@ -96,7 +96,7 @@ const IndexPage = () => {
 
     return (
         <Layout>
-            <main className="container content-main-container content">
+            <main className="container content-main-container content documentation-page">
                 <h1 id="getting-started" className={'main-title'}>Getting started</h1>
 
                 <p>Nickel is still young and the installation process is not yet optimal. Sorry about that! We are focused on improving the

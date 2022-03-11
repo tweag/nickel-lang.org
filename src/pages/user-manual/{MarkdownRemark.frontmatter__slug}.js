@@ -31,7 +31,7 @@ const UserManual = ({data}) => {
                     <SidebarToc {...sidebarProps}/>
                 </div>
                 <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
-                    <div className={"container content-main-container content all-links-primary"} dangerouslySetInnerHTML={{ __html: html }}>
+                    <div className={"container content-main-container content documentation-page"} dangerouslySetInnerHTML={{ __html: html }}>
                     </div>
                 </div>
             </div>

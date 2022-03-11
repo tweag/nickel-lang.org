@@ -255,7 +255,7 @@
     font-weight: bold;
 }
 
-:not(pre) > code {
+.documentation-page :not(pre) > code {
     background: transparent !important;
     color: #1285f9 !important;
 }
