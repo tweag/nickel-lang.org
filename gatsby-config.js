@@ -6,17 +6,25 @@ module.exports = {
                 name: 'Getting started',
                 link: '/getting-started'
             },
-            // Disabling the documentation page for now.
-            // There is just not enough interesting content to show.
-            /*{
+            {
                 name: 'Documentation',
-                link: '/documentation'
-            },*/
+                link: '/user-manual'
+            },
             {
                 name: 'Playground',
                 link: '/playground'
             },
-        ]
+        ],
+        userManual: {
+            sections: [
+                {name: "Introduction", link: "/user-manual/introduction"},
+                {name: "Syntax", link: "/user-manual/syntax"},
+                {name: "Merging", link: "/user-manual/merging"},
+                {name: "Correctness", link: "/user-manual/correctness"},
+                {name: "Typing", link: "/user-manual/typing"},
+                {name: "Contracts", link: "/user-manual/contracts"},
+            ],
+        },
     },
     plugins: [
         'gatsby-plugin-react-helmet',
@@ -27,9 +35,30 @@ module.exports = {
             resolve: `gatsby-source-filesystem`,
             options: {
                 name: `markdown-pages`,
-                path: `${__dirname}/src/markdown-pages`,
+                path: `${__dirname}/src/nickel-manual`,
             },
         },
         `gatsby-plugin-sass`,
+        {
+          resolve: `gatsby-transformer-remark`,
+          options: {
+              plugins: [
+                  `gatsby-remark-autolink-headers`,
+                  `gatsby-remark-prismjs`,
+                  {
+                      resolve: `gatsby-remark-classes`,
+                      options: {
+                          classMap: {
+                              link: "link-primary",
+                              table: "table table-striped markdown-table",
+                          }
+                      }
+                  }
+              ],
+          },
+        },
+        // {
+        //     resolve: `gatsby-remark-prismjs`,
+        // },
     ],
 };
