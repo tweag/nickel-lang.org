@@ -207,8 +207,7 @@ const IndexPage = () => {
 
                 <p>This short introduction should get you started. Nickel is a
                     full-fledged programming language, featuring higher-order functions, gradual
-                    typing, contracts, and more! To explore further, read the
-                    <a
+                    typing, contracts, and more! To explore further, read the <a
                         className={"link-primary"}
                         href="/user-manual">user manual</a>
                     . You will also find <a
