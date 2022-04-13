@@ -46,6 +46,6 @@
     "react-bootstrap-icons": "^1.8.1",
     "react-dom": "^18.0.0",
     "react-helmet": "^6.1.0",
-    "sass": "^1.49.0"
+    "sass": "^1.50.0"
   }
 }
