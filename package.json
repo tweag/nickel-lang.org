@@ -24,7 +24,7 @@
     "ansi-to-react": "^6.1.6",
     "bootstrap": "^4.6.1",
     "create-react-class": "^15.7.0",
-    "gatsby": "^4.12.1",
+    "gatsby": "^4.13.1",
     "gatsby-plugin-fontawesome-css": "^1.2.0",
     "gatsby-plugin-image": "^2.12.1",
     "gatsby-plugin-react-helmet": "^5.10.0",
