@@ -34,7 +34,7 @@
     "gatsby-remark-classes": "^1.0.2",
     "gatsby-remark-prismjs": "^6.17.0",
     "gatsby-source-filesystem": "^4.17.0",
-    "gatsby-transformer-remark": "^5.15.1",
+    "gatsby-transformer-remark": "^5.17.0",
     "gatsby-transformer-sharp": "^4.17.0",
     "jquery": "^3.6.0",
     "nickel-repl": "file:nickel-repl",
