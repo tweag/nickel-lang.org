@@ -209,7 +209,7 @@ const IndexPage = () => {
                     full-fledged programming language, featuring higher-order functions, gradual
                     typing, contracts, and more! To explore further, read the <a
                         className={"link-primary"}
-                        href="/user-manual">user manual</a>
+                        href="/user-manual/introduction">user manual</a>
                     . You will also find <a
                         className={"link-primary"}
                         href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a
