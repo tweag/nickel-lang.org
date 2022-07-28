@@ -193,7 +193,7 @@ const IndexPage = () => {
                     The name <code>example</code> appears both in <code>name</code> and <code>scripts.test</code> as well.
                     Pure aesthetics aside, a more serious issue is inconsistency. If you bump the
                     version number in <code>version</code>, you may forget to do so in the <code>scripts.test</code> as well,
-                    ending up wih incoherent version numbers in the same configuration. To remedy the problem, let's have a
+                    ending up with incoherent version numbers in the same configuration. To remedy the problem, let's have a
                     single source of truth by reusing the value of <code>name</code> and <code>version</code> in <code>scripts.test</code>, using
                     the string interpolation syntax <code>%{'{expr}'}</code>:</p>
                 <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
