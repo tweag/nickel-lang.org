@@ -84,7 +84,7 @@ scripts = {
 scripts:
   do_stuff: do_stuff.sh subcommand
   test: "test.sh --option --install example --version \\"0.1.2\\""
-  version: 0.1.2`,
+version: 0.1.2`,
     },
 };
 
