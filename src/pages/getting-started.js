@@ -84,7 +84,7 @@ scripts = {
 scripts:
   do_stuff: do_stuff.sh subcommand
   test: "test.sh --option --install example --version \\"0.1.2\\""
-  version: 0.1.2`,
+version: 0.1.2`,
     },
 };
 
@@ -115,7 +115,7 @@ const IndexPage = () => {
 
                 <h3>Run</h3>
 
-                <p>With a recent version of Nix (> 2.4.0), you can build an run Nickel in one shot. If you haven't installed Nix yet, please follow
+                <p>With a recent version of Nix (> 2.4.0), you can build and run Nickel in one shot. If you haven't installed Nix yet, please follow
                     <a className={"link-primary"} href={"https://nixos.org/guides/nix-pills/install-on-your-running-system.html"}> this installation guide</a>. Once Nix is installed, use <code>nix run</code> to start Nickel
                     and append <code>-- args</code> to pass arguments to the Nickel executable (here we launch an REPL session)</p>
 
@@ -132,7 +132,7 @@ const IndexPage = () => {
 
                 <h2 id="build-using-cargo">Get a Nickel binary using Cargo</h2>
 
-                <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative to install a Nickel binary:</p>
+                <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative way to install a Nickel binary:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
                      data-output="3"><code>{codeExamples.withCargo.install}</code></pre>
 
@@ -146,7 +146,7 @@ const IndexPage = () => {
 
                 <p> Nickel has advanced features to help you handle and organize complex configurations (gradual typing, contracts, a merge system, and so on).
                     But you'll only have to deal with any of this once you need to.
-                    Writing a basic configuration is as simple as writing JSON or YAML. Let us write a manifest of a fictional app:</p>
+                    Writing a basic configuration is as simple as writing JSON or YAML. Let's write a manifest of a fictional app:</p>
 
                 <div className={'d-none d-md-block'}>
                     <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig}/>
@@ -162,22 +162,22 @@ const IndexPage = () => {
                         <li>Records (objects), delimited by <code>{'{'}</code> and <code>{'}'}</code>.</li>
                         <li>Strings, delimited by <code>&quot;</code>. The sequence <code>m%&quot;</code> and <code>&quot;%m</code> delimits multiline strings.
                         </li>
-                        <li>Numbers</li>
+                        <li>Numbers.</li>
                         <li>Lists, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
                     </ul>
 
                 <p/>Multiline strings are an alternative way of defining strings. Line 11 is an example of such a string. Without diving into the details, multiline strings are
                     useful for:
                     <ul>
-                        <li>Write strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
+                        <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
                             level as the surrounding code while still producing the expected result (the common indentation prefix is stripped).
                         </li>
-                        <li>Write strings with special characters without having to escape them.</li>
+                        <li>Writing strings with special characters without having to escape them.</li>
                     </ul>
 
                 In our example, using a multiline string saves us from escaping the recurring double quotes <code>"</code>.
                 <h2 id="export">Export</h2>
-                <p>The ultimate goal of a Nickel program is to produce a static configuration. To do so, save the content of our example above in <code>example.ncl</code> and run <code>nickel export</code>:</p>
+                <p>The ultimate goal of a Nickel program is to produce a static configuration. To do so, save the example above to <code>example.ncl</code> and run <code>nickel export</code>:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
                      data-output="2-21:"><code>{codeExamples.export}</code></pre>
 
@@ -193,7 +193,7 @@ const IndexPage = () => {
                     The name <code>example</code> appears both in <code>name</code> and <code>scripts.test</code> as well.
                     Pure aesthetics aside, a more serious issue is inconsistency. If you bump the
                     version number in <code>version</code>, you may forget to do so in the <code>scripts.test</code> as well,
-                    ending up wih incoherent version numbers in the same configuration. To remedy the problem, let's have a
+                    ending up with incoherent version numbers in the same configuration. To remedy the problem, let's have a
                     single source of truth by reusing the value of <code>name</code> and <code>version</code> in <code>scripts.test</code>, using
                     the string interpolation syntax <code>%{'{expr}'}</code>:</p>
                 <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
@@ -209,7 +209,7 @@ const IndexPage = () => {
                     full-fledged programming language, featuring higher-order functions, gradual
                     typing, contracts, and more! To explore further, read the <a
                         className={"link-primary"}
-                        href="/user-manual">user manual</a>
+                        href="/user-manual/introduction">user manual</a>
                     . You will also find <a
                         className={"link-primary"}
                         href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a

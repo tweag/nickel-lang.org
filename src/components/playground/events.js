@@ -4,7 +4,7 @@
  */
 const PLAYGROUND_SEND_EVENT = 'playground:send';
 /**
- * The editor is sending a snippet for execution (by clicking the "Run" button, or usign the corresponding shortcut). Editor listens to `PLAYGROUND_SEND_EVENT`,
+ * The editor is sending a snippet for execution (by clicking the "Run" button, or using the corresponding shortcut). Editor listens to `PLAYGROUND_SEND_EVENT`,
  * and dispatch `EDITOR_SEND_ENVENT`. The payload (field `detail` of the event) contains the input as a string.
  * @type {string}
  */
