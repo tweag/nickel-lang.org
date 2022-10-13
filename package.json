@@ -22,7 +22,7 @@
     "@loadable/component": "^5.15.2",
     "ace-builds": "^1.11.2",
     "ansi-to-react": "^6.1.6",
-    "bootstrap": "^4.6.1",
+    "bootstrap": "^4.6.2",
     "create-react-class": "^15.7.0",
     "gatsby": "^4.17.1",
     "gatsby-plugin-fontawesome-css": "^1.2.0",
