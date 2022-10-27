@@ -150,7 +150,7 @@ ace.define("ace/mode/nickel",["require","exports","module","ace/lib/oop","ace/mo
     oop.inherits(Mode, TextMode);
 
     (function () {
-        this.lineCommentStart = "//";
+        this.lineCommentStart = "#";
         this.$id = "ace/mode/nickel";
     }).call(Mode.prototype);
 
