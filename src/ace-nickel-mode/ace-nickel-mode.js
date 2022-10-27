@@ -78,7 +78,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                 },
                 {
                 token: "string",
-                regex: "m(#{4,})\"",
+                regex: "m(%{4,})\"",
                 next: "qqdocn"
             },
                 genQqdoc(1),
@@ -117,7 +117,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
             "qqstring": [
                 {
                     token: "constant.language.escape",
-                    regex: "#{",
+                    regex: "%{",
                     push: "start"
                 }, {
                     token: "string",
