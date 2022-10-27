@@ -57,7 +57,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
         this.$rules = {
             "start": [{
                 token: "comment",
-                regex: /\/\/.*$/
+                regex: /#.*$/
             }, {
                 regex: "(==|!=|<=?|>=?)",
                 token: ["keyword.operator.comparison.nickel"]
