@@ -65,7 +65,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                 regex: "(\\+\\+|@)",
                 token: ["keyword.operator.combinator.nickel"]
             }, {
-                regex: "(#|->|:)",
+                regex: "(->|:)",
                 token: ["keyword.operator.type.nickel"]
             }, {
                 regex: "=",
