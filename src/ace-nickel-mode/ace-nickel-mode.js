@@ -25,7 +25,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
         // maintain a state and a stack), we can't encode nickel
         // variable-length delimiter directly with one nice generic rule.
         //
-        // We thus generate a rule for lengths 1, 2 and 3 (m#", m##", and m###")
+        // We thus generate a rule for lengths 1, 2 and 3 (m%", m%%", and m%%%")
         // plus write a generic rule for size n. The generic rule is wrong for
         // length 5 and above, but this is highly unlikely to be used in
         // practice.
@@ -34,7 +34,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
         // delimiters
         let genQqdoc = length => ({
             token: "string",
-            regex: `m${'#'.repeat(length)}"`,
+            regex: `m${'%'.repeat(length)}"`,
             next: `qqdoc${length}`,
         });
 
@@ -43,11 +43,11 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
             [`qqdoc${length}`]: [
                 {
                     token: "constant.language.escape",
-                    regex: `${'#'.repeat(length)}{`,
+                    regex: `${'%'.repeat(length)}{`,
                     push: "start",
                 }, {
                     token: "string",
-                    regex: `"${'#'.repeat(length)}m`,
+                    regex: `"${'%'.repeat(length)}m`,
                     next: "pop",
                 }, {
                     defaultToken: "string"
@@ -57,7 +57,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
         this.$rules = {
             "start": [{
                 token: "comment",
-                regex: /\/\/.*$/
+                regex: /#.*$/
             }, {
                 regex: "(==|!=|<=?|>=?)",
                 token: ["keyword.operator.comparison.nickel"]
@@ -65,7 +65,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                 regex: "(\\+\\+|@)",
                 token: ["keyword.operator.combinator.nickel"]
             }, {
-                regex: "(#|->|:)",
+                regex: "(->|:)",
                 token: ["keyword.operator.type.nickel"]
             }, {
                 regex: "=",
@@ -78,7 +78,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                 },
                 {
                 token: "string",
-                regex: "m(#{4,})\"",
+                regex: "m(%{4,})\"",
                 next: "qqdocn"
             },
                 genQqdoc(1),
@@ -117,7 +117,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
             "qqstring": [
                 {
                     token: "constant.language.escape",
-                    regex: "#{",
+                    regex: "%{",
                     push: "start"
                 }, {
                     token: "string",
