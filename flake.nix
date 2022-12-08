@@ -20,20 +20,20 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         packageInfo = pkgs.lib.importJSON ./package.json;
-        nickelWasm = nickel.packages.${system}.buildWasm;
+        nickelWasm = nickel.packages.${system}.nickelWasm;
         nickelUserManual = nickel.packages.${system}.userManual;
       in rec {
         devShell = pkgs.mkShell {
           packages = with pkgs; [
             nodejs_latest
-            autoconf 
-            automake 
-            gettext 
-            libtool 
-            cmake 
-            pkg-config 
-            libpng 
-            zlib 
+            autoconf
+            automake
+            gettext
+            libtool
+            cmake
+            pkg-config
+            libpng
+            zlib
             nasm
           ];
           shellHook = ''
