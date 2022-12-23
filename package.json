@@ -47,5 +47,11 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "sass": "^1.55.0"
+  },
+  "overrides": {
+    "ansi-to-react": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    }
   }
 }
