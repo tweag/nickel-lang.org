@@ -15,9 +15,9 @@ import nickelLanguageDefinition from "../prism/nickel";
 // Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
-        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel -- repl
+        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel/stable -- repl
 nickel>`,
-        install: `nix profile install github:tweag/nickel
+        install: `nix profile install github:tweag/nickel/stable
 nickel repl
 nickel>`,
     },
