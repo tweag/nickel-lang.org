@@ -23,6 +23,7 @@ module.exports = {
                 {name: "Correctness", link: "/user-manual/correctness"},
                 {name: "Typing", link: "/user-manual/typing"},
                 {name: "Contracts", link: "/user-manual/contracts"},
+                {name: "Tutorial", link: "/user-manual/tutorial"},
             ],
         },
     },
