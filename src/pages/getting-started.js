@@ -139,7 +139,7 @@ const IndexPage = () => {
                 <h2 id="build-using-docker">Get a Docker image</h2>
 
                 A last alternative is to use <a className={"link-primary"} href="https://www.docker.com/">Docker</a>: you can download the
-                <a className={"link-primary"} href={"https://github.com/tweag/nickel/releases/download/0.1.0/nickel-0.1.0-docker-image.tar.gz"}> nickel-0.1.0-docker-image.tar.gz</a>.
+                <a className={"link-primary"} href={"https://github.com/tweag/nickel/releases/download/0.3.1/nickel-0.3.1-docker-image.tar.gz"}> nickel-0.3.1-docker-image.tar.gz</a>.
                 Please refer to the official Docker documentation to know how to load and run a Docker image.
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
