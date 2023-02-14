@@ -46,7 +46,7 @@
     "react-bootstrap-icons": "^1.10.2",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "sass": "^1.57.1"
+    "sass": "^1.58.1"
   },
   "overrides": {
     "ansi-to-react": {
