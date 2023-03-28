@@ -17,7 +17,7 @@ const UserManual = ({data}) => {
         Prism.languages.nickel = nickelLanguageDefinition;
         Prism.highlightAll();
     }, []);
-    const { markdownRemark: {html, headings, frontmatter} } = data; // data.markdownRemark holds your post data
+    const { userManualMarkdown: {parent: {html, headings, frontmatter} } } = data;
     const sidebarProps = {
         active: frontmatter.slug,
         headings
@@ -42,14 +42,18 @@ const UserManual = ({data}) => {
 
 export const pageQuery = graphql`
   query($id: String!) {
-    markdownRemark(id: {eq: $id }) {
-      html
-      frontmatter {
-          slug
-      }
-      headings(depth: h2) {
-          value
-          id
+    userManualMarkdown(id: { eq: $id }) {
+      parent {
+        ... on MarkdownRemark {
+          html
+          frontmatter {
+            slug
+          }
+          headings(depth: h2) {
+            value
+            id
+          }
+        }
       }
     }
   }

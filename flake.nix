@@ -19,10 +19,10 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        packageInfo = pkgs.lib.importJSON ./package.json;
         nickelWasm = nickel.packages.${system}.nickelWasm;
         nickelUserManual = nickel.packages.${system}.userManual;
-      in rec {
+        nickelStdlibDoc = nickel.packages.${system}.stdlibDoc;
+      in {
         devShell = pkgs.mkShell {
           packages = with pkgs; [
             nodejs_latest
@@ -37,9 +37,9 @@
             nasm
           ];
           shellHook = ''
-            rm -rf nickel-repl
-            ln -s ${nickelWasm}/nickel-repl nickel-repl
-            ln -s ${nickelUserManual} src/nickel-manual
+            ln -sfn ${nickelWasm}/nickel-repl nickel-repl
+            ln -sfn ${nickelUserManual} src/nickel-manual
+            ln -sfn ${nickelStdlibDoc} src/nickel-stdlib-doc
 
             echo "== Run \`npm run develop\` to start developing"
             echo " or"

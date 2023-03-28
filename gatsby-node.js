@@ -1,3 +1,5 @@
+const path = require('path')
+
 exports.onCreateWebpackConfig = ({ _stage, actions, _loaders }) => {
     actions.setWebpackConfig({
         experiments: {
@@ -21,6 +23,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
                   frontmatter {
                     slug
                   }
+                  parent {
+                    ... on File {
+                      sourceInstanceName
+                    }
+                  }            
                 }
               }
             }
@@ -28,15 +35,17 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
 
     result.data.allMarkdownRemark.edges.forEach(edge => {
-        const page = edge.node.frontmatter.slug;
-        let path = `/user-manual/${page}`;
+        if (edge.node.parent.sourceInstanceName === "markdown-pages") {
+            const page = edge.node.frontmatter.slug;
+            let page_path = `/user-manual/${page}`;
 
-        actions.createRedirect({
-            fromPath: `${path}.md`,
-            toPath: path,
-            redirectInBrowser: true,
-            isPermanent: true
-        });
+            actions.createRedirect({
+                fromPath: `${page_path}.md`,
+                toPath: page_path,
+                redirectInBrowser: true,
+                isPermanent: true
+            });
+        }
     });
 
     let redirectToIntro = fromPath => (
@@ -51,3 +60,33 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     redirectToIntro("/user-manual/");
     redirectToIntro("/user-manual");
 };
+
+exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
+    if (node.internal.type === "MarkdownRemark" && getNode(node.parent).sourceInstanceName === "user-manual") {
+        newNode = {
+            id: createNodeId(`Nickel User Manual ${node.id}`),
+            parent: node.id,
+            slug: node.frontmatter.slug,
+            internal: {
+                contentDigest: node.internal.contentDigest,
+                type: "UserManualMarkdown",
+            },
+        };
+        actions.createNode(newNode);
+        actions.createParentChildLink({ parent: node, child: newNode })
+    }
+
+    if (node.internal.type === "MarkdownRemark" && getNode(node.parent).sourceInstanceName === "stdlib-doc") {
+        newNode = {
+            id: createNodeId(`Nickel Stdlib Doc ${node.id}`),
+            parent: node.id,
+            slug: getNode(node.parent).name,
+            internal: {
+                contentDigest: node.internal.contentDigest,
+                type: "StdlibMarkdown",
+            },
+        };
+        actions.createNode(newNode);
+        actions.createParentChildLink({ parent: node, child: newNode })
+    }
+}
