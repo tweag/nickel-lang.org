@@ -13,14 +13,44 @@ import ReactMarkdown from 'react-markdown';
 const Stdlib = ({data}) => {
     const object = JSON.parse(data.stdlibSection.internal.content);
     const slug = data.stdlibSection.slug; 
-    console.log(object)
     useEffect(() => {
         Prism.languages.nickel = nickelLanguageDefinition;
         Prism.highlightAll();
     }, []);
     // const { stdlibMarkdown: { parent: {html, headings} } } = data;
     const sidebarProps = {
-        // active: frontmatter.slug,
+        active: slug,
+        headings: data.stdlibSection.functions,
+    };
+
+    const HeaderWithTypes = ({id, name, types, contracts}) => {
+        if(!types && !contracts.length) {
+            return (<h3 id={id}><code className={'language-nickel'}>{name}</code></h3>);
+        }
+
+        if(types && !contracts.length) {
+            return (<h3 id={id}><code className={'language-nickel'}>{name} : {types}</code></h3>);
+        }
+
+        if(!types && contracts) {
+            return (
+                <React.Fragment>
+                <h3 id={id}><code className={'language-nickel'}>{name} | {contracts[0]}</code></h3>
+                {contracts.slice(1).map((ctr) => {
+                    return (<h4><code className={'language-nickel'}>{name} | {ctr}</code></h4>);
+                })}
+                </React.Fragment>
+            );
+        }
+
+        return (
+            <React.Fragment>
+            <h3 id={id}><code className={'language-nickel'}>{name} : {types}</code></h3>
+            {contracts.map((ctr) => {
+                return (<h4><code className={'language-nickel'}>{name} | {ctr}</code></h4>);
+            })}
+            </React.Fragment>
+        );
     };
 
     const markdownComponents = {
@@ -42,18 +72,15 @@ const Stdlib = ({data}) => {
                 <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
                     <div className={"container content-main-container content documentation-page"}>
                         <h2>{slug.charAt(0).toUpperCase() + slug.slice(1)}</h2>
-                        {Object.entries(object[`${slug}`].fields).map(([k, v]) => {
+                        {Object.entries(object[`${slug}`].fields).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([k, v]) => {
                             return (
-                                <div>
-                                <h3>{k}</h3>
-                                {v.types ? (<h4><code className={'language-nickel'}>{k} : {v.types}</code></h4>) : ""}
-                                {v.contracts.map((ctr) => {
-                                    return (<h4><code className={'language-nickel'}>{k} | {ctr}</code></h4>);
-                                })}
+                                <React.Fragment>
+                                <HeaderWithTypes id={`sub-${slug}-${k}`} name={k} types={v.types} contracts={v.contracts}/>
                                 <ReactMarkdown components={markdownComponents}>
                                 {v.documentation}
                                 </ReactMarkdown>
-                                </div>
+                                <hr/>
+                                </React.Fragment>
                             );
                         })}
                     </div>
@@ -68,6 +95,10 @@ export const pageQuery = graphql`
   query($id: String) {
     stdlibSection(id: { eq: $id }) {
         slug
+        functions {
+            value
+            id
+        }
         internal { content }
     }
   }

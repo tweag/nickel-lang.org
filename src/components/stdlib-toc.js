@@ -6,9 +6,9 @@ import Footer from "./footer"
 
 export default function SidebarToc({active, headings}) {
     const subMenu = (name) => {
-        if(name.toLowerCase() === active) {
+        if(name === active) {
             return (
-                <ol>
+                <ul>
                     { headings.map(({value, id}, index) => {
                         const key = `sub-${index}-${id}`;
                         return (
@@ -17,7 +17,7 @@ export default function SidebarToc({active, headings}) {
                             </li>
                         )})
                     }
-                </ol>
+                </ul>
             )
         }
     };
@@ -25,23 +25,23 @@ export default function SidebarToc({active, headings}) {
     return (
         <StaticQuery
             query={graphql`
-      query sections {
-        site {
-            siteMetadata {
-                stdlib {
-                    link
+              query sections {
+                site {
+                    siteMetadata {
+                        stdlib {
+                            link
+                        }
+                    }
                 }
-            }
-        }
-        allStdlibSection(sort: {fields: slug}) {
-            edges {
-                node {
-                    slug
+                allStdlibSection(sort: {fields: slug}) {
+                    edges {
+                        node {
+                            slug
+                        }
+                    }
+                  }
                 }
-            }
-          }
-        }
-    `}
+            `}
             render={data => (
                 <nav id="sidebar" className="sidebar sticky-top">
                     <div className="sidebar-scroll-box">
@@ -55,6 +55,7 @@ export default function SidebarToc({active, headings}) {
                                 return (
                                     <li key={key}>
                                         <Link className="link-primary" activeClassName="sidebar-link-active" to={`${data.site.siteMetadata.stdlib.link}/${slug}`}>{slug}</Link>
+                                        { subMenu(slug) }
                                     </li>
                                 )
                             })}
