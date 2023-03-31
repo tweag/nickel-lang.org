@@ -30,6 +30,9 @@ module.exports = {
                 {name: "Tutorial", link: "/user-manual/tutorial"},
             ],
         },
+        stdlib: {
+            link: '/stdlib'
+        },
     },
     plugins: [
         'gatsby-plugin-react-helmet',
@@ -69,8 +72,6 @@ module.exports = {
               ],
           },
         },
-        // {
-        //     resolve: `gatsby-remark-prismjs`,
-        // },
+        `gatsby-transformer-json`,
     ],
 };

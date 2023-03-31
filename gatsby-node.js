@@ -76,16 +76,18 @@ exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
         actions.createParentChildLink({ parent: node, child: newNode })
     }
 
-    if (node.internal.type === "MarkdownRemark" && getNode(node.parent).sourceInstanceName === "stdlib-doc") {
+    if (node.internal.type == "NickelStdlibDocJson") {
+        slug = getNode(node.parent).name;
         newNode = {
             id: createNodeId(`Nickel Stdlib Doc ${node.id}`),
             parent: node.id,
-            slug: getNode(node.parent).name,
+            slug,
             internal: {
                 contentDigest: node.internal.contentDigest,
-                type: "StdlibMarkdown",
-            },
-        };
+                content: getNode(node.parent).internal.content,
+                type: "StdlibSection"
+            }
+        }
         actions.createNode(newNode);
         actions.createParentChildLink({ parent: node, child: newNode })
     }
