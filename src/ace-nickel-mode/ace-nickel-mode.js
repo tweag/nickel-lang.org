@@ -10,7 +10,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
 
     const NickelHighlightRules = function () {
         const constantLanguage = "true|false|null";
-        const keywordControl = "switch|import|if|else|then";
+        const keywordControl = "match|import|if|else|then";
         const keywordDeclaration = "let|in";
         const keywordMetavalue = "doc|default";
 
@@ -47,7 +47,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                     push: "start",
                 }, {
                     token: "string",
-                    regex: `"${'%'.repeat(length)}m`,
+                    regex: `"${'%'.repeat(length)}`,
                     next: "pop",
                 }, {
                     defaultToken: "string"
@@ -106,7 +106,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                     push: "start"
                 }, {
                     token: "string",
-                    regex: "\"(#{4,})m",
+                    regex: "\"(#{4,})",
                     next: "pop"
                 }, {
                     defaultToken: "string"
