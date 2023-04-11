@@ -59,6 +59,18 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
     redirectToIntro("/user-manual/");
     redirectToIntro("/user-manual");
+
+    let redirectToStdlibArray = fromPath => (
+        actions.createRedirect({
+            fromPath,
+            toPath: `/stdlib/array`,
+            redirectInBrowser: true,
+            isPermanent: true,
+        })
+    );
+
+    redirectToStdlibArray("/stdlib/");
+    redirectToStdlibArray("/stdlib");
 };
 
 exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
@@ -85,7 +97,6 @@ exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
                     id: `sub-${slug}-${k}`,
                 };
             });
-        console.log(functions);
         
         newNode = {
             id: createNodeId(`Nickel Stdlib Doc ${node.id}`),
