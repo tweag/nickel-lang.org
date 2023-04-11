@@ -5,21 +5,26 @@ import Header from "./header"
 import Footer from "./footer"
 
 export default function SidebarToc({active, headings}) {
-    const subMenu = (name) => {
-        if(name === active) {
+    const subMenu = ({headings, keyPrefix}) => {
             return (
                 <ul>
-                    { headings.map(({value, id}, index) => {
-                        const key = `sub-${index}-${id}`;
+                    { Object.entries(headings).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([id, field]) => {
+                        const key = `${keyPrefix}-${id}`;
+                        console.log(key);
                         return (
                             <li key={key}>
-                                <Link key={key} className="link-secondary" to={`#${id}`}>{value}</Link>
+                                <Link key={`link-${key}`} className="link-secondary" to={`#${id}`}>{id}</Link>
+                                <ul>
+                                {field.fields ? subMenu({
+                                    headings: field.fields,
+                                    keyPrefix: `${keyPrefix}-${id}`,
+                                }) : ""}
+                                </ul>
                             </li>
                         )})
                     }
                 </ul>
             )
-        }
     };
 
     return (
@@ -55,7 +60,14 @@ export default function SidebarToc({active, headings}) {
                                 return (
                                     <li key={key}>
                                         <Link className="link-primary" activeClassName="sidebar-link-active" to={`${data.site.siteMetadata.stdlib.link}/${slug}`}>{slug}</Link>
-                                        { subMenu(slug) }
+                                        {
+                                            (slug == active) ?
+                                                subMenu({
+                                                    headings,
+                                                    keyPrefix: `${key}-sub`,
+                                                })
+                                            : ""
+                                        }
                                     </li>
                                 )
                             })}

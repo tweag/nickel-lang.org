@@ -90,19 +90,11 @@ exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
 
     if (node.internal.type == "NickelStdlibDocJson") {
         const slug = getNode(node.parent).name;
-        const functions =
-            Object.entries(node[slug].fields).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([k, v]) => {
-                return {
-                    value: k,
-                    id: `sub-${slug}-${k}`,
-                };
-            });
-        
+
         newNode = {
             id: createNodeId(`Nickel Stdlib Doc ${node.id}`),
             parent: node.id,
             slug,
-            functions,
             internal: {
                 contentDigest: node.internal.contentDigest,
                 content: getNode(node.parent).internal.content,

@@ -20,7 +20,7 @@ const Stdlib = ({data}) => {
     // const { stdlibMarkdown: { parent: {html, headings} } } = data;
     const sidebarProps = {
         active: slug,
-        headings: data.stdlibSection.functions,
+        headings: object[slug].fields,
     };
 
     const HeaderWithTypes = ({id, name, types, contracts}) => {
@@ -75,7 +75,7 @@ const Stdlib = ({data}) => {
                         {Object.entries(object[`${slug}`].fields).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([k, v]) => {
                             return (
                                 <React.Fragment>
-                                <HeaderWithTypes id={`sub-${slug}-${k}`} name={k} types={v.types} contracts={v.contracts}/>
+                                <HeaderWithTypes id={k} name={k} types={v.types} contracts={v.contracts}/>
                                 <ReactMarkdown components={markdownComponents}>
                                 {v.documentation}
                                 </ReactMarkdown>
@@ -95,7 +95,7 @@ export const pageQuery = graphql`
   query($id: String) {
     stdlibSection(id: { eq: $id }) {
         slug
-        functions {
+        subfields {
             value
             id
         }
