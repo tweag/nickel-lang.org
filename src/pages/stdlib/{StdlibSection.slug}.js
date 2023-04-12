@@ -17,7 +17,6 @@ const Stdlib = ({data}) => {
         Prism.languages.nickel = nickelLanguageDefinition;
         Prism.highlightAll();
     }, []);
-    // const { stdlibMarkdown: { parent: {html, headings} } } = data;
     const sidebarProps = {
         active: slug,
         headings: object[slug].fields,
@@ -53,14 +52,39 @@ const Stdlib = ({data}) => {
         );
     };
 
-    const markdownComponents = {
-        h1: 'h4',
-        h2: 'h5',
-        h3: 'h6',
-        h4: 'h6',
-        h5: 'h6',
-        h6: 'h6',
+    const DocEntry = ({prefix, k, v}) => {
+        const markdownComponents = {
+            h1: 'h4',
+            h2: 'h5',
+            h3: 'h6',
+            h4: 'h6',
+            h5: 'h6',
+            h6: 'h6',
+        };
+        const id = `${prefix}${prefix ? "." : ""}${k}`;
+        return (
+            <React.Fragment>
+            <HeaderWithTypes id={id} name={id} types={v.types} contracts={v.contracts}/>
+            <ReactMarkdown components={markdownComponents}>
+            {v.documentation}
+            </ReactMarkdown>
+            <hr/>
+            <DocEntries prefix={id} fields={v.fields} />
+            </React.Fragment>
+        );
     };
+
+    const DocEntries = ({prefix, fields}) => {
+        return Object.entries(fields ? fields : {}).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([k, v]) => {
+            return (
+                <React.Fragment>
+                <DocEntry prefix={prefix} k={k} v={v} />
+                </React.Fragment>
+            );
+        })
+    };
+
+  console.log(object[`${slug}`].fields);
   return (
       <Layout>
         <div className="container-fluid">
@@ -72,17 +96,7 @@ const Stdlib = ({data}) => {
                 <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
                     <div className={"container content-main-container content documentation-page"}>
                         <h2>{slug.charAt(0).toUpperCase() + slug.slice(1)}</h2>
-                        {Object.entries(object[`${slug}`].fields).sort(([k1, v1], [k2, v2]) => k1.localeCompare(k2)).map(([k, v]) => {
-                            return (
-                                <React.Fragment>
-                                <HeaderWithTypes id={k} name={k} types={v.types} contracts={v.contracts}/>
-                                <ReactMarkdown components={markdownComponents}>
-                                {v.documentation}
-                                </ReactMarkdown>
-                                <hr/>
-                                </React.Fragment>
-                            );
-                        })}
+                        <DocEntries prefix={``} fields={object[`${slug}`].fields} />
                     </div>
                 </div>
             </div>
@@ -95,10 +109,6 @@ export const pageQuery = graphql`
   query($id: String) {
     stdlibSection(id: { eq: $id }) {
         slug
-        subfields {
-            value
-            id
-        }
         internal { content }
     }
   }

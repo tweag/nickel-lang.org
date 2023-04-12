@@ -88,7 +88,7 @@ exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
         actions.createParentChildLink({ parent: node, child: newNode })
     }
 
-    if (node.internal.type == "NickelStdlibDocJson") {
+    if (node.internal.type === "NickelStdlibDocJson") {
         const slug = getNode(node.parent).name;
 
         newNode = {
