@@ -13,9 +13,10 @@ import ReactMarkdown from 'react-markdown';
 const Stdlib = ({data}) => {
     const object = JSON.parse(data.stdlibSection.internal.content);
     const slug = data.stdlibSection.slug; 
+    const name = data.stdlibSection.name; 
     const sidebarProps = {
         active: slug,
-        headings: object[slug].fields,
+        headings: object,
     };
 
     const HeaderWithTypes = ({id, name, types, contracts}) => {
@@ -84,7 +85,6 @@ const Stdlib = ({data}) => {
         })
     };
 
-  console.log(object[`${slug}`].fields);
   return (
       <Layout>
         <div className="container-fluid">
@@ -95,20 +95,22 @@ const Stdlib = ({data}) => {
                 </div>
                 <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
                     <div className={"container content-main-container content documentation-page"}>
-                        <h2>{slug.charAt(0).toUpperCase() + slug.slice(1)}</h2>
-                        <DocEntries prefix={``} fields={object[`${slug}`].fields} />
+                        <h2>{name}</h2>
+                        <DocEntries prefix={``} fields={object} />
                     </div>
                 </div>
             </div>
         </div>
       </Layout>
   )
+                        // <h2>{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
 };
 
 export const pageQuery = graphql`
   query($id: String) {
     stdlibSection(id: { eq: $id }) {
         slug
+        name
         internal { content }
     }
   }

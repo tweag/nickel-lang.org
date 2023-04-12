@@ -60,20 +60,36 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     redirectToIntro("/user-manual/");
     redirectToIntro("/user-manual");
 
-    let redirectToStdlibArray = fromPath => (
+    let redirectToStdlibStd = fromPath => (
         actions.createRedirect({
             fromPath,
-            toPath: `/stdlib/array`,
+            toPath: `/stdlib/std`,
             redirectInBrowser: true,
             isPermanent: true,
         })
     );
 
-    redirectToStdlibArray("/stdlib/");
-    redirectToStdlibArray("/stdlib");
+    redirectToStdlibStd("/stdlib/");
+    redirectToStdlibStd("/stdlib");
 };
 
-exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
+const makeStdlibSection = ({ actions, createNodeId, createContentDigest, node, slug, name, content }) => {
+    newNode = {
+        id: createNodeId(`${node.id} >>> Nickel Stdlib Doc ${slug}`),
+        parent: node.id,
+        slug,
+        name,
+        internal: {
+            contentDigest: createContentDigest(content),
+            content: JSON.stringify(content),
+            type: "StdlibSection"
+        }
+    };
+    actions.createNode(newNode);
+    actions.createParentChildLink({ parent: node, child: newNode })
+}
+
+exports.onCreateNode = ({ node, getNode, createNodeId, createContentDigest, actions }) => {
     if (node.internal.type === "MarkdownRemark" && getNode(node.parent).sourceInstanceName === "user-manual") {
         newNode = {
             id: createNodeId(`Nickel User Manual ${node.id}`),
@@ -89,19 +105,27 @@ exports.onCreateNode = ({ node, getNode, createNodeId, actions }) => {
     }
 
     if (node.internal.type === "NickelStdlibDocJson") {
-        const slug = getNode(node.parent).name;
+        const toplevelName = getNode(node.parent).name;
+        docsContent = JSON.parse(getNode(node.parent).internal.content);
 
-        newNode = {
-            id: createNodeId(`Nickel Stdlib Doc ${node.id}`),
-            parent: node.id,
-            slug,
-            internal: {
-                contentDigest: node.internal.contentDigest,
-                content: getNode(node.parent).internal.content,
-                type: "StdlibSection"
-            }
-        }
-        actions.createNode(newNode);
-        actions.createParentChildLink({ parent: node, child: newNode })
+        toplevelFields = Object.fromEntries(Object.entries(docsContent).filter(([key, value]) => !value.fields));
+
+        makeStdlibSection({
+            actions, createNodeId, createContentDigest,
+            node,
+            slug: toplevelName,
+            name: toplevelName,
+            content: toplevelFields,
+        })
+
+        Object.entries(docsContent).filter(([key, value]) => !!value.fields).forEach(([slug, value]) => {
+            makeStdlibSection({
+                actions, createNodeId, createContentDigest,
+                node,
+                slug: `${toplevelName}-${slug}`,
+                name: `${toplevelName}.${slug}`,
+                content: value.fields,
+            })
+        });
     }
 }

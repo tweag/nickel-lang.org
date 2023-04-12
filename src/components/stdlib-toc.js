@@ -40,6 +40,7 @@ export default function SidebarToc({active, headings}) {
                     edges {
                         node {
                             slug
+                            name
                         }
                     }
                   }
@@ -53,11 +54,11 @@ export default function SidebarToc({active, headings}) {
                         </div>
 
                         <ul>
-                            {data.allStdlibSection.edges.map(({node: { slug }}) => {
+                            {data.allStdlibSection.edges.map(({node: { slug, name }}) => {
                                 const key = `sec-stdlib-${slug}`;
                                 return (
                                     <li key={key}>
-                                        <Link className="link-primary" activeClassName="sidebar-link-active" to={`${data.site.siteMetadata.stdlib.link}/${slug}`}>{slug}</Link>
+                                        <Link className="link-primary" activeClassName="sidebar-link-active" to={`${data.site.siteMetadata.stdlib.link}/${slug}`}>{name}</Link>
                                         {
                                             (slug === active) ?
                                                 subMenu({
