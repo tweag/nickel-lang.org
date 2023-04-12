@@ -13,10 +13,6 @@ import ReactMarkdown from 'react-markdown';
 const Stdlib = ({data}) => {
     const object = JSON.parse(data.stdlibSection.internal.content);
     const slug = data.stdlibSection.slug; 
-    useEffect(() => {
-        Prism.languages.nickel = nickelLanguageDefinition;
-        Prism.highlightAll();
-    }, []);
     const sidebarProps = {
         active: slug,
         headings: object[slug].fields,
@@ -53,6 +49,10 @@ const Stdlib = ({data}) => {
     };
 
     const DocEntry = ({prefix, k, v}) => {
+        useEffect(() => {
+            Prism.languages.nickel = nickelLanguageDefinition;
+            Prism.highlightAll();
+        }, []);
         const markdownComponents = {
             h1: 'h4',
             h2: 'h5',
