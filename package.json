@@ -20,7 +20,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@loadable/component": "^5.15.3",
-    "ace-builds": "^1.16.0",
+    "ace-builds": "^1.17.0",
     "ansi-to-react": "^6.1.6",
     "bootstrap": "^4.6.2",
     "create-react-class": "^15.7.0",
