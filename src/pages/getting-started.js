@@ -31,12 +31,12 @@ nickel>`,
   description = m%"
     This is an awesome software I'm developing.
     Please use it!
-  "%m,
+  "%,
   version = "0.1.1",
   main = "index.js",
   keywords = ["example", "config"],
   scripts = {
-    test = m%"test.sh --option --install example --version "0.1.1""%m,
+    test = m%"test.sh --option --install example --version "0.1.1""%,
     do_stuff = "do_stuff.sh subcommand",
   },
   contributors = [{
@@ -51,7 +51,7 @@ nickel>`,
     dep3 = "6.7"
   }
 }`,
-    export: `./result/bin/nickel -f example.ncl export --format yaml
+    export: `nickel -f example.ncl export --format yaml
 ---
 contributors:
   - email: johndoe@example.com
@@ -61,7 +61,7 @@ contributors:
 dependencies:
   dep1: ^1.0.0
   dep3: "6.7"
-description: "This is an awesome software I'm developing.\\nPlease use it!"
+description: "This is awesome software I'm developing.\\nPlease use it!"
 keywords:
   - example
   - config
@@ -71,15 +71,24 @@ scripts:
   do_stuff: do_stuff.sh subcommand
   test: "test.sh --option --install example --version \\"0.1.1\\""
 version: 0.1.1`,
+    "importingYaml": `{
+  # [...]
+  scripts = {
+    test = m%"test.sh --option --install example --version "0.1.1""%,
+    do_stuff = "do_stuff.sh subcommand",
+  },
+  contributors = import "contributors.yaml",
+  # [...]
+}`,
     reuse: {
         problem: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m%"test.sh --option --install example --version "0.1.1""%m,`,
+  test = m%"test.sh --option --install example --version "0.1.1""%,`,
         diff: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m%"test.sh --option --install %{name} --version "%{version}""%m`,
+  test = m%"test.sh --option --install %{name} --version "%{version}""%`,
         result: `# [...]
 scripts:
   do_stuff: do_stuff.sh subcommand
@@ -156,11 +165,11 @@ const IndexPage = () => {
                 </div>
                 <p/>This program is composed of a <i>record</i>. A record is the same thing as an object in JSON, that is a list of
                     key-value pairs delimited
-                    by <code>{'{'}</code> and <code>{'}'}</code>. In general, the values of Nickel map directly to
-                    corresponding values in JSON (excluding functions). Thus, the basic datatypes of Nickel are the same as in JSON:
+                    by <code>{'{'}</code> and <code>{'}'}</code>. In general, Nickel values map directly to
+                    values in JSON, excluding functions. Thus, the basic datatypes of Nickel are the same as in JSON:
                     <ul>
                         <li>Records (objects), delimited by <code>{'{'}</code> and <code>{'}'}</code>.</li>
-                        <li>Strings, delimited by <code>&quot;</code>. The sequence <code>m%&quot;</code> and <code>&quot;%m</code> delimits multiline strings.
+                        <li>Strings, delimited by <code>&quot;</code>. The sequences <code>m%&quot;</code> and <code>&quot;%</code> delimit multiline strings.
                         </li>
                         <li>Numbers.</li>
                         <li>Lists, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
@@ -170,22 +179,25 @@ const IndexPage = () => {
                     useful for:
                     <ul>
                         <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
-                            level as the surrounding code while still producing the expected result (the common indentation prefix is stripped).
+                            level as the surrounding code while still producing the expected result: The common indentation prefix is stripped.
                         </li>
                         <li>Writing strings with special characters without having to escape them.</li>
                     </ul>
 
                 In our example, using a multiline string saves us from escaping the recurring double quotes <code>"</code>.
-                <h2 id="export">Export</h2>
+                <h2 id="export">Export & Import</h2>
                 <p>The ultimate goal of a Nickel program is to produce a static configuration. To do so, save the example above to <code>example.ncl</code> and run <code>nickel export</code>:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
                      data-output="2-21:"><code>{codeExamples.export}</code></pre>
 
-                <p>Nickel currently supports exporting to and importing from YAML, TOML and JSON.</p>
+                <p>Nickel currently supports exporting to and importing from YAML, TOML and JSON. Importing an existing configuration into a Nickel one
+                    is as easy as writing <code className={'language-nickel'}>import "something.yaml"</code>. For example, if our contributor data is alreay stored in a YAML
+                    file <code>contributors.yaml</code> and we want to gradually migrate the manifest to Nickel, we could import <code>contributors.yaml</code> as a first step:</p>
+                    <pre><code className={'language-nickel'}>{codeExamples.importingYaml}</code></pre>
 
                 <h2 id="reuse">Reuse</h2>
 
-                <p>Nickel is a programming language. This allows you not only to describe, but to
+                <p>Nickel is a programming language. This allows you to not only describe, but
                     generate data. There&#39;s repetition in our previous example:</p>
                 <pre><code className={'language-nickel'}>{codeExamples.reuse.problem}</code></pre>
 
