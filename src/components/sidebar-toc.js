@@ -5,15 +5,15 @@ import Header from "./header"
 import Footer from "./footer"
 
 export default function SidebarToc({active, headings}) {
-    const subMenu = (name) => {
-        if(name.toLowerCase() === active) {
+    const subMenu = (section) => {
+        if(section.name.toLowerCase() === active) {
             return (
                 <ol>
                     { headings.map(({value, id}, index) => {
                         const key = `sub-${index}-${id}`;
                         return (
                             <li key={key}>
-                                <Link key={key} className="link-secondary" to={`#${id}`}>{value}</Link>
+                                <Link key={key} className="link-secondary" to={`${section.link}#${id}`}>{value}</Link>
                             </li>
                         )})
                     }
@@ -51,7 +51,7 @@ export default function SidebarToc({active, headings}) {
                                 return (
                                     <li key={key}>
                                         <Link key={key} className="link-primary" activeClassName="sidebar-link-active" to={section.link}>{section.name}</Link>
-                                        { subMenu(section.name) }
+                                        { subMenu(section) }
                                     </li>
                                 )
                             })}
