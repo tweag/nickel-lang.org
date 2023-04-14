@@ -13,32 +13,6 @@ exports.onCreateWebpackConfig = ({ _stage, actions, _loaders }) => {
    to the introduction.
  */
 exports.createPages = async ({ actions, graphql, reporter }) => {
-    const result = await graphql(`
-        query {
-            allMarkdownRemark {
-              edges {
-                node {
-                  frontmatter {
-                    slug
-                  }
-                }
-              }
-            }
-        }`
-    );
-
-    result.data.allMarkdownRemark.edges.forEach(edge => {
-        const page = edge.node.frontmatter.slug;
-        let path = `/user-manual/${page}`;
-
-        actions.createRedirect({
-            fromPath: `${path}.md`,
-            toPath: path,
-            redirectInBrowser: true,
-            isPermanent: true
-        });
-    });
-
     let redirectToIntro = fromPath => (
         actions.createRedirect({
             fromPath,

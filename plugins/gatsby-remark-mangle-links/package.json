@@ -1,0 +1,10 @@
+{
+  "name": "gatsby-remark-mangle-links",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Link mangling plugin specific to nickel-lang.org",
+  "main": "index.js",
+  "dependencies": {
+    "unist-util-visit": "^2.0.3"
+  }
+}
