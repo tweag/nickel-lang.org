@@ -23,11 +23,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
                   frontmatter {
                     slug
                   }
-                  parent {
-                    ... on File {
-                      sourceInstanceName
-                    }
-                  }            
                 }
               }
             }
@@ -35,17 +30,15 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     );
 
     result.data.allMarkdownRemark.edges.forEach(edge => {
-        if (edge.node.parent.sourceInstanceName === "markdown-pages") {
-            const page = edge.node.frontmatter.slug;
-            let page_path = `/user-manual/${page}`;
+        const page = edge.node.frontmatter.slug;
+        let page_path = `/user-manual/${page}`;
 
-            actions.createRedirect({
-                fromPath: `${page_path}.md`,
-                toPath: page_path,
-                redirectInBrowser: true,
-                isPermanent: true
-            });
-        }
+        actions.createRedirect({
+            fromPath: `${page_path}.md`,
+            toPath: page_path,
+            redirectInBrowser: true,
+            isPermanent: true
+        });
     });
 
     let redirectToIntro = fromPath => (
