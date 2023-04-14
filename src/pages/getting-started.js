@@ -179,7 +179,7 @@ const IndexPage = () => {
                     useful for:
                     <ul>
                         <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
-                            level as the surrounding code while still producing the expected result: The common indentation prefix is stripped.
+                            level as the surrounding code while still producing the expected result: the common indentation prefix is stripped.
                         </li>
                         <li>Writing strings with special characters without having to escape them.</li>
                     </ul>
@@ -191,7 +191,7 @@ const IndexPage = () => {
                      data-output="2-21:"><code>{codeExamples.export}</code></pre>
 
                 <p>Nickel currently supports exporting to and importing from YAML, TOML and JSON. Importing an existing configuration into a Nickel one
-                    is as easy as writing <code className={'language-nickel'}>import "something.yaml"</code>. For example, if our contributor data is alreay stored in a YAML
+                    is as easy as writing <code className={'language-nickel'}>import "something.yaml"</code>. For example, if our contributor data is already stored in a YAML
                     file <code>contributors.yaml</code> and we want to gradually migrate the manifest to Nickel, we could import <code>contributors.yaml</code> as a first step:</p>
                     <pre><code className={'language-nickel'}>{codeExamples.importingYaml}</code></pre>
 
