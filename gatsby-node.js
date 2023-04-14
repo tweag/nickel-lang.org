@@ -73,6 +73,8 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     redirectToStdlibStd("/stdlib");
 };
 
+// Make a StdlibSection node in the format expected by the page generation code
+// We pass the original content as JSON so we can query the entire thing at once instead of havin gatsby integrate it into the GraphQL schema
 const makeStdlibSection = ({ actions, createNodeId, createContentDigest, node, slug, name, content }) => {
     newNode = {
         id: createNodeId(`${node.id} >>> Nickel Stdlib Doc ${slug}`),
@@ -90,6 +92,7 @@ const makeStdlibSection = ({ actions, createNodeId, createContentDigest, node, s
 }
 
 exports.onCreateNode = ({ node, getNode, createNodeId, createContentDigest, actions }) => {
+    // We make a new node type "UserManualMarkdown" to make the filesystem query in `src/pages/user-manual/{UserManualMarkdown.slug}.js` more specific
     if (node.internal.type === "MarkdownRemark" && getNode(node.parent).sourceInstanceName === "user-manual") {
         newNode = {
             id: createNodeId(`Nickel User Manual ${node.id}`),
@@ -104,10 +107,12 @@ exports.onCreateNode = ({ node, getNode, createNodeId, createContentDigest, acti
         actions.createParentChildLink({ parent: node, child: newNode })
     }
 
+    // Preprocess the JSON stdlib documentation data that we get from Nickel into a format that makes it easier to handle
     if (node.internal.type === "NickelStdlibDocJson") {
         const toplevelName = getNode(node.parent).name;
         docsContent = JSON.parse(getNode(node.parent).internal.content);
 
+        // Since we don't want to have every module displayed under the `std` namespace on the website, we split out those top-level entries which have subfields.
         toplevelFields = Object.fromEntries(Object.entries(docsContent).filter(([key, value]) => !value.fields));
 
         makeStdlibSection({
@@ -118,6 +123,7 @@ exports.onCreateNode = ({ node, getNode, createNodeId, createContentDigest, acti
             content: toplevelFields,
         })
 
+        // What's left are the stdlib functions living in the top-level `std` namespace
         Object.entries(docsContent).filter(([key, value]) => !!value.fields).forEach(([slug, value]) => {
             makeStdlibSection({
                 actions, createNodeId, createContentDigest,

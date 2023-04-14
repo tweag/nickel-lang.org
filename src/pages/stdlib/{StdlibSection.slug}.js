@@ -12,8 +12,7 @@ import ReactMarkdown from 'react-markdown';
 
 const Stdlib = ({data}) => {
     const object = JSON.parse(data.stdlibSection.internal.content);
-    const slug = data.stdlibSection.slug; 
-    const name = data.stdlibSection.name; 
+    const {slug, name} = data.stdlibSection; 
     const sidebarProps = {
         active: slug,
         headings: object,
