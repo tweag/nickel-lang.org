@@ -44,17 +44,18 @@ module.exports = {
           resolve: `gatsby-transformer-remark`,
           options: {
               plugins: [
-                  `gatsby-remark-autolink-headers`,
-                  `gatsby-remark-prismjs`,
-                  {
-                      resolve: `gatsby-remark-classes`,
-                      options: {
-                          classMap: {
-                              link: "link-primary",
-                              table: "table table-striped markdown-table",
-                          }
-                      }
-                  }
+                `gatsby-remark-autolink-headers`,
+                `gatsby-remark-prismjs`,
+                {
+                    resolve: `gatsby-remark-classes`,
+                    options: {
+                        classMap: {
+                            link: "link-primary",
+                            table: "table table-striped markdown-table",
+                        }
+                    }
+                },
+                `gatsby-remark-mangle-links`
               ],
           },
         },
