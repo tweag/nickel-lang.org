@@ -11,6 +11,10 @@ module.exports = {
                 link: '/user-manual'
             },
             {
+                name: 'Standard Library',
+                link: '/stdlib'
+            },
+            {
                 name: 'Playground',
                 link: '/playground'
             },
@@ -26,6 +30,9 @@ module.exports = {
                 {name: "Tutorial", link: "/user-manual/tutorial"},
             ],
         },
+        stdlib: {
+            link: '/stdlib'
+        },
     },
     plugins: [
         'gatsby-plugin-react-helmet',
@@ -35,8 +42,15 @@ module.exports = {
         {
             resolve: `gatsby-source-filesystem`,
             options: {
-                name: `markdown-pages`,
+                name: `user-manual`,
                 path: `${__dirname}/src/nickel-manual`,
+            },
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `stdlib-doc`,
+                path: `${__dirname}/src/nickel-stdlib-doc`,
             },
         },
         `gatsby-plugin-sass`,
@@ -59,8 +73,6 @@ module.exports = {
               ],
           },
         },
-        // {
-        //     resolve: `gatsby-remark-prismjs`,
-        // },
+        `gatsby-transformer-json`,
     ],
 };

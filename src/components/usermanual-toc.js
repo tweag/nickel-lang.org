@@ -1,8 +1,5 @@
 import React from "react"
 import {graphql, Link, StaticQuery} from "gatsby"
-import {Helmet} from "react-helmet"
-import Header from "./header"
-import Footer from "./footer"
 
 export default function SidebarToc({active, headings}) {
     const subMenu = (section) => {

@@ -8,7 +8,7 @@
 
   inputs.nixpkgs.url = "nixpkgs/nixos-unstable";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nickel.url = "github:tweag/nickel/stable";
+  inputs.nickel.url = "github:tweag/nickel";
 
   outputs =
     { self
@@ -17,34 +17,35 @@
     , nickel
     }:
     flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = nixpkgs.legacyPackages.${system};
-        packageInfo = pkgs.lib.importJSON ./package.json;
-        nickelWasm = nickel.packages.${system}.nickelWasm;
-        nickelUserManual = nickel.packages.${system}.userManual;
-      in rec {
-        devShell = pkgs.mkShell {
-          packages = with pkgs; [
-            nodejs_latest
-            autoconf
-            automake
-            gettext
-            libtool
-            cmake
-            pkg-config
-            libpng
-            zlib
-            nasm
-          ];
-          shellHook = ''
-            rm -rf nickel-repl
-            ln -s ${nickelWasm}/nickel-repl nickel-repl
-            ln -s ${nickelUserManual} src/nickel-manual
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+      nickelWasm = nickel.packages.${system}.nickelWasm;
+      nickelUserManual = nickel.packages.${system}.userManual;
+      nickelStdlibDoc = nickel.packages.${system}.stdlibJson;
+    in
+    {
+      devShell = pkgs.mkShell {
+        packages = with pkgs; [
+          nodejs_latest
+          autoconf
+          automake
+          gettext
+          libtool
+          cmake
+          pkg-config
+          libpng
+          zlib
+          nasm
+        ];
+        shellHook = ''
+          ln -sfn ${nickelWasm}/nickel-repl nickel-repl
+          ln -sfn ${nickelUserManual} src/nickel-manual
+          ln -sfn ${nickelStdlibDoc} src/nickel-stdlib-doc
 
-            echo "== Run \`npm run develop\` to start developing"
-            echo " or"
-            echo "== Run \`npm run build\` to build the website"
-          '';
-        };
-      });
+          echo "== Run \`npm run develop\` to start developing"
+          echo " or"
+          echo "== Run \`npm run build\` to build the website"
+        '';
+      };
+    });
 }
