@@ -36,7 +36,9 @@ nickel>`,
   main = "index.js",
   keywords = ["example", "config"],
   scripts = {
-    test = m%"test.sh --option --install example --version "0.1.1""%,
+    test = m%"
+      test.sh --option --install example --version "0.1.1"
+    "%,
     do_stuff = "do_stuff.sh subcommand",
   },
   contributors = [{
@@ -74,7 +76,9 @@ version: 0.1.1`,
     "importingYaml": `{
   # [...]
   scripts = {
-    test = m%"test.sh --option --install example --version "0.1.1""%,
+    test = m%"
+      test.sh --option --install example --version "0.1.1"
+    "%,
     do_stuff = "do_stuff.sh subcommand",
   },
   contributors = import "contributors.yaml",
@@ -84,11 +88,15 @@ version: 0.1.1`,
         problem: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m%"test.sh --option --install example --version "0.1.1""%,`,
+  test = m%"
+    test.sh --option --install example --version "0.1.1"
+    "%,`,
         diff: `name = "example",
 version = "0.1.1",
 scripts = {
-  test = m%"test.sh --option --install %{name} --version "%{version}""%`,
+  test = m%"
+    test.sh --option --install %{name} --version "%{version}"
+  "%`,
         result: `# [...]
 scripts:
   do_stuff: do_stuff.sh subcommand
@@ -108,7 +116,7 @@ const IndexPage = () => {
             <main className="container content-main-container content documentation-page">
                 <h1 id="getting-started" className={'main-title'}>Getting started</h1>
 
-                <p>Nickel is still young and the installation process is not yet optimal. Sorry about that! We are focused on improving the
+                <p>Nickel is still young, and the installation process is not yet optimal. Sorry about that! We are focused on improving the
                     experience, so stay tuned. </p>
 
                 We give three alternative ways of obtaining a running Nickel executable:
@@ -172,10 +180,10 @@ const IndexPage = () => {
                         <li>Strings, delimited by <code>&quot;</code>. The sequences <code>m%&quot;</code> and <code>&quot;%</code> delimit multiline strings.
                         </li>
                         <li>Numbers.</li>
-                        <li>Lists, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
+                        <li>Arrays, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
                     </ul>
 
-                <p/>Multiline strings are an alternative way of defining strings. Line 11 is an example of such a string. Without diving into the details, multiline strings are
+                <p/>Multiline strings are an alternative way of writing string literals. Line 11 is an example of such a string. Without diving into the details, multiline strings are
                     useful for:
                     <ul>
                         <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
@@ -222,7 +230,11 @@ const IndexPage = () => {
                     typing, contracts, and more! To explore further, read the <a
                         className={"link-primary"}
                         href="/user-manual/introduction">user manual</a>
-                    . You will also find <a
+                    . In particular, the <a
+                        className={"link-primary"}
+                        href="/user-manual/tutorial">last section</a>
+                    is a slighty more advanced tutorial.
+                    You will also find <a
                         className={"link-primary"}
                         href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a
                         className={"link-primary"}
