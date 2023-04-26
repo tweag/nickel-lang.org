@@ -28,9 +28,9 @@ let SemanticVersion = fun label value =>
   in
 
 let AppSchema = {
-  name | Str,
+  name | String,
   version | SemanticVersion,
-  description | Str,
+  description | String,
 } in
 
 conf | AppSchema`;
