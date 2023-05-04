@@ -5,13 +5,13 @@
 const nickel = {
     comment: /#.+/,
     string: [
-        { pattern: /m(%+)"(.|\n)*?"\1/, greedy: true},
+        { pattern: /(m|[a-zA-Z][_a-zA-Z0-9-']*-s)(%+)"(.|\n)*?"\2/, greedy: true},
         { pattern: /".*?"/, greedy: true},
     ],
     operator: [
         />/, />=/, /</, /<=/, /&/, /==/, /&&/, /\|\|/, /!/, /\+/, /@/, /-/, /\+\+/, /\*/, /\//,
     ],
-    keyword: /\b(?:let|in|fun|match|forall|if|then|else|doc|default|force|priority|import)\b/,
+    keyword: /\b(?:let|rec|in|fun|match|forall|if|then|else|doc|default|force|priority|import|not_exported|optional)\b/,
     punctuation: [
         /[:/,;{}()=|]/,
         /=>/,
