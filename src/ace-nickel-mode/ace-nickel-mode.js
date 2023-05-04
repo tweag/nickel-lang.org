@@ -1,7 +1,6 @@
 /**
  * Define a Nickel mode in the ace editor. This enables syntax highlighting for the Nickel language.
  */
-
 import ace from "ace-builds/src-noconflict/ace";
 
 ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oop', 'ace/mode/text_highlight_rules'], function (_require, exports, _module) {
@@ -11,14 +10,16 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
     const NickelHighlightRules = function () {
         const constantLanguage = "true|false|null";
         const keywordControl = "match|import|if|else|then";
-        const keywordDeclaration = "let|in";
-        const keywordMetavalue = "doc|default";
+        const keywordDeclaration = "let|rec|in|fun";
+        const keywordMetavalue = "doc|default|priority|force|not_exported|optional";
+        const keywordType = "forall";
 
         const keywordMapper = this.createKeywordMapper({
             "constant.language.nickel": constantLanguage,
             "keyword.control.nickel": keywordControl,
             "keyword.declaration.nickel": keywordDeclaration,
             'keyword.metavalue.nickel': keywordMetavalue,
+            'keyword.type.nickel': keywordType,
         }, "identifier");
 
         // Although Ace supports modal lexing (the next, push and pop rules allow to
@@ -34,7 +35,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
         // delimiters
         let genQqdoc = length => ({
             token: "string",
-            regex: `m${'%'.repeat(length)}"`,
+            regex: `(m|[a-zA-Z][_a-zA-Z0-9-']*-s)${'%'.repeat(length)}"`,
             next: `qqdoc${length}`,
         });
 
@@ -56,31 +57,29 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
 
         this.$rules = {
             "start": [{
-                token: "comment",
-                regex: /#.*$/
-            }, {
-                regex: "(==|!=|<=?|>=?)",
-                token: ["keyword.operator.comparison.nickel"]
-            }, {
-                regex: "(\\+\\+|@)",
-                token: ["keyword.operator.combinator.nickel"]
-            }, {
-                regex: "(->|:)",
-                token: ["keyword.operator.type.nickel"]
-            }, {
-                regex: "=",
-                token: "keyword.operator.assignment.nickel"
-            },
-                {
+                    token: "comment",
+                    regex: /#.*$/
+                }, {
+                    regex: "(==|!=|<=?|>=?)",
+                    token: ["keyword.operator.comparison.nickel"]
+                }, {
+                    regex: "(\\+\\+|@)",
+                    token: ["keyword.operator.combinator.nickel"]
+                }, {
+                    regex: "(->|:)",
+                    token: ["keyword.operator.type.nickel"]
+                }, {
+                    regex: "=",
+                    token: "keyword.operator.assignment.nickel"
+                }, {
                     token: "string",
                     regex: "\"",
                     next: "qqstring",
+                }, {
+                    token: "string",
+                    regex: "m(%{4,})\"",
+                    next: "qqdocn"
                 },
-                {
-                token: "string",
-                regex: "m(%{4,})\"",
-                next: "qqdocn"
-            },
                 genQqdoc(1),
                 genQqdoc(2),
                 genQqdoc(3), {
@@ -99,8 +98,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
                     },
                     next: "pop"
                 }],
-            "qqdocn": [
-                {
+            "qqdocn": [{
                     token: "constant.language.escape",
                     regex: "#{4,}{",
                     push: "start"
@@ -114,8 +112,7 @@ ace.define('ace/mode/nickel_highlight_rules', ['require', 'exports', 'ace/lib/oo
             ...genQqdocState(1),
             ...genQqdocState(2),
             ...genQqdocState(3),
-            "qqstring": [
-                {
+            "qqstring": [{
                     token: "constant.language.escape",
                     regex: "%{",
                     push: "start"
