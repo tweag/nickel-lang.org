@@ -22,12 +22,13 @@ module.exports = {
         userManual: {
             sections: [
                 {name: "Introduction", link: "/user-manual/introduction"},
+                {name: "Tutorial", link: "/user-manual/tutorial"},
                 {name: "Syntax", link: "/user-manual/syntax"},
                 {name: "Merging", link: "/user-manual/merging"},
                 {name: "Correctness", link: "/user-manual/correctness"},
                 {name: "Typing", link: "/user-manual/typing"},
                 {name: "Contracts", link: "/user-manual/contracts"},
-                {name: "Tutorial", link: "/user-manual/tutorial"},
+                {name: "Types vs. Contracts", link: "/user-manual/types-vs-contracts"},
             ],
         },
         stdlib: {
