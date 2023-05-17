@@ -38,7 +38,7 @@
     "gatsby-transformer-json": "^4.25.0",
     "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^4.25.0",
-    "jquery": "^3.6.4",
+    "jquery": "^3.7.0",
     "nickel-repl": "file:nickel-repl",
     "popper.js": "^1.16.1",
     "prismjs": "^1.29.0",
