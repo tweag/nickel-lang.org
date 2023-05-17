@@ -238,11 +238,11 @@
         "topiary": "topiary"
       },
       "locked": {
-        "lastModified": 1682500406,
-        "narHash": "sha256-IGQCeiwbVjbg6DO9dW/wxETIJnXJ/MCL48GTyvwxoMw=",
+        "lastModified": 1684220170,
+        "narHash": "sha256-Vl6KHfZCmG016cN3xkaHgVtB9p2eODwjHQuMXF3KUsg=",
         "owner": "tweag",
         "repo": "nickel",
-        "rev": "c77cdcf03b5024bff4c31b5909239e8425e59e3a",
+        "rev": "f11b7b09e2fbbcaa6384e511ef95cde1f4aae93a",
         "type": "github"
       },
       "original": {
@@ -315,11 +315,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1682453498,
-        "narHash": "sha256-WoWiAd7KZt5Eh6n+qojcivaVpnXKqBsVgpixpV2L9CE=",
+        "lastModified": 1684215771,
+        "narHash": "sha256-fsum28z+g18yreNa1Y7MPo9dtps5h1VkHfZbYQ+YPbk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c8018361fa1d1650ee8d4b96294783cf564e8a7f",
+        "rev": "963006aab35e3e8ebbf6052b6bf4ea712fdd3c28",
         "type": "github"
       },
       "original": {
@@ -491,11 +491,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1682415064,
-        "narHash": "sha256-uAyg5d+i2YLJrY+nnoFb+w2wlcuwIa9Vs4UtvMEKBVs=",
+        "lastModified": 1682503900,
+        "narHash": "sha256-3Kb9D8S0lkGcPAcpJJGInVyFN79K6gn6TN0ZHWFA19s=",
         "owner": "tweag",
         "repo": "topiary",
-        "rev": "74952c7720ccd7f055f629b5cff61bda7adfab4f",
+        "rev": "773159aa4c819b46c6d51ca9275e7366087eb3a0",
         "type": "github"
       },
       "original": {
