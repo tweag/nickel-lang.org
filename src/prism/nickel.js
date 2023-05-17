@@ -5,20 +5,20 @@
 const nickel = {
     comment: /#.+/,
     string: [
-        { pattern: /m(%+)"(.|\n)*?"\1m/, greedy: true},
+        { pattern: /(m|[a-zA-Z][_a-zA-Z0-9-']*-s)(%+)"(.|\n)*?"\2/, greedy: true},
         { pattern: /".*?"/, greedy: true},
     ],
     operator: [
         />/, />=/, /</, /<=/, /&/, /==/, /&&/, /\|\|/, /!/, /\+/, /@/, /-/, /\+\+/, /\*/, /\//,
     ],
-    keyword: /\b(?:let|in|fun|switch|forall|if|then|else|doc|default|import)\b/,
+    keyword: /\b(?:let|rec|in|fun|match|forall|if|then|else|doc|default|force|priority|import|not_exported|optional)\b/,
     punctuation: [
         /[:/,;{}()=|]/,
         /=>/,
         /->/,
     ],
     number: /\b[0-9]*\.?[0-9]+\b/,
-    builtin: /\b(?:Dyn|Num|Bool|Str|Array)\b/,
+    builtin: /\b(?:Dyn|Number|Bool|String|Array)\b/,
     type: /[A-Z][a-zA-Z0-9_-]*/,
 };
 

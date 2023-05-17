@@ -11,6 +11,10 @@ module.exports = {
                 link: '/user-manual'
             },
             {
+                name: 'Standard Library',
+                link: '/stdlib'
+            },
+            {
                 name: 'Playground',
                 link: '/playground'
             },
@@ -18,13 +22,17 @@ module.exports = {
         userManual: {
             sections: [
                 {name: "Introduction", link: "/user-manual/introduction"},
+                {name: "Tutorial", link: "/user-manual/tutorial"},
                 {name: "Syntax", link: "/user-manual/syntax"},
                 {name: "Merging", link: "/user-manual/merging"},
                 {name: "Correctness", link: "/user-manual/correctness"},
                 {name: "Typing", link: "/user-manual/typing"},
                 {name: "Contracts", link: "/user-manual/contracts"},
-                {name: "Tutorial", link: "/user-manual/tutorial"},
+                {name: "Types vs. Contracts", link: "/user-manual/types-vs-contracts"},
             ],
+        },
+        stdlib: {
+            link: '/stdlib'
         },
     },
     plugins: [
@@ -35,8 +43,15 @@ module.exports = {
         {
             resolve: `gatsby-source-filesystem`,
             options: {
-                name: `markdown-pages`,
+                name: `user-manual`,
                 path: `${__dirname}/src/nickel-manual`,
+            },
+        },
+        {
+            resolve: `gatsby-source-filesystem`,
+            options: {
+                name: `stdlib-doc`,
+                path: `${__dirname}/src/nickel-stdlib-doc`,
             },
         },
         `gatsby-plugin-sass`,
@@ -59,8 +74,6 @@ module.exports = {
               ],
           },
         },
-        // {
-        //     resolve: `gatsby-remark-prismjs`,
-        // },
+        `gatsby-transformer-json`,
     ],
 };

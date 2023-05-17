@@ -20,17 +20,17 @@ const codeExample = `let conf = {
 
 let SemanticVersion = fun label value =>
   let pattern = "^\\\\d{1,2}\\\\.\\\\d{1,2}(\\\\.\\\\d{1,2})?$" in
-  if string.is_match pattern value then
+  if std.string.is_match pattern value then
     value
   else
     let msg = "invalid version number" in
-    contract.blame_with msg label
+    std.contract.blame_with_message msg label
   in
 
 let AppSchema = {
-  name | Str,
+  name | String,
   version | SemanticVersion,
-  description | Str,
+  description | String,
 } in
 
 conf | AppSchema`;
