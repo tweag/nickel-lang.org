@@ -7,7 +7,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
     faArrowUp,
-    faComments
+    faComments,
+    faMessage,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => (
@@ -22,6 +23,9 @@ const Footer = () => (
 
                 <Link className="btn btn-outline btn-floating m-1" to="https://github.com/tweag/nickel/discussions" role="button"
                 ><FontAwesomeIcon color="black" icon={faComments}/></Link>
+
+                <Link className="btn btn-outline btn-floating m-1" to="https://matrix.to/#/#nickel-lang:matrix.org" role="button"
+                ><FontAwesomeIcon color="black" icon={faMessage}/></Link>
 
                 <Link className="btn btn-outline-dark btn-floating m-1 ml-4" to="#" role="button"
                 ><FontAwesomeIcon color="black" icon={faArrowUp}/></Link>
