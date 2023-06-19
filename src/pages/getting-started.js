@@ -27,7 +27,7 @@ nickel repl
 nickel>`,
     },
     withHomeBrew: {
-        install: `brew install nickel-lang
+        install: `brew install nickel
 nickel repl
 nickel>`,
     },
