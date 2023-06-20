@@ -26,6 +26,11 @@ nickel>`,
 nickel repl
 nickel>`,
     },
+    withHomeBrew: {
+        install: `brew install nickel
+nickel repl
+nickel>`,
+    },
     firstConfig: `{
   name = "example",
   description = m%"
@@ -152,6 +157,13 @@ const IndexPage = () => {
                 <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative way to install a Nickel binary:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
                      data-output="3"><code>{codeExamples.withCargo.install}</code></pre>
+
+                <h2 id="install-with-homebrew">Install with Homebrew</h2>
+
+                <p>If you're running macOS you can use Homebrew to install the Nickel binary.</p>
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output={"3-1"}>
+                    <code>{codeExamples.withHomeBrew.install}</code>
+                </pre>
 
                 <h2 id="build-using-docker">Get a Docker image</h2>
 
