@@ -31,6 +31,10 @@ nickel>`,
 nickel repl
 nickel>`,
     },
+    withDocker: {
+        install: `docker run --rm -it ghcr.io/tweag/nickel:1.0.0 nickel repl
+nickel>`,
+    },
     firstConfig: `{
   name = "example",
   description = m%"
@@ -167,9 +171,10 @@ const IndexPage = () => {
 
                 <h2 id="build-using-docker">Get a Docker image</h2>
 
-                A last alternative is to use <a className={"link-primary"} href="https://www.docker.com/">Docker</a>: you can download the
-                <a className={"link-primary"} href={"https://github.com/tweag/nickel/releases/download/1.0.0/nickel-1.0.0-docker-image.tar.gz"}> nickel-1.0.0-docker-image.tar.gz</a>.
-                Please refer to the official Docker documentation to know how to load and run a Docker image. The image contains the Nickel interpreter symlinked to <code>/bin/nickel</code>.
+                <p>A last alternative is to use <a className={"link-primary"} href="https://www.docker.com/">Docker</a> image:</p>
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output={"2:"}>
+                    <code>{codeExamples.withDocker.install}</code>
+                </pre>
 
                 <h2 id="write-your-first-configuration">Write your first configuration</h2>
 
