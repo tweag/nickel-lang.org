@@ -165,7 +165,7 @@ const IndexPage = () => {
                 <h2 id="install-with-homebrew">Install with Homebrew</h2>
 
                 <p>If you're running macOS you can use Homebrew to install the Nickel binary.</p>
-                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output={"3-1"}>
+                <pre className={'command-line language-bash'} data-user="devops" data-host="nickel" data-output={"3"}>
                     <code>{codeExamples.withHomeBrew.install}</code>
                 </pre>
 
