@@ -28,7 +28,7 @@ const Stdlib = ({data}) => {
         headings: object,
     };
 
-    const HeaderWithTypes = ({id, name, types, contracts}) => {
+    const HeaderWithTypes = ({id, name, type, contracts}) => {
         const Header = ({content}) => {
             return (
                 <h3 id={id} style={{'position': 'relative'}}>
@@ -38,15 +38,15 @@ const Stdlib = ({data}) => {
             );
         }
         
-        if(!types && !contracts.length) {
+        if(!type && !contracts.length) {
             return (<Header content={name} />);
         }
 
-        if(types && !contracts.length) {
-            return (<Header content={`${name} : ${types}`} />);
+        if(type && !contracts.length) {
+            return (<Header content={`${name} : ${type}`} />);
         }
 
-        if(!types && contracts) {
+        if(!type && contracts) {
             return (
                 <React.Fragment>
                 <Header content={`${name} | ${contracts[0]}`} />
@@ -59,7 +59,7 @@ const Stdlib = ({data}) => {
 
         return (
             <React.Fragment>
-            <Header content={`${name} : ${types}`} />
+            <Header content={`${name} : ${type}`} />
             {contracts.map((ctr) => {
                 return (<h4><code className={'language-nickel'}>{name} | {ctr}</code></h4>);
             })}
@@ -83,7 +83,7 @@ const Stdlib = ({data}) => {
         const id = `${prefix}${prefix ? "." : ""}${k}`;
         return (
             <React.Fragment>
-            <HeaderWithTypes id={id} name={id} types={v.types} contracts={v.contracts}/>
+            <HeaderWithTypes id={id} name={id} type={v.type} contracts={v.contracts}/>
             <ReactMarkdown components={markdownComponents}>
             {v.documentation}
             </ReactMarkdown>
