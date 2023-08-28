@@ -32,7 +32,7 @@ nickel repl
 nickel>`,
     },
     withDocker: {
-        install: `docker run --rm -it ghcr.io/tweag/nickel:1.1.1 nickel repl
+        install: `docker run --rm -it ghcr.io/tweag/nickel:1.1.1 repl
 nickel>`,
     },
     firstConfig: `{
