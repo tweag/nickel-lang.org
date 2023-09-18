@@ -4,19 +4,7 @@ import { graphql } from "gatsby"
 import UserManualToc from "../../components/usermanual-toc";
 import {useEffect} from "react";
 
-import Prism from "prismjs";
-import "prismjs/components/prism-bash";
-import "prismjs/components/prism-yaml";
-import "prismjs/themes/prism-tomorrow.css";
-import "prismjs/plugins/command-line/prism-command-line";
-import "prismjs/plugins/command-line/prism-command-line.css";
-import nickelLanguageDefinition from "../../prism/nickel";
-
 const UserManual = ({data}) => {
-    useEffect(() => {
-        Prism.languages.nickel = nickelLanguageDefinition;
-        Prism.highlightAll();
-    }, []);
     const { userManualMarkdown: {parent: {html, headings, frontmatter} } } = data;
     const sidebarProps = {
         active: frontmatter.slug,

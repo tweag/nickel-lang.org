@@ -1,3 +1,5 @@
+const nickelLanguageDefinition = require('./src/prism/nickel.js');
+
 module.exports = {
     siteMetadata: {
         title: "Nickel",
@@ -60,7 +62,23 @@ module.exports = {
           options: {
               plugins: [
                 `gatsby-remark-autolink-headers`,
-                `gatsby-remark-prismjs`,
+                {
+                    resolve: `gatsby-remark-prismjs`,
+                    options: {
+                        aliases: {
+                            'nickel-lines': 'nickel',
+                            'nickel-repl': 'nickel',
+                            'nickel-parse': 'nickel',
+                            'nickel-no-check': 'nickel',
+                        },
+                        languageExtensions: [
+                            {
+                                language: 'nickel',
+                                definition: nickelLanguageDefinition
+                            }
+                        ]
+                    }
+                },
                 {
                     resolve: `gatsby-remark-classes`,
                     options: {

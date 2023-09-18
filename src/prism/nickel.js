@@ -22,4 +22,4 @@ const nickel = {
     type: /[A-Z][a-zA-Z0-9_-]*/,
 };
 
-export default nickel;
+module.exports = nickel;
