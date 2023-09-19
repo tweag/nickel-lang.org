@@ -66,10 +66,10 @@ module.exports = {
                     resolve: `gatsby-remark-prismjs`,
                     options: {
                         aliases: {
-                            'nickel-lines': 'nickel',
-                            'nickel-repl': 'nickel',
-                            'nickel-parse': 'nickel',
-                            'nickel-no-check': 'nickel',
+                            'nickel#lines': 'nickel',
+                            'nickel#repl': 'nickel',
+                            'nickel#parse': 'nickel',
+                            'nickel#no-check': 'nickel',
                         },
                         languageExtensions: [
                             {
