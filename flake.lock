@@ -253,11 +253,11 @@
         "topiary": "topiary"
       },
       "locked": {
-        "lastModified": 1694769579,
-        "narHash": "sha256-3SSaR61JUuex2vccxENKc0HQHNhUNhgfXPHQ45wDKiA=",
+        "lastModified": 1695987465,
+        "narHash": "sha256-g7pRTwa2sniIOmgdYCxfYxGRtxnQP8zaVWuPjzEZTSg=",
         "owner": "tweag",
         "repo": "nickel",
-        "rev": "cf4c2a44b76100da1170f3a6e89a52be9cb44f93",
+        "rev": "fe2956b57f28ba0b1a17c146afe4f098bddbc8e9",
         "type": "github"
       },
       "original": {
