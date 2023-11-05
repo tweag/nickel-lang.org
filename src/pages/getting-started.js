@@ -249,8 +249,8 @@ const IndexPage = () => {
                         href="/user-manual/introduction">user manual</a>
                     . In particular, the <a
                         className={"link-primary"}
-                        href="/user-manual/tutorial">last section</a>
-                    is a slighty more advanced tutorial.
+                        href="/user-manual/tutorial">last section</a> is
+                    a slighty more advanced tutorial.
                     You will also find <a
                         className={"link-primary"}
                         href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a
