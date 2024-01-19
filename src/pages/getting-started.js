@@ -32,7 +32,7 @@ nickel repl
 nickel>`,
     },
     withDocker: {
-        install: `docker run --rm -it ghcr.io/tweag/nickel:1.1.1 repl
+        install: `docker run --rm -it ghcr.io/tweag/nickel:1.4.0 repl
 nickel>`,
     },
     firstConfig: `{
@@ -62,7 +62,7 @@ nickel>`,
     dep3 = "6.7"
   }
 }`,
-    export: `nickel -f example.ncl export --format yaml
+    export: `nickel export example.ncl --format yaml
 ---
 contributors:
   - email: johndoe@example.com
@@ -99,13 +99,13 @@ version = "0.1.1",
 scripts = {
   test = m%"
     test.sh --option --install example --version "0.1.1"
-    "%,`,
+  "%,`,
         diff: `name = "example",
 version = "0.1.1",
 scripts = {
   test = m%"
     test.sh --option --install %{name} --version "%{version}"
-  "%`,
+  "%,`,
         result: `# [...]
 scripts:
   do_stuff: do_stuff.sh subcommand
@@ -141,7 +141,7 @@ const IndexPage = () => {
 
                 <h3>Run</h3>
 
-                <p>With a recent version of Nix (> 2.4.0), you can build and run Nickel in one shot. If you haven't installed Nix yet, please follow
+                <p>With a recent version of Nix ({'>'} 2.4.0), you can build and run Nickel in one shot. If you haven't installed Nix yet, please follow
                     <a className={"link-primary"} href={"https://nixos.org/guides/nix-pills/install-on-your-running-system.html"}> this installation guide</a>. Once Nix is installed, use <code>nix run</code> to start Nickel
                     and append <code>-- args</code> to pass arguments to the Nickel executable (here we launch an REPL session)</p>
 
@@ -233,7 +233,7 @@ const IndexPage = () => {
                     ending up with incoherent version numbers in the same configuration. To remedy the problem, let's have a
                     single source of truth by reusing the value of <code>name</code> and <code>version</code> in <code>scripts.test</code>, using
                     the string interpolation syntax <code>%{'{expr}'}</code>:</p>
-                <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
+                <pre><code className={'diff'}>{codeExamples.reuse.diff}</code></pre>
 
                 <p>Now, if we change version to <code>0.1.2</code> and export the result, the test script
                     invocation is updated as well:</p>
