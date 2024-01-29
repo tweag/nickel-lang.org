@@ -249,11 +249,11 @@
         "topiary": "topiary"
       },
       "locked": {
-        "lastModified": 1704906109,
-        "narHash": "sha256-YPS+Szj0T8mbcrYBdAuoQupv1x0EIq4rFS2Wk5oYVsY=",
+        "lastModified": 1706207911,
+        "narHash": "sha256-VltrIGo4jXV6lDIqj+hTQQ46PJH1v9CVFOZopyi9tbM=",
         "owner": "tweag",
         "repo": "nickel",
-        "rev": "1fa5a7989a2f785c916bde9f7398e96a60f2ea9e",
+        "rev": "25ea79e234f1800a0a3e79c4b88eb8d39c619bfe",
         "type": "github"
       },
       "original": {
@@ -380,11 +380,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1705677747,
-        "narHash": "sha256-eyM3okYtMgYDgmYukoUzrmuoY4xl4FUujnsv/P6I/zI=",
+        "lastModified": 1706191920,
+        "narHash": "sha256-eLihrZAPZX0R6RyM5fYAWeKVNuQPYjAkCUBr+JNvtdE=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "bbe7d8f876fbbe7c959c90ba2ae2852220573261",
+        "rev": "ae5c332cbb5827f6b1f02572496b141021de335f",
         "type": "github"
       },
       "original": {
