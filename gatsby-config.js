@@ -27,6 +27,7 @@ module.exports = {
                 {name: "Tutorial", link: "/user-manual/tutorial"},
                 {name: "Syntax", link: "/user-manual/syntax"},
                 {name: "Merging", link: "/user-manual/merging"},
+                {name: "Modular Configurations", link: "/user-manual/modular-configurations"},
                 {name: "Correctness", link: "/user-manual/correctness"},
                 {name: "Typing", link: "/user-manual/typing"},
                 {name: "Contracts", link: "/user-manual/contracts"},
