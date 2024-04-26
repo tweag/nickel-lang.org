@@ -46,7 +46,7 @@
     "react-ace": "^11.0.1",
     "react-bootstrap": "^2.10.2",
     "react-bootstrap-icons": "^1.11.4",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.0",
     "react-helmet": "^6.1.0",
     "sass": "^1.75.0",
     "react-markdown": "^8.0.6"
