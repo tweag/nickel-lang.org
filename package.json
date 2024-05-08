@@ -48,7 +48,7 @@
     "react-bootstrap-icons": "^1.11.4",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
-    "sass": "^1.75.0",
+    "sass": "^1.77.0",
     "react-markdown": "^8.0.6"
   },
   "overrides": {
