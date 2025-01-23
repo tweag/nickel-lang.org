@@ -25,6 +25,7 @@ module.exports = {
             sections: [
                 {name: "Introduction", link: "/user-manual/introduction"},
                 {name: "Tutorial", link: "/user-manual/tutorial"},
+                {name: "Command line interface", link: "/user-manual/cli"},
                 {name: "Syntax", link: "/user-manual/syntax"},
                 {name: "Merging", link: "/user-manual/merging"},
                 {name: "Modular Configurations", link: "/user-manual/modular-configurations"},
