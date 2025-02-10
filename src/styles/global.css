@@ -292,3 +292,8 @@
     margin-top: 3em;
     margin-bottom: 3em;
 }
+
+.scrollable-column {
+    overflow-y: scroll;
+    height: 100vh;
+}
