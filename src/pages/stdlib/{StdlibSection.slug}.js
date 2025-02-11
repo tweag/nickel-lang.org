@@ -1,14 +1,14 @@
-import * as React from "react"
-import Layout from "../../components/layout"
-import { graphql } from "gatsby"
+import * as React from "react";
+import Layout from "../../components/layout-sidebar";
+import { graphql } from "gatsby";
 import SidebarToc from "../../components/stdlib-toc";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 import Prism from "prismjs";
 import "prismjs/themes/prism-tomorrow.css";
 import nickelLanguageDefinition from "../../prism/nickel";
 
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown from "react-markdown";
 
 // Icon taken from gatsby-remark-autolink-headers at https://github.com/gatsbyjs/gatsby/blob/master/packages/gatsby-remark-autolink-headers/src/index.js
 const AnchorIcon = () => {
@@ -104,24 +104,20 @@ const Stdlib = ({data}) => {
     };
 
   return (
-      <Layout>
-        <div className="container-fluid">
-            <div className={"row"}>
-                {/*col-md-4 col-lg-3 col-xl-3*/}
-                <div className={"col-xl-3 col-lg-4 col-md-5 order-1"}>
-                    <SidebarToc {...sidebarProps}/>
-                </div>
-                <div className={"col-xl-9 col-lg-8 col-md-7 order-2"}>
-                    <div className={"container content-main-container content documentation-page"}>
-                        <h2>{name}</h2>
-                        <DocEntries prefix={``} fields={object} />
-                    </div>
-                </div>
-            </div>
+    <Layout
+      children={
+        <div
+          className={
+            "container content-main-container content documentation-page"
+          }
+        >
+          <h2>{name}</h2>
+          <DocEntries prefix={``} fields={object} />
         </div>
-      </Layout>
-  )
-                        // <h2>{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
+      }
+      sidebar={<SidebarToc {...sidebarProps} />}
+    />
+  );
 };
 
 export const pageQuery = graphql`
