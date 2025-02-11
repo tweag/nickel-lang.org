@@ -1,5 +1,5 @@
 import * as React from "react";
-import { LayoutWithScrollableSidebar } from "../../components/layout";
+import Layout from "../../components/layout-sidebar";
 import { graphql } from "gatsby";
 import SidebarToc from "../../components/stdlib-toc";
 import { useEffect } from "react";
@@ -104,7 +104,7 @@ const Stdlib = ({data}) => {
     };
 
   return (
-    <LayoutWithScrollableSidebar
+    <Layout
       children={
         <div
           className={
