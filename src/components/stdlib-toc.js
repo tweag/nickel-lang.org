@@ -36,7 +36,7 @@ export default function SidebarToc({active, headings}) {
                         }
                     }
                 }
-                allStdlibSection(sort: {fields: slug}) {
+                allStdlibSection(sort: {slug: ASC}) {
                     edges {
                         node {
                             slug
