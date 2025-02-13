@@ -68,16 +68,16 @@ export default class Playground extends React.Component {
                 </div>
                 <ul className={"col-6 nav nav-pills playground-tab"}>
                     <li className="nav-item">
-                        <a className={this.replTabStyle(modes.REPL)} onClick={() => this.setMode(modes.REPL)}>REPL</a>
+                        <button className={this.replTabStyle(modes.REPL)} onClick={() => this.setMode(modes.REPL)}>REPL</button>
                     </li>
                     <li className="nav-item">
-                        <a className={this.replTabStyle(modes.JSON)} onClick={() => this.setMode(modes.JSON)}>JSON</a>
+                        <button className={this.replTabStyle(modes.JSON)} onClick={() => this.setMode(modes.JSON)}>JSON</button>
                     </li>
                     <li className="nav-item">
-                        <a className={this.replTabStyle(modes.YAML)} onClick={() => this.setMode(modes.YAML)}>YAML</a>
+                        <button className={this.replTabStyle(modes.YAML)} onClick={() => this.setMode(modes.YAML)}>YAML</button>
                     </li>
                     <li className="nav-item">
-                        <a className={this.replTabStyle(modes.TOML)} onClick={() => this.setMode(modes.TOML)}>TOML</a>
+                        <button className={this.replTabStyle(modes.TOML)} onClick={() => this.setMode(modes.TOML)}>TOML</button>
                     </li>
                 </ul>
             </div>
