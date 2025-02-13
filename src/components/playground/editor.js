@@ -6,8 +6,6 @@ import {PLAYGROUND_SEND_EVENT, EDITOR_SEND_EVENT, REPL_RUN_EVENT} from "./events
 import "ace-builds/src-noconflict/theme-solarized_dark";
 import "../../ace-nickel-mode/ace-nickel-mode";
 import ReactDOMServer from "react-dom/server";
-import {wrapPageElement} from "gatsby/dist/utils/api-browser-docs";
-import modes from "./modes";
 
 /**
  * Nickel code editor component, based on the Ace editor.

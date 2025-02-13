@@ -2,7 +2,6 @@ import * as React from "react"
 import Layout from "../../components/layout"
 import { graphql } from "gatsby"
 import UserManualToc from "../../components/usermanual-toc";
-import {useEffect} from "react";
 
 const UserManual = ({data}) => {
     const { userManualMarkdown: {parent: {html, headings, frontmatter} } } = data;
