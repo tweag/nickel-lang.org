@@ -60,6 +60,7 @@ a:hover { text-decoration: none};
 }
 
 /* Augment bootstrap with breakpoint variants of w-100, w-50, and so on. */
+$sizes: ("25": 25%, "50": 50%, "75": 75%, "100": 100%);
 
 @each $breakpoint in map-keys($grid-breakpoints) {
   @each $size, $length in $sizes {
