@@ -15,9 +15,9 @@ import nickelLanguageDefinition from "../prism/nickel";
 // Escaping curly braces and other stuff in JSX is tiring, so we define all code examples here
 const codeExamples = {
     withNix: {
-        nix_run: `nix run --experimental-features "flakes nix-command" github:tweag/nickel/stable -- repl
+        nix_run: `nix run --experimental-features "flakes nix-command" nixpkgs#nickel -- repl
 nickel>`,
-        install: `nix profile install github:tweag/nickel/stable
+        install: `nix profile install nixpkgs#nickel
 nickel repl
 nickel>`,
     },
@@ -32,7 +32,7 @@ nickel repl
 nickel>`,
     },
     withDocker: {
-        install: `docker run --rm -it ghcr.io/tweag/nickel:1.4.0 repl
+        install: `docker run --rm -it ghcr.io/tweag/nickel:1.10.0 repl
 nickel>`,
     },
     firstConfig: `{
@@ -125,17 +125,18 @@ const IndexPage = () => {
             <main className="container content-main-container content documentation-page">
                 <h1 id="getting-started" className={'main-title'}>Getting started</h1>
 
-                <p>Nickel is still young, and the installation process is not yet optimal. Sorry about that! We are focused on improving the
-                    experience, so stay tuned. </p>
+                The simplest way to get nickel and nls (the Nickel language server) binaries is to download them from the pre-built binaries available
+                under the Assets section of the latest <a className={"link-primary"} href="https://github.com/tweag/nickel/releases">GitHub release</a>.
 
-                We give three alternative ways of obtaining a running Nickel executable:
+                If your platform isn't available, or if you prefer to use a package manager, we give three alternative ways of obtaining a running Nickel executable:
+
                 <ol>
                     <li>Using <a className={"link-primary"} href="https://nixos.org/">Nix</a></li>
                     <li>Using <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a></li>
                     <li>Using <a className={"link-primary"} href="https://www.docker.com/">Docker</a></li>
                 </ol>
 
-                If you have neither of these tools, Nix is the preferred way. If you don't have Nix but you are a user of Cargo or Docker, you may prefer the corresponding installation method.
+                If you have neither of these tools, Nix is the preferred way. If you don't have Nix but you are Cargo or Docker user, you may prefer the corresponding installation method.
 
                 <h2 id="build-using-nix">Get a Nickel binary using Nix</h2>
 
@@ -146,7 +147,7 @@ const IndexPage = () => {
                     and append <code>-- args</code> to pass arguments to the Nickel executable (here we launch an REPL session)</p>
 
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                     data-output="2:"><code>{codeExamples.withNix.nix_run}</code></pre>
+                    data-output="2:"><code>{codeExamples.withNix.nix_run}</code></pre>
 
                 <h3>Install</h3>
 
@@ -160,7 +161,7 @@ const IndexPage = () => {
 
                 <p>If you are a Rust developer, the <a className={"link-primary"} href="https://doc.rust-lang.org/cargo/">Cargo</a> build tool is an alternative way to install a Nickel binary:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel"
-                     data-output="3"><code>{codeExamples.withCargo.install}</code></pre>
+                    data-output="3"><code>{codeExamples.withCargo.install}</code></pre>
 
                 <h2 id="install-with-homebrew">Install with Homebrew</h2>
 
@@ -183,42 +184,42 @@ const IndexPage = () => {
                     Writing a basic configuration is as simple as writing JSON or YAML. Let's write a manifest of a fictional app:</p>
 
                 <div className={'d-none d-md-block'}>
-                    <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig}/>
+                    <Playground fit={'code'} mode={modes.YAML} value={codeExamples.firstConfig} />
                 </div>
                 <div className={'d-block d-md-none'}>
                     <pre><code className={'language-nickel'}>{codeExamples.firstConfig}</code></pre>
                 </div>
-                <p/>This program is composed of a <i>record</i>. A record is the same thing as an object in JSON, that is a list of
-                    key-value pairs delimited
-                    by <code>{'{'}</code> and <code>{'}'}</code>. In general, Nickel values map directly to
-                    values in JSON, excluding functions. Thus, the basic datatypes of Nickel are the same as in JSON:
-                    <ul>
-                        <li>Records (objects), delimited by <code>{'{'}</code> and <code>{'}'}</code>.</li>
-                        <li>Strings, delimited by <code>&quot;</code>. The sequences <code>m%&quot;</code> and <code>&quot;%</code> delimit multiline strings.
-                        </li>
-                        <li>Numbers.</li>
-                        <li>Arrays, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
-                    </ul>
+                <p />This program is composed of a <i>record</i>. A record is the same thing as an object in JSON, that is a list of
+                key-value pairs delimited
+                by <code>{'{'}</code> and <code>{'}'}</code>. In general, Nickel values map directly to
+                values in JSON, excluding functions. Thus, the basic datatypes of Nickel are the same as in JSON:
+                <ul>
+                    <li>Records (objects), delimited by <code>{'{'}</code> and <code>{'}'}</code>.</li>
+                    <li>Strings, delimited by <code>&quot;</code>. The sequences <code>m%&quot;</code> and <code>&quot;%</code> delimit multiline strings.
+                    </li>
+                    <li>Numbers.</li>
+                    <li>Arrays, delimited by <code>[</code> and <code>]</code> and separated by <code>,</code>.</li>
+                </ul>
 
-                <p/>Multiline strings are an alternative way of writing string literals. Line 11 is an example of such a string. Without diving into the details, multiline strings are
-                    useful for:
-                    <ul>
-                        <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
-                            level as the surrounding code while still producing the expected result: the common indentation prefix is stripped.
-                        </li>
-                        <li>Writing strings with special characters without having to escape them.</li>
-                    </ul>
+                <p />Multiline strings are an alternative way of writing string literals. Line 11 is an example of such a string. Without diving into the details, multiline strings are
+                useful for:
+                <ul>
+                    <li>Writing strings spanning several lines, as their name suggests. Multiline strings can be indented at the same
+                        level as the surrounding code while still producing the expected result: the common indentation prefix is stripped.
+                    </li>
+                    <li>Writing strings with special characters without having to escape them.</li>
+                </ul>
 
                 In our example, using a multiline string saves us from escaping the recurring double quotes <code>"</code>.
                 <h2 id="export">Export & Import</h2>
                 <p>The ultimate goal of a Nickel program is to produce a static configuration. To do so, save the example above to <code>example.ncl</code> and run <code>nickel export</code>:</p>
                 <pre className={'command-line language-bash'} data-user="devops" data-host="nickel:~/nickel"
-                     data-output="2-21:"><code>{codeExamples.export}</code></pre>
+                    data-output="2-21:"><code>{codeExamples.export}</code></pre>
 
                 <p>Nickel currently supports exporting to and importing from YAML, TOML and JSON. Importing an existing configuration into a Nickel one
                     is as easy as writing <code className={'language-nickel'}>import "something.yaml"</code>. For example, if our contributor data is already stored in a YAML
                     file <code>contributors.yaml</code> and we want to gradually migrate the manifest to Nickel, we could import <code>contributors.yaml</code> as a first step:</p>
-                    <pre><code className={'language-nickel'}>{codeExamples.importingYaml}</code></pre>
+                <pre><code className={'language-nickel'}>{codeExamples.importingYaml}</code></pre>
 
                 <h2 id="reuse">Reuse</h2>
 
@@ -233,7 +234,7 @@ const IndexPage = () => {
                     ending up with incoherent version numbers in the same configuration. To remedy the problem, let's have a
                     single source of truth by reusing the value of <code>name</code> and <code>version</code> in <code>scripts.test</code>, using
                     the string interpolation syntax <code>%{'{expr}'}</code>:</p>
-                <pre><code className={'diff'}>{codeExamples.reuse.diff}</code></pre>
+                <pre><code className={'language-nickel'}>{codeExamples.reuse.diff}</code></pre>
 
                 <p>Now, if we change version to <code>0.1.2</code> and export the result, the test script
                     invocation is updated as well:</p>
@@ -254,10 +255,10 @@ const IndexPage = () => {
                     You will also find <a
                         className={"link-primary"}
                         href="https://github.com/tweag/nickel/tree/master/examples">examples in the repository</a>. For an overview of Nickel and the motivations behind it, see the <a
-                        className={"link-primary"}
-                        href="https://github.com/tweag/nickel/#nickel">README</a> and the <a
-                className={"link-primary"}
-                href="https://github.com/tweag/nickel/blob/master/RATIONALE.md">design rationale document</a>.</p>
+                            className={"link-primary"}
+                            href="https://github.com/tweag/nickel/#nickel">README</a> and the <a
+                                className={"link-primary"}
+                                href="https://github.com/tweag/nickel/blob/master/RATIONALE.md">design rationale document</a>.</p>
             </main>
         </Layout>
     );
