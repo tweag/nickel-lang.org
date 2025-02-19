@@ -27,7 +27,7 @@ const Footer = () => (
                 <Link className="btn btn-outline btn-floating m-1" to="https://discord.gg/vYDnJYBmax" role="button"
                 ><FontAwesomeIcon color="black" icon={faMessage}/></Link>
 
-                <Link className="btn btn-outline-dark btn-floating m-1 ml-4" to="#" role="button"
+                <Link className="btn btn-outline-dark btn-floating m-1 ms-4" to="#" role="button"
                 ><FontAwesomeIcon color="black" icon={faArrowUp}/></Link>
             </section>
         </div>

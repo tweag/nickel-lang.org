@@ -20,7 +20,7 @@ export default function ClientSidePlayground(props) {
             {!isSSR && (
                 <React.Suspense fallback={
                     <div className={"text-center playground-loader mt-4"}>
-                        Loading playground <span className={"ml-2"}><FontAwesomeIcon icon={faSpinner} size={"lg"} spin/></span>
+                        Loading playground <span className={"ms-2"}><FontAwesomeIcon icon={faSpinner} size={"lg"} spin/></span>
                     </div>
                 }>
                 <LoadablePlayground {...props}/>
