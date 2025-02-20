@@ -83,7 +83,7 @@ const IndexPage = () => {
                 This configuration contains an error. Fix it and press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>Cmd <Command/>
               </kbd>+<kbd>Enter</kbd>) or click <span className={'btn btn-primary disabled'}>Run</span> to try your solution.
               </div>
-              <div className={'text-left landingpage-playground-wrapper'}>
+              <div className={'text-start landingpage-playground-wrapper'}>
                 <PlaygroundComponent value={codeExample} fit={'code'} mode={modes.JSON}/>
               </div>
             </div>
@@ -95,14 +95,14 @@ const IndexPage = () => {
             <div className="col-12 col-lg-4 mb-5 mb-lg-0 main-text text-center landingpage-column">
               <img src={mergeImage} className="abstract-illustration" alt={""}/>
                 <h3 className="mb-4 mt-4">Merge</h3>
-                <div className="text-left mt-4">
+                <div className="text-start mt-4">
                     Write simple, modular blocks. Merge them into a complex configuration.
                 </div>
             </div>
             <div className="col-12 col-lg-4 mb-5 mb-lg-0 main-text text-center landingpage-column">
               <img src={validateImage} className="abstract-illustration" alt={""}/>
                 <h3 className="mb-4 mt-4">Verify & Validate</h3>
-              <div className="text-left mt-4">
+              <div className="text-start mt-4">
                 <p>Use (opt-in) static typing to verify functions, if you need to. Let
                 type inference do the boring work.</p>
 
@@ -113,7 +113,7 @@ const IndexPage = () => {
             <div className="col-12 col-lg-4 main-text text-center landingpage-column">
               <img src={reuseImage} className="abstract-illustration" alt={""}/>
                 <h3 className="mb-4 mt-4">Reuse</h3>
-              <div className="text-left lt-4">
+              <div className="text-start lt-4">
                 Don't use hacks, don't reinvent the wheel: Nickel is a
                 programming language. Factorize. Reuse the generic parts. Import external libraries.
               </div>

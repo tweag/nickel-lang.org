@@ -62,7 +62,7 @@ export default class Playground extends React.Component {
                 <div className={"col-6 playground-tab d-flex align-items-center"}>
                     <div>
                         <button className={"btn btn-primary"} onClick={() => this.dispatchSendEvent()}>Run</button>
-                        <span className={'ml-4'}> or press</span> <kbd>Ctrl</kbd>+<kbd>Enter</kbd> or <kbd>Cmd <Command/>
+                        <span className={'ms-4'}> or press</span> <kbd>Ctrl</kbd>+<kbd>Enter</kbd> or <kbd>Cmd <Command/>
                     </kbd>+<kbd>Enter</kbd>
                     </div>
                 </div>
