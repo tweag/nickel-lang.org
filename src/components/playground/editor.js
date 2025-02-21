@@ -87,15 +87,12 @@ export default class Editor extends React.Component {
      * @param label
      * @returns {*}
      */
-    annotationWidget(diagnostic, label) {
-        const labelClass = label.style === nickelCodes.error.label.PRIMARY ? 'ansi-red-fg' : 'ansi-blue-fg';
-        return (<div>
-            <span className={"ansi-bright-red-fg"}>{diagnostic.msg}</span><br/>
-            <span className={labelClass}>{label.msg}</span><br/>
-            <ul>
-                {diagnostic.notes.map(note => <li>{note}</li>)}
-            </ul>
-        </div>)
+    annotationText(diagnostic) {
+        if (diagnostic.notes.length > 0) {
+            return `${diagnostic.msg} (${diagnostic.notes[0]})`
+        } else {
+            return diagnostic.msg
+        }
     }
 
     /**
@@ -109,7 +106,7 @@ export default class Editor extends React.Component {
                     diagnostic.labels.map(label => ({
                         row: label.line_start,
                         column: label.col_start,
-                        html: ReactDOMServer.renderToStaticMarkup(this.annotationWidget(diagnostic, label)),
+                        text: this.annotationText(diagnostic),
                         type: label.style === nickelCodes.error.label.PRIMARY ? 'error' : 'warning',
                     }))
                 )).flat();
