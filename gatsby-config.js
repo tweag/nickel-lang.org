@@ -33,6 +33,7 @@ module.exports = {
                 {name: "Typing", link: "/user-manual/typing"},
                 {name: "Contracts", link: "/user-manual/contracts"},
                 {name: "Types vs. Contracts", link: "/user-manual/types-vs-contracts"},
+                {name: "Package management", link: "/user-manual/package-management"},
             ],
         },
         stdlib: {
