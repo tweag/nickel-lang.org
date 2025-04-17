@@ -14,7 +14,7 @@ module.exports = {
             },
             {
                 name: 'Standard Library',
-                link: '/stdlib'
+                link: '/stdlib/std'
             },
             {
                 name: 'Playground',
@@ -37,10 +37,11 @@ module.exports = {
             ],
         },
         stdlib: {
-            link: '/stdlib'
+            link: '/stdlib/std'
         },
     },
     plugins: [
+        'gatsby-plugin-netlify',
         'gatsby-plugin-react-helmet',
         'gatsby-plugin-sharp',
         'gatsby-transformer-sharp',
