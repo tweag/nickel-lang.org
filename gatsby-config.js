@@ -37,7 +37,7 @@ module.exports = {
             ],
         },
         stdlib: {
-            link: '/stdlib/std'
+            link: '/stdlib'
         },
     },
     plugins: [
