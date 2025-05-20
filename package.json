@@ -19,7 +19,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@loadable/component": "^5.16.4",
+    "@loadable/component": "^5.16.7",
     "ace-builds": "^1.40.1",
     "ansi-to-react": "^6.1.6",
     "bootstrap": "^5.3.3",
