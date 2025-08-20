@@ -17,6 +17,8 @@ export default function Layout({ children, sidebar }) {
           site {
             siteMetadata {
               title
+              description
+              keywords
               menuLinks {
                 name
                 link
@@ -28,10 +30,10 @@ export default function Layout({ children, sidebar }) {
       render={(data) => (
         <React.Fragment>
           <Helmet
-            title={"Nickel"}
+            title={data.site.siteMetadata.title}
             meta={[
-              { name: "description", content: "Sample" },
-              { name: "keywords", content: "sample, something" },
+              { name: "description", content: data.site.siteMetadata.description },
+              { name: "keywords", content: data.site.siteMetadata.keywords },
             ]}
           ></Helmet>
           <Header menuLinks={data.site.siteMetadata.menuLinks} />

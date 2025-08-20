@@ -3,6 +3,8 @@ const nickelLanguageDefinition = require('./src/prism/nickel.js');
 module.exports = {
     siteMetadata: {
         title: "Nickel",
+        description: "Manage complex configurations. Modular, correct and boilerplate-free.",
+        keywords: "nickel, configuration, Infrastructure as Code, DevOps, automation, Terraform, cloud, AWS, Kubernetes, GCP, Nix, Azure, CI/CD",
         menuLinks: [
             {
                 name: 'Getting started',
