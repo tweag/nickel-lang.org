@@ -69,7 +69,7 @@ const IndexPage = () => {
               </div>
 
               <div className="mt-4 mb-4 main-text">
-                Write complex configurations. Modular, correct and boilerplate-free.
+                Manage complex configurations. Modular, correct and boilerplate-free.
               </div>
             </div>
           </section>

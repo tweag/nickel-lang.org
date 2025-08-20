@@ -12,10 +12,12 @@ export default function Layout({children}) {
         site {
           siteMetadata {
             title
-             menuLinks {
-               name
-               link
-             }
+            description
+            keywords
+            menuLinks {
+              name
+              link
+            }
           }
         }
       }
@@ -23,18 +25,18 @@ export default function Layout({children}) {
             render={data => (
                 <React.Fragment>
                     <Helmet
-                        title={'Nickel'}
+                        title={data.site.siteMetadata.title}
                         meta={[
-                            {name: 'description', content: 'Sample'},
-                            {name: 'keywords', content: 'sample, something'},
+                            {name: "description", content: data.site.siteMetadata.description},
+                            {name: "keywords", content: data.site.siteMetadata.keywords},
                         ]}
                     >
                     </Helmet>
-                    <Header menuLinks={data.site.siteMetadata.menuLinks}/>
+                    <Header menuLinks={data.site.siteMetadata.menuLinks} />
                     <div>
                         {children}
                     </div>
-                    <Footer/>
+                    <Footer />
                 </React.Fragment>
             )}
         />
