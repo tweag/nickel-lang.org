@@ -37,7 +37,7 @@
     "gatsby-source-filesystem": "^5.0.0",
     "gatsby-transformer-json": "^5.0.0",
     "gatsby-transformer-remark": "^6.13.1",
-    "gatsby-transformer-sharp": "^5.0.0",
+    "gatsby-transformer-sharp": "^5.15.0",
     "jquery": "^3.7.1",
     "nickel-repl": "file:nickel-repl",
     "popper.js": "^1.16.1",
