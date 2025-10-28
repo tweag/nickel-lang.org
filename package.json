@@ -31,7 +31,7 @@
     "gatsby-plugin-react-helmet": "^6.15.0",
     "gatsby-plugin-sass": "^6.0.0",
     "gatsby-plugin-sharp": "^5.15",
-    "gatsby-remark-autolink-headers": "^6.0.0",
+    "gatsby-remark-autolink-headers": "^6.15.0",
     "gatsby-remark-classes": "^1.0.2",
     "gatsby-remark-prismjs": "^7.15.0",
     "gatsby-source-filesystem": "^5.15.0",
